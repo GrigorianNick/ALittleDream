@@ -9,19 +9,14 @@ using Microsoft.Xna.Framework.Audio;
 
 namespace ALittleDream
 {
-    abstract class GameObject
+    abstract class GameObject : Sprite
     {
         // Mechanics stuff
         protected double luminosity;
         protected double gravity;
 
-        // Rendering stuff
-        protected int spriteX, spriteY;
-        protected int spriteWidth, spriteHeight;
-        protected Texture2D image;
-
         // Getters and setters
-        public int GetX()
+        public double GetX()
         {
             return spriteX;
         }
@@ -31,7 +26,7 @@ namespace ALittleDream
             spriteX = x;
         }
 
-        public int GetY()
+        public double GetY()
         {
             return spriteY;
         }
@@ -41,14 +36,8 @@ namespace ALittleDream
             spriteY = y;
         }
 
-        public void Draw(SpriteBatch sb)
-        {
-            sb.Draw(image, new Rectangle(spriteX, spriteY, spriteWidth, spriteHeight), Color.White);
-        }
-
         // Abstract stuff
         public abstract bool Collide(GameObject input);
-        public abstract void LoadContent(ContentManager content);
         public abstract void Update(Controls controls, GameTime gameTime);
     }
 }

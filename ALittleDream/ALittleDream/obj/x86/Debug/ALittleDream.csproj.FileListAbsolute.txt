@@ -24,3 +24,5 @@ C:\Users\Nick\Documents\GitHub\ALittleDream\ALittleDream\ALittleDream\obj\x86\De
 C:\Users\Nick\Documents\GitHub\ALittleDream\ALittleDream\ALittleDream\obj\x86\Debug\ALittleDream.pdb
 C:\Users\Nick\Documents\GitHub\ALittleDream\ALittleDream\ALittleDream\bin\Windows\Debug\Content\beta_lantern.png
 C:\Users\Nick\Documents\GitHub\ALittleDream\ALittleDream\ALittleDream\bin\Windows\Debug\Content\beta_player.png
+C:\Users\Nick\Documents\GitHub\ALittleDream\ALittleDream\ALittleDream\obj\x86\Debug\ALittleDream.csprojResolveAssemblyReference.cache
+C:\Users\Nick\Documents\GitHub\ALittleDream\ALittleDream\ALittleDream\bin\Windows\Debug\Content\beta_crate.png

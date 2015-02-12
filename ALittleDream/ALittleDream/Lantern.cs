@@ -8,11 +8,10 @@ using Microsoft.Xna.Framework.Storage;
 
 namespace ALittleDream
 {
-    class Player : GameObject
+    class Lantern : GameObject
     {
 
-        // Constructor
-        public Player(int x, int y, int width, int height, string spriteName)
+        public Lantern(int x, int y, int width, int height, string spriteName)
         {
             this.spriteName = spriteName;
             this.spriteX = x;
@@ -26,33 +25,33 @@ namespace ALittleDream
         private void Move(Controls controls)
         {
             // WASD movement
-            if (controls.isHeld(Keys.D, Buttons.DPadRight))
+            if (controls.isHeld(Keys.Right, Buttons.DPadRight))
             {
                 spriteX++;
             }
-            else if (controls.isHeld(Keys.A, Buttons.DPadRight))
+            else if (controls.isHeld(Keys.Left, Buttons.DPadRight))
             {
                 spriteX--;
             }
-            if (controls.isHeld(Keys.W, Buttons.DPadRight))
+            if (controls.isHeld(Keys.Up, Buttons.DPadRight))
             {
                 spriteY--;
             }
-            else if (controls.isHeld(Keys.S, Buttons.DPadRight))
+            else if (controls.isHeld(Keys.Down, Buttons.DPadRight))
             {
                 spriteY++;
             }
         }
 
-        // Public abstract stuff
         public override bool Collide(GameObject input)
         {
-            return true;
+            return false;
         }
 
         public override void Update(Controls controls, GameTime gameTime)
         {
             this.Move(controls);
         }
+
     }
 }
