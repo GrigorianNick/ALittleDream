@@ -1,5 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
+using System.Collections;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
@@ -14,6 +14,12 @@ namespace ALittleDream
         // Mechanics stuff
         protected double luminosity;
         protected double gravity;
+        public static ArrayList objects = new ArrayList();
+
+        public static void AddGameObject(GameObject obj)
+        {
+            objects.Add(obj);
+        }
 
         // Getters and setters
         public double GetX()

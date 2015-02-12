@@ -18,7 +18,7 @@ namespace ALittleDream
         [STAThread]
         static void Main()
         {
-            using (var game = new ALittleDreamMain())
+            using (var game = new GameLoop())
                 game.Run();
         }
     }

@@ -36,7 +36,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="Controls.cs" />
-    <Compile Include="ALittleDreamMain.cs" />
+    <Compile Include="GameLoop.cs" />
     <Compile Include="Crate.cs" />
     <Compile Include="GameObject.cs" />
     <Compile Include="Lantern.cs" />

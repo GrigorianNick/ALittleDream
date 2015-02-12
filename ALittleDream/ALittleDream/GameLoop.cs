@@ -1,6 +1,6 @@
 ﻿#region Using Statements
 using System;
-using System.Collections.Generic;
+using System.Collections;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
@@ -14,16 +14,15 @@ namespace ALittleDream
     /// <summary>
     /// This is the main type for your game
     /// </summary>
-    public class ALittleDreamMain : Game
+    public class GameLoop : Game
     {
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
         Player player;
         Lantern lantern;
         Controls controls;
-        Crate crate;
 
-        public ALittleDreamMain()
+        public GameLoop()
             : base()
         {
             graphics = new GraphicsDeviceManager(this);
@@ -41,10 +40,13 @@ namespace ALittleDream
             // TODO: Add your initialization logic here
             player = new Player(50, 50, 50, 50, "beta_player.png");
             lantern = new Lantern(10, 10, 20, 20, "beta_lantern.png");
-            crate = new Crate(100, 10, 50, 50, "beta_crate.png");
+            GameObject.objects.Add(new Crate(100, 100, 50, 50, "beta_crate.png"));
             graphics.PreferredBackBufferWidth = 1024;
             graphics.PreferredBackBufferHeight = 576;
             graphics.ApplyChanges(); // Really important
+
+            //GameObject.objects = new ArrayList();
+
             base.Initialize();
 
             //Joystick.Init();
@@ -62,7 +64,11 @@ namespace ALittleDream
             spriteBatch = new SpriteBatch(GraphicsDevice);
             player.LoadContent(this.Content);
             lantern.LoadContent(this.Content);
-            crate.LoadContent(this.Content);
+            // Load all GameObject content
+            foreach (GameObject obj in GameObject.objects)
+            {
+                obj.LoadContent(this.Content);
+            }
 
             // TODO: use this.Content to load your game content here
         }
@@ -90,7 +96,10 @@ namespace ALittleDream
             controls.Update();
             player.Update(controls, gameTime);
             lantern.Update(controls, gameTime);
-            crate.Update(controls, gameTime);
+            foreach (GameObject obj in GameObject.objects)
+            {
+                obj.Update(controls, gameTime);
+            }
 
             base.Update(gameTime);
         }
@@ -106,7 +115,10 @@ namespace ALittleDream
             spriteBatch.Begin();
             lantern.Draw(spriteBatch);
             player.Draw(spriteBatch);
-            crate.Draw(spriteBatch);
+            foreach (GameObject obj in GameObject.objects)
+            {
+                obj.Draw(spriteBatch);
+            }
             spriteBatch.End();
             // TODO: Add your drawing code here
 
