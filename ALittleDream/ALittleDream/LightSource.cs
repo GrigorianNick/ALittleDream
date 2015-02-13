@@ -5,7 +5,7 @@ using System.Text;
 
 namespace ALittleDream
 {
-    class LightSource
+    class LightSource : Sprite
     {
         public static ArrayList lights = new ArrayList();
 

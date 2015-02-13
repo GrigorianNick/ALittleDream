@@ -38,15 +38,16 @@ namespace ALittleDream
         protected override void Initialize()
         {
             // TODO: Add your initialization logic here
-            player = new Player(50, 50, 50, 50, "beta_player.png");
+            player = new Player(50, 50, 40, 40, "beta_player.png");
             lantern = new Lantern(180, 50, 20, 20, "beta_lantern.png");
+            GameObject.AddGameObject(new Lightbulb(180, 320, 20, 20, "beta_lightbulb.png"));
+            GameObject.AddGameObject(new Lightbulb(50, 350, 20, 20, "beta_lightbulb.png"));
             GameObject.AddGameObject(new Crate(200, 0, 50, 50, "beta_crate.png"));
             //GameObject.AddGameObject(new Crate(0, 200, 1000, 10, "beta_crate.png"));
             Platform.AddPlatform(new brick(200, 50, 50, 50, "beta_brick.png"));
             Platform.AddPlatform(new brick(200, 100, 50, 50, "beta_brick.png"));
             Platform.AddPlatform(new brick(200, 150, 50, 50, "beta_brick.png"));
             Platform.AddPlatform(new brick(200, 200, 50, 50, "beta_brick.png"));
-            Platform.AddPlatform(new brick(200, 250, 50, 50, "beta_brick.png"));
             Platform.AddPlatform(new brick(200, 300, 50, 50, "beta_brick.png"));
             Platform.AddPlatform(new brick(0, 400, 50, 50, "beta_brick.png"));
             Platform.AddPlatform(new brick(50, 400, 50, 50, "beta_brick.png"));
@@ -136,7 +137,8 @@ namespace ALittleDream
             player.Draw(spriteBatch);
             foreach (GameObject obj in GameObject.objects)
             {
-                obj.Draw(spriteBatch);
+                //obj.Draw(spriteBatch);
+                obj.render(spriteBatch);
             }
             foreach (Platform plat in Platform.platforms)
             {

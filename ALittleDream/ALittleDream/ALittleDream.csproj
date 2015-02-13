@@ -41,6 +41,7 @@
     <Compile Include="Crate.cs" />
     <Compile Include="GameObject.cs" />
     <Compile Include="Lantern.cs" />
+    <Compile Include="Lightbulb.cs" />
     <Compile Include="LightSource.cs" />
     <Compile Include="Platform.cs" />
     <Compile Include="Player.cs" />
@@ -57,6 +58,9 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\beta_lantern.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\beta_lightbulb.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Content\beta_player.png">

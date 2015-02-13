@@ -8,31 +8,27 @@ namespace ALittleDream
     class Crate : GameObject
     {
         private void Move() {
-            //Console.WriteLine("CrateY: {0}", spriteY);
-            if (spriteY < 500)
+            bool rewind = false;
+            spriteY+=1;
+            foreach (GameObject obj in GameObject.objects)
             {
-                bool rewind = false;
-                spriteY+=1;
-                foreach (GameObject obj in GameObject.objects)
+                if (this.Collide(obj))
                 {
-                    if (this.Collide(obj))
-                    {
-                        rewind = true;
-                        break;
-                    }
+                    rewind = true;
+                    break;
                 }
-                foreach (Platform plat in Platform.platforms)
+            }
+            foreach (Platform plat in Platform.platforms)
+            {
+                if (plat.Collide(this))
                 {
-                    if (plat.Collide(this))
-                    {
-                        rewind = true;
-                        break;
-                    }
+                    rewind = true;
+                    break;
                 }
-                if (rewind)
-                {
-                    spriteY--;
-                }
+            }
+            if (rewind)
+            {
+                spriteY--;
             }
         }
         public Crate(int x, int y, int width, int height, string spriteName)
