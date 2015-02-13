@@ -9,6 +9,41 @@ using Microsoft.Xna.Framework.Storage;
 using Microsoft.Xna.Framework.GamerServices;
 #endregion
 
+/* 
+ * What this prototype does:
+ *      Sets up user and lantern control
+ *      Object collision
+ *      Illumination-controlled collision
+ * What this prototype does not do:
+ *      Physics
+ *      Good object collision (it doesn't do not-squares)
+ *      Variable illumination
+ * 
+ * Controls:
+ *      Arrow keys for lantern
+ *      WASD for player
+ *      Numpad4 = reduce window width
+ *      Numpad6 = increase window width
+ *      Numpad8 = reduce window height
+ *      Numpad2 = incrase window height
+ *      ESC = Exit game
+ * 
+ * Code layout:
+ * 
+ *      Base classes: GameObject and Platform.
+ *          GameObject is meant for things that move around and collide, like crates or players.
+ *          Platforms are meant for things that collide but don't budge.
+ *      
+ *      Derived classes: brick, crate, lightbulb
+ *          Bricks are placeholder platforms.
+ *          Crates are crates, and will probably make it into the final game.
+ *              You can push these around.
+ *              They fall at a constant rate.
+ *          Lightbulbs are intangable objects that provide light.
+ *              There's a bug where you can push them to the right.
+ * 
+ */
+
 namespace ALittleDream
 {
     /// <summary>
@@ -21,6 +56,8 @@ namespace ALittleDream
         Player player;
         Lantern lantern;
         Controls controls;
+        int windowWidth = 500;
+        int windowHeight = 500;
 
         public GameLoop()
             : base()
@@ -59,9 +96,6 @@ namespace ALittleDream
             Platform.AddPlatform(new brick(350, 400, 50, 50, "beta_brick.png"));
             Platform.AddPlatform(new brick(400, 400, 50, 50, "beta_brick.png"));
             Platform.AddPlatform(new brick(450, 400, 50, 50, "beta_brick.png"));
-            graphics.PreferredBackBufferWidth = 1024;
-            graphics.PreferredBackBufferHeight = 576;
-            graphics.ApplyChanges(); // Really important
 
             //GameObject.objects = new ArrayList();
 
@@ -115,6 +149,31 @@ namespace ALittleDream
 
             // TODO: Add your update logic here
             controls.Update();
+            // Window sizing with numpad
+            if (controls.isPressed(Keys.NumPad6, Buttons.A))
+            {
+                windowWidth += 10;
+                graphics.PreferredBackBufferWidth = windowWidth;
+                graphics.ApplyChanges();
+            }
+            else if (controls.isPressed(Keys.NumPad4, Buttons.A))
+            {
+                windowWidth = Math.Max(0, windowWidth - 10);
+                graphics.PreferredBackBufferWidth = windowWidth;
+                graphics.ApplyChanges();
+            }
+            if (controls.isPressed(Keys.NumPad2, Buttons.A))
+            {
+                windowHeight += 10;
+                graphics.PreferredBackBufferHeight = windowHeight;
+                graphics.ApplyChanges();
+            }
+            else if (controls.isPressed(Keys.NumPad8, Buttons.A))
+            {
+                windowHeight = Math.Max(0,windowHeight - 10);
+                graphics.PreferredBackBufferHeight = windowHeight;
+                graphics.ApplyChanges();
+            }
             player.Update(controls, gameTime);
             lantern.Update(controls, gameTime);
             foreach (GameObject obj in GameObject.objects)

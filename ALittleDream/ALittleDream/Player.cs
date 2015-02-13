@@ -30,7 +30,7 @@ namespace ALittleDream
             {
                 spriteX++;
                 foreach (GameObject obj in GameObject.objects) {
-                    if (this.Collide(obj))
+                    if (obj.Collide(this))
                     {
                         obj.SetX((int)obj.GetX() + 1);
                         break;
