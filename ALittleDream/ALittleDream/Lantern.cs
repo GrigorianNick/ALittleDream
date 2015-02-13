@@ -13,12 +13,12 @@ namespace ALittleDream
 
         public Lantern(int x, int y, int width, int height, string spriteName)
         {
+            LightSource.AddLightSource(this);
             this.spriteName = spriteName;
             this.spriteX = x;
             this.spriteY = y;
             this.spriteWidth = width;
             this.spriteHeight = height;
-            this.gravity = 1;
         }
 
         // Private stuff

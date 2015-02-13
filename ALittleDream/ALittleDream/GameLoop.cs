@@ -40,7 +40,9 @@ namespace ALittleDream
             // TODO: Add your initialization logic here
             player = new Player(50, 50, 50, 50, "beta_player.png");
             lantern = new Lantern(10, 10, 20, 20, "beta_lantern.png");
-            GameObject.objects.Add(new Crate(100, 100, 50, 50, "beta_crate.png"));
+            GameObject.AddGameObject(new Crate(200, 10, 50, 50, "beta_crate.png"));
+            GameObject.AddGameObject(new Crate(0, 200, 1000, 10, "beta_crate.png"));
+            Platform.AddPlatform(new brick(10, 400, 50, 50, "beta_brick.png"));
             graphics.PreferredBackBufferWidth = 1024;
             graphics.PreferredBackBufferHeight = 576;
             graphics.ApplyChanges(); // Really important
@@ -51,7 +53,6 @@ namespace ALittleDream
 
             //Joystick.Init();
             controls = new Controls();
-            Console.WriteLine("Done with init");
         }
 
         /// <summary>
@@ -68,6 +69,10 @@ namespace ALittleDream
             foreach (GameObject obj in GameObject.objects)
             {
                 obj.LoadContent(this.Content);
+            }
+            foreach (Platform plat in Platform.platforms)
+            {
+                plat.LoadContent(this.Content);
             }
 
             // TODO: use this.Content to load your game content here
@@ -118,6 +123,11 @@ namespace ALittleDream
             foreach (GameObject obj in GameObject.objects)
             {
                 obj.Draw(spriteBatch);
+            }
+            foreach (Platform plat in Platform.platforms)
+            {
+                //plat.render(spriteBatch);
+                plat.Draw(spriteBatch);
             }
             spriteBatch.End();
             // TODO: Add your drawing code here
