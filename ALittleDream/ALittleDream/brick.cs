@@ -26,11 +26,13 @@ namespace ALittleDream
             {
                 foreach (GameObject light in LightSource.lights)
                 {
+                    //Console.WriteLine("Distance: {0}", Math.Pow(this.GetX() - light.GetX(), 2) + Math.Pow(this.GetY() - light.GetY(), 2));
                     // Hardcoding light distance because simple prototype
-                    /*if (Math.Pow(this.GetX() - light.GetX(), 2) + Math.Pow(this.GetY() - light.GetY(), 2) < 200)                    {
+                    if (Math.Pow(Math.Pow(this.GetX() - light.GetX(), 2) + Math.Pow(this.GetY() - light.GetY(), 2), 0.5) < 100)
+                    {
                         return true;
-                    }*/
-                    return true;
+                    }
+                    //return true;
                 }
             }
             return false;

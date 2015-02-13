@@ -44,7 +44,7 @@ namespace ALittleDream
             foreach (GameObject light in LightSource.lights)
             {
                 // Hardcoding light distance because simple prototype
-                if (Math.Pow(this.GetX() - light.GetX(), 2) + Math.Pow(this.GetY() - light.GetY(), 2) < 10000) {
+                if (Math.Pow(Math.Pow(this.GetX() - light.GetX(), 2) + Math.Pow(this.GetY() - light.GetY(), 2),0.5) < 100) {
                     Draw(sb);
                 }
             }

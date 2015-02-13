@@ -39,10 +39,25 @@ namespace ALittleDream
         {
             // TODO: Add your initialization logic here
             player = new Player(50, 50, 50, 50, "beta_player.png");
-            lantern = new Lantern(10, 10, 20, 20, "beta_lantern.png");
-            GameObject.AddGameObject(new Crate(200, 10, 50, 50, "beta_crate.png"));
-            GameObject.AddGameObject(new Crate(0, 200, 1000, 10, "beta_crate.png"));
-            Platform.AddPlatform(new brick(10, 400, 50, 50, "beta_brick.png"));
+            lantern = new Lantern(180, 50, 20, 20, "beta_lantern.png");
+            GameObject.AddGameObject(new Crate(200, 0, 50, 50, "beta_crate.png"));
+            //GameObject.AddGameObject(new Crate(0, 200, 1000, 10, "beta_crate.png"));
+            Platform.AddPlatform(new brick(200, 50, 50, 50, "beta_brick.png"));
+            Platform.AddPlatform(new brick(200, 100, 50, 50, "beta_brick.png"));
+            Platform.AddPlatform(new brick(200, 150, 50, 50, "beta_brick.png"));
+            Platform.AddPlatform(new brick(200, 200, 50, 50, "beta_brick.png"));
+            Platform.AddPlatform(new brick(200, 250, 50, 50, "beta_brick.png"));
+            Platform.AddPlatform(new brick(200, 300, 50, 50, "beta_brick.png"));
+            Platform.AddPlatform(new brick(0, 400, 50, 50, "beta_brick.png"));
+            Platform.AddPlatform(new brick(50, 400, 50, 50, "beta_brick.png"));
+            Platform.AddPlatform(new brick(100, 400, 50, 50, "beta_brick.png"));
+            Platform.AddPlatform(new brick(150, 400, 50, 50, "beta_brick.png"));
+            Platform.AddPlatform(new brick(200, 400, 50, 50, "beta_brick.png"));
+            Platform.AddPlatform(new brick(250, 400, 50, 50, "beta_brick.png"));
+            Platform.AddPlatform(new brick(300, 400, 50, 50, "beta_brick.png"));
+            Platform.AddPlatform(new brick(350, 400, 50, 50, "beta_brick.png"));
+            Platform.AddPlatform(new brick(400, 400, 50, 50, "beta_brick.png"));
+            Platform.AddPlatform(new brick(450, 400, 50, 50, "beta_brick.png"));
             graphics.PreferredBackBufferWidth = 1024;
             graphics.PreferredBackBufferHeight = 576;
             graphics.ApplyChanges(); // Really important
@@ -118,7 +133,6 @@ namespace ALittleDream
             GraphicsDevice.Clear(Color.CornflowerBlue);
 
             spriteBatch.Begin();
-            lantern.Draw(spriteBatch);
             player.Draw(spriteBatch);
             foreach (GameObject obj in GameObject.objects)
             {
@@ -126,9 +140,9 @@ namespace ALittleDream
             }
             foreach (Platform plat in Platform.platforms)
             {
-                //plat.render(spriteBatch);
-                plat.Draw(spriteBatch);
+                plat.render(spriteBatch);
             }
+            lantern.Draw(spriteBatch);
             spriteBatch.End();
             // TODO: Add your drawing code here
 

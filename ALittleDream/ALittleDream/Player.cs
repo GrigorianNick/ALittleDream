@@ -36,6 +36,14 @@ namespace ALittleDream
                         break;
                     }
                 }
+                foreach (Platform plat in Platform.platforms)
+                {
+                    if (plat.Collide(this))
+                    {
+                        spriteX--;
+                        break;
+                    }
+                }
             }
             else if (controls.isHeld(Keys.A, Buttons.DPadRight))
             {
@@ -45,6 +53,14 @@ namespace ALittleDream
                     if (this.Collide(obj))
                     {
                         obj.SetX((int)obj.GetX() - 1);
+                        break;
+                    }
+                }
+                foreach (Platform plat in Platform.platforms)
+                {
+                    if (plat.Collide(this))
+                    {
+                        spriteX++;
                         break;
                     }
                 }
@@ -60,6 +76,14 @@ namespace ALittleDream
                         break;
                     }
                 }
+                foreach (Platform plat in Platform.platforms)
+                {
+                    if (plat.Collide(this))
+                    {
+                        spriteY++;
+                        break;
+                    }
+                }
             }
             else if (controls.isHeld(Keys.S, Buttons.DPadRight))
             {
@@ -67,6 +91,14 @@ namespace ALittleDream
                 foreach (GameObject obj in GameObject.objects)
                 {
                     if (obj.Collide(this))
+                    {
+                        spriteY--;
+                        break;
+                    }
+                }
+                foreach (Platform plat in Platform.platforms)
+                {
+                    if (plat.Collide(this))
                     {
                         spriteY--;
                         break;
