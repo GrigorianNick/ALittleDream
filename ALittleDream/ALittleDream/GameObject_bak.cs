@@ -9,22 +9,37 @@ using Microsoft.Xna.Framework.Audio;
 
 namespace ALittleDream
 {
-    abstract class Platform : Sprite
+    abstract class GameObject_bak : Sprite
     {
-        public static ArrayList platforms = new ArrayList();
+        // Mechanics stuff
+        protected double luminosity;
+        protected double gravity;
+        public static ArrayList objects = new ArrayList();
 
-        public static void AddPlatform(Platform plat)
+        public static void AddGameObject(GameObject_bak obj)
         {
-            platforms.Add(plat);
+            objects.Add(obj);
         }
+
+        // Getters and setters
         public double GetX()
         {
             return spriteX;
         }
 
+        public void SetX(int x)
+        {
+            spriteX = x;
+        }
+
         public double GetY()
         {
             return spriteY;
+        }
+
+        public void SetY(int y)
+        {
+            spriteY = y;
         }
 
         public int GetHeight()
@@ -36,18 +51,21 @@ namespace ALittleDream
         {
             return spriteWidth;
         }
+        public void render(SpriteBatch sb)
+        {
 
-        public abstract bool Collide(GameObject_bak input);
-
-        public void render(SpriteBatch sb){
-        
             foreach (GameObject_bak light in LightSource.lights)
             {
                 // Hardcoding light distance because simple prototype
-                if (Math.Pow(Math.Pow(this.GetX() - light.GetX(), 2) + Math.Pow(this.GetY() - light.GetY(), 2),0.5) < 100) {
+                if (Math.Pow(Math.Pow(this.GetX() - light.GetX(), 2) + Math.Pow(this.GetY() - light.GetY(), 2), 0.5) < 100)
+                {
                     Draw(sb);
                 }
             }
         }
+
+        // Abstract stuff
+        public abstract bool Collide(GameObject_bak input);
+        public abstract void Update(Controls controls, GameTime gameTime);
     }
 }

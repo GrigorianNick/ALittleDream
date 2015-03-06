@@ -5,12 +5,12 @@ using System.Text;
 
 namespace ALittleDream
 {
-    class Crate : GameObject
+    class Crate : GameObject_bak
     {
         private void Move() {
             bool rewind = false;
             spriteY+=1;
-            foreach (GameObject obj in GameObject.objects)
+            foreach (GameObject_bak obj in GameObject_bak.objects)
             {
                 if (this.Collide(obj))
                 {
@@ -40,7 +40,7 @@ namespace ALittleDream
             this.spriteHeight = height;
         }
 
-        public override bool Collide(GameObject input)
+        public override bool Collide(GameObject_bak input)
         {
             if (input == this)
             {

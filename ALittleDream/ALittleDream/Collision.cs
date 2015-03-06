@@ -5,9 +5,8 @@ using System.Text;
 
 namespace ALittleDream
 {
-    abstract class GameObject
+    abstract class Collision : GameObject
     {
-        public abstract void Update();
-        public abstract GameObject getInstance();
+
     }
 }

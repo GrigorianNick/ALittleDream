@@ -9,7 +9,7 @@ namespace ALittleDream
     {
         public static ArrayList lights = new ArrayList();
 
-        public static void AddLightSource(GameObject light)
+        public static void AddLightSource(GameObject_bak light)
         {
             lights.Add(light);
         }

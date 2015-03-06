@@ -17,14 +17,14 @@ namespace ALittleDream
             this.spriteWidth = width;
             this.spriteHeight = height;
         }
-        public override bool Collide(GameObject input)
+        public override bool Collide(GameObject_bak input)
         {
             if ((this.GetX() + this.GetWidth()) >= input.GetX() &&
                 this.GetX() <= (input.GetX() + input.GetWidth()) &&
                 (this.GetY() + this.GetHeight()) >= input.GetY() &&
                 this.GetY() <= (input.GetY() + input.GetHeight()))
             {
-                foreach (GameObject light in LightSource.lights)
+                foreach (GameObject_bak light in LightSource.lights)
                 {
                     // Hardcoding light distance because simple prototype
                     if (Math.Pow(Math.Pow(this.GetX() - light.GetX(), 2) + Math.Pow(this.GetY() - light.GetY(), 2), 0.5) < 100)

@@ -8,7 +8,7 @@ using Microsoft.Xna.Framework.Storage;
 
 namespace ALittleDream
 {
-    class Player : GameObject
+    class Player : GameObject_bak
     {
 
         // Constructor
@@ -29,7 +29,7 @@ namespace ALittleDream
             if (controls.isHeld(Keys.D, Buttons.DPadRight))
             {
                 spriteX++;
-                foreach (GameObject obj in GameObject.objects) {
+                foreach (GameObject_bak obj in GameObject_bak.objects) {
                     if (obj.Collide(this))
                     {
                         obj.SetX((int)obj.GetX() + 1);
@@ -48,7 +48,7 @@ namespace ALittleDream
             else if (controls.isHeld(Keys.A, Buttons.DPadRight))
             {
                 spriteX--;
-                foreach (GameObject obj in GameObject.objects)
+                foreach (GameObject_bak obj in GameObject_bak.objects)
                 {
                     if (this.Collide(obj))
                     {
@@ -68,7 +68,7 @@ namespace ALittleDream
             if (controls.isHeld(Keys.W, Buttons.DPadRight))
             {
                 spriteY--;
-                foreach (GameObject obj in GameObject.objects)
+                foreach (GameObject_bak obj in GameObject_bak.objects)
                 {
                     if (this.Collide(obj))
                     {
@@ -88,7 +88,7 @@ namespace ALittleDream
             else if (controls.isHeld(Keys.S, Buttons.DPadRight))
             {
                 spriteY++;
-                foreach (GameObject obj in GameObject.objects)
+                foreach (GameObject_bak obj in GameObject_bak.objects)
                 {
                     if (obj.Collide(this))
                     {
@@ -109,7 +109,7 @@ namespace ALittleDream
 
         // Public abstract stuff
         // We're just gonna pretend everything's a square.
-        public override bool Collide(GameObject input)
+        public override bool Collide(GameObject_bak input)
         {
             if ((this.GetX() + this.GetWidth()) >= input.GetX() &&
                 this.GetX() <= (input.GetX() + input.GetWidth()) &&

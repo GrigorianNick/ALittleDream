@@ -74,12 +74,22 @@ namespace ALittleDream
         /// </summary>
         protected override void Initialize()
         {
+            System.IO.StreamReader file = new System.IO.StreamReader("Content/levels/test.txt");
+            string line;
+            int counter = 0;
+            while ((line = file.ReadLine()) != null)
+            {
+                Console.WriteLine(line);
+                counter++;
+            }
+            Console.WriteLine(counter);
+            file.Close();
             // TODO: Add your initialization logic here
             player = new Player(50, 50, 40, 40, "beta_player.png");
             lantern = new Lantern(180, 50, 20, 20, "beta_lantern.png");
-            GameObject.AddGameObject(new Lightbulb(180, 320, 20, 20, "beta_lightbulb.png"));
-            GameObject.AddGameObject(new Lightbulb(50, 350, 20, 20, "beta_lightbulb.png"));
-            GameObject.AddGameObject(new Crate(200, 0, 50, 50, "beta_crate.png"));
+            GameObject_bak.AddGameObject(new Lightbulb(180, 320, 20, 20, "beta_lightbulb.png"));
+            GameObject_bak.AddGameObject(new Lightbulb(50, 350, 20, 20, "beta_lightbulb.png"));
+            GameObject_bak.AddGameObject(new Crate(200, 0, 50, 50, "beta_crate.png"));
             //GameObject.AddGameObject(new Crate(0, 200, 1000, 10, "beta_crate.png"));
             Platform.AddPlatform(new brick(200, 50, 50, 50, "beta_brick.png"));
             Platform.AddPlatform(new brick(200, 100, 50, 50, "beta_brick.png"));
@@ -116,7 +126,7 @@ namespace ALittleDream
             player.LoadContent(this.Content);
             lantern.LoadContent(this.Content);
             // Load all GameObject content
-            foreach (GameObject obj in GameObject.objects)
+            foreach (GameObject_bak obj in GameObject_bak.objects)
             {
                 obj.LoadContent(this.Content);
             }
@@ -176,7 +186,7 @@ namespace ALittleDream
             }
             player.Update(controls, gameTime);
             lantern.Update(controls, gameTime);
-            foreach (GameObject obj in GameObject.objects)
+            foreach (GameObject_bak obj in GameObject_bak.objects)
             {
                 obj.Update(controls, gameTime);
             }
@@ -194,7 +204,7 @@ namespace ALittleDream
 
             spriteBatch.Begin();
             player.Draw(spriteBatch);
-            foreach (GameObject obj in GameObject.objects)
+            foreach (GameObject_bak obj in GameObject_bak.objects)
             {
                 //obj.Draw(spriteBatch);
                 obj.render(spriteBatch);

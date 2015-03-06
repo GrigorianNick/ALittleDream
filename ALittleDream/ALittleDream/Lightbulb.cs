@@ -9,7 +9,7 @@ using Microsoft.Xna.Framework.Audio;
 
 namespace ALittleDream
 {
-    class Lightbulb : GameObject
+    class Lightbulb : GameObject_bak
     {
         public Lightbulb(int x, int y, int width, int height, string spriteName)
         {
@@ -26,7 +26,7 @@ namespace ALittleDream
             Draw(sb);
         }
 
-        public override bool Collide(GameObject input)
+        public override bool Collide(GameObject_bak input)
         {
             return false;
         }

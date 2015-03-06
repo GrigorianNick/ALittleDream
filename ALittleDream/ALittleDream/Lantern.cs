@@ -8,7 +8,7 @@ using Microsoft.Xna.Framework.Storage;
 
 namespace ALittleDream
 {
-    class Lantern : GameObject
+    class Lantern : GameObject_bak
     {
 
         public Lantern(int x, int y, int width, int height, string spriteName)
@@ -43,7 +43,7 @@ namespace ALittleDream
             }
         }
 
-        public override bool Collide(GameObject input)
+        public override bool Collide(GameObject_bak input)
         {
             return false;
         }

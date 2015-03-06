@@ -28,3 +28,4 @@ C:\Users\Nick\Documents\GitHub\ALittleDream\ALittleDream\ALittleDream\obj\x86\De
 C:\Users\Nick\Documents\GitHub\ALittleDream\ALittleDream\ALittleDream\bin\Windows\Debug\Content\beta_crate.png
 C:\Users\Nick\Documents\GitHub\ALittleDream\ALittleDream\ALittleDream\bin\Windows\Debug\Content\beta_brick.png
 C:\Users\Nick\Documents\GitHub\ALittleDream\ALittleDream\ALittleDream\bin\Windows\Debug\Content\beta_lightbulb.png
+C:\Users\Nick\Documents\GitHub\ALittleDream\ALittleDream\ALittleDream\bin\Windows\Debug\Content\levels\test.txt

@@ -36,13 +36,20 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="brick.cs" />
+    <Compile Include="Collision.cs" />
     <Compile Include="Controls.cs" />
+    <Compile Include="Draw.cs" />
+    <Compile Include="Entity.cs" />
     <Compile Include="GameLoop.cs" />
     <Compile Include="Crate.cs" />
     <Compile Include="GameObject.cs" />
+    <Compile Include="GameObject_bak.cs" />
+    <Compile Include="Interaction.cs" />
     <Compile Include="Lantern.cs" />
     <Compile Include="Lightbulb.cs" />
+    <Compile Include="Lighting.cs" />
     <Compile Include="LightSource.cs" />
+    <Compile Include="Movement.cs" />
     <Compile Include="Platform.cs" />
     <Compile Include="Player.cs" />
     <Compile Include="Program.cs" />
@@ -58,19 +65,22 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\beta_lantern.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Content\beta_lightbulb.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Content\beta_player.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Content\beta_crate.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Content\beta_brick.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\levels\test.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Icon.ico" />
   </ItemGroup>
