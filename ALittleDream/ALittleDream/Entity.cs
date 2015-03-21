@@ -16,6 +16,7 @@ namespace ALittleDream
         public Movement movement;
         public Draw draw;
         public Interaction interaction;
+        int x, y;
 
         public Entity(Collision col, Lighting lit, Movement mov, Draw drw, Interaction inter)
         {
