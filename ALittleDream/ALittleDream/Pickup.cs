@@ -7,5 +7,9 @@ namespace ALittleDream
 {
     class Pickup : Interaction
     {
+        public override void interact(Entity ent)
+        {
+            //todo
+        }
     }
 }

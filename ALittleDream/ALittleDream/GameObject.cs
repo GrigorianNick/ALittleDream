@@ -6,10 +6,10 @@ using System.Text;
 
 namespace ALittleDream
 {
-    abstract class GameObject
+    public abstract class GameObject : Sprite
     {
         public static GameTime gameTime;
-        public abstract void Update();
+        public abstract void Update(Controls controls, GameTime gameTime);
         /*public abstract GameObject getInstance();*/
     }
 }

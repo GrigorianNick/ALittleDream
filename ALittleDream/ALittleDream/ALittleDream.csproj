@@ -21,6 +21,7 @@
     <DefineConstants>DEBUG;TRACE;WINDOWS</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x86' ">
     <PlatformTarget>x86</PlatformTarget>
@@ -35,14 +36,13 @@
     <ApplicationIcon>Icon.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="AlwaysDraw.cs" />
     <Compile Include="CircleCollision.cs" />
     <Compile Include="CircleLighting.cs" />
     <Compile Include="Collision.cs" />
     <Compile Include="Component.cs" />
     <Compile Include="ConeLighting.cs" />
     <Compile Include="Controls.cs" />
-    <Compile Include="Draw.cs" />
+    <Compile Include="MyDraw.cs" />
     <Compile Include="Entity.cs" />
     <Compile Include="Flying.cs" />
     <Compile Include="GameLoop.cs" />
@@ -50,7 +50,6 @@
     <Compile Include="Grab.cs" />
     <Compile Include="Interaction.cs" />
     <Compile Include="Lighting.cs" />
-    <Compile Include="DrawIfLit.cs" />
     <Compile Include="Movement.cs" />
     <Compile Include="NoCollision.cs" />
     <Compile Include="NoInteraction.cs" />
@@ -62,7 +61,6 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Sprite.cs" />
     <Compile Include="SquareCollision.cs" />
-    <Compile Include="DrawIfUnlit.cs" />
     <Compile Include="Walking.cs" />
   </ItemGroup>
   <ItemGroup>

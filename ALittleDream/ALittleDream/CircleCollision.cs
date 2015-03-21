@@ -7,5 +7,9 @@ namespace ALittleDream
 {
     class CircleCollision : Collision
     {
+        public override bool collide(Entity ent)
+        {
+            return false;
+        }
     }
 }

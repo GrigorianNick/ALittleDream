@@ -9,33 +9,60 @@ using Microsoft.Xna.Framework.Audio;
 
 namespace ALittleDream
 {
-    class Entity : GameObject
+    public unsafe class Entity : GameObject
     {
         public static ArrayList entityList = new ArrayList();
         public Collision collision;
         public Lighting lighting;
         public Movement movement;
-        public Draw draw;
+        public MyDraw draw;
         public Interaction interaction;
-        int x, y;
 
-        public Entity(int x_in, int y_in, Collision col, Lighting lit, Movement mov, Draw drw, Interaction inter)
+        public Entity(ref int x_in, ref int y_in, ref int height, ref int width, string spriteFile, Collision col, Lighting lit, Movement mov, MyDraw drw, Interaction inter)
         {
-            Lighting.AddLightingObject(this);
-            Collision.AddCollisionObject(this);
-            Draw.AddDrawObject(this);
+            //assign inherited sprite values
+            spriteX = x_in;
+            spriteY = y_in;
+            spriteHeight = height;
+            spriteWidth = width;
+            spriteName = spriteFile;
+
+            //assign entity components
+            if (!(col is NoCollision))
+            {
+                Collision.AddCollisionObject(this);
+            }
+            if (!(lit is NoLighting))
+            {
+                Lighting.AddLightingObject(this);
+            }            
             collision = col;
             lighting = lit;
             movement = mov;
             draw = drw;
             interaction = inter;
-            x = x_in;
-            y = y_in;
+            collision.x = spriteX;
+            collision.y = spriteY;
+            collision.height = height;
+            collision.width = width;
+
+            movement.x = spriteX;
+            movement.y = spriteY;
+            movement.height = height;
+            movement.width = width;
+
+            lighting.x = spriteX;
+            lighting.y = spriteY;
         }
 
         public static void AddEntityObject(Entity ent)
         {
             entityList.Add(ent);
+        }
+
+        public override void Update(Controls controls, GameTime gameTime)
+        {
+            movement.move(controls, gameTime);
         }
     }
 }

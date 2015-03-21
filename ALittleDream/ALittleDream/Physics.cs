@@ -7,5 +7,9 @@ namespace ALittleDream
 {
     public class Physics : Movement
     {
+        public override void move(Controls controls, Microsoft.Xna.Framework.GameTime gameTime)
+        {
+            //todo
+        }
     }
 }

@@ -5,7 +5,7 @@ using System.Text;
 
 namespace ALittleDream
 {
-    abstract class Lighting : Component
+    public abstract class Lighting : Component
     {
         public static ArrayList lightingList = new ArrayList();
         public static void AddLightingObject(Entity ent)

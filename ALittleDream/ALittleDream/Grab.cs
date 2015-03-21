@@ -7,5 +7,9 @@ namespace ALittleDream
 {
     class Grab : Interaction
     {
+        public override void interact(Entity ent)
+        {
+            //todo
+        }
     }
 }

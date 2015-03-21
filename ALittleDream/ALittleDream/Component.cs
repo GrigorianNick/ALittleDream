@@ -5,9 +5,12 @@ using System.Text;
 
 namespace ALittleDream
 {
-    abstract unsafe class Component : GameObject
+    public abstract unsafe class Component
     {
-        public int* x;
-        public int* y;
+        public int x;
+        public int y;
+        public int width;
+        public int height;
+        
     }
 }

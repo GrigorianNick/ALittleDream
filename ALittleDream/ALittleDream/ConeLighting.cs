@@ -7,5 +7,9 @@ namespace ALittleDream
 {
     public class ConeLighting : Lighting
     {
+        public override bool light(Entity ent)
+        {
+            return false;
+        }
     }
 }

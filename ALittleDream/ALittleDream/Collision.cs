@@ -5,7 +5,7 @@ using System.Text;
 
 namespace ALittleDream
 {
-    abstract class Collision : Component
+    public abstract class Collision : Component
     {
         public static ArrayList collisionList = new ArrayList();
         public static void AddCollisionObject(Entity ent)

@@ -9,24 +9,15 @@ using Microsoft.Xna.Framework.Audio;
 
 namespace ALittleDream
 {
-    unsafe class Sprite
+    public unsafe class Sprite
     {
         public string spriteName;
-        public int* spriteX = null;
-        public int* spriteY = null;
-        public int spriteWidth, spriteHeight;
+        public int spriteX, spriteY, spriteHeight, spriteWidth;
         public Texture2D image;
 
         public void Draw(SpriteBatch sb)
         {
-            if (spriteX == null || spriteY == null)
-            {
-                throw new NullReferenceException("spriteX/Y is null!");
-            }
-            else
-            {
-                sb.Draw(image, new Rectangle((int)spriteX, (int)spriteY, spriteWidth, spriteHeight), Color.White);
-            }
+            sb.Draw(image, new Rectangle(spriteX, spriteY, spriteWidth, spriteHeight), Color.White);            
         }
         public void LoadContent(ContentManager content)
         {

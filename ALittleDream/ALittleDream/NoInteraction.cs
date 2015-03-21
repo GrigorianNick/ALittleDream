@@ -7,5 +7,9 @@ namespace ALittleDream
 {
     class NoInteraction : Interaction
     {
+        public override void interact(Entity ent)
+        {
+            //take no action
+        }
     }
 }
