@@ -29,3 +29,5 @@ C:\Users\Nick\Documents\GitHub\ALittleDream\ALittleDream\ALittleDream\bin\Window
 C:\Users\Nick\Documents\GitHub\ALittleDream\ALittleDream\ALittleDream\bin\Windows\Debug\Content\beta_brick.png
 C:\Users\Nick\Documents\GitHub\ALittleDream\ALittleDream\ALittleDream\bin\Windows\Debug\Content\beta_lightbulb.png
 C:\Users\Nick\Documents\GitHub\ALittleDream\ALittleDream\ALittleDream\bin\Windows\Debug\Content\levels\test.txt
+C:\Users\student\Source\Repos\ALittleDream\ALittleDream\ALittleDream\obj\x86\Debug\ALittleDream.exe
+C:\Users\student\Source\Repos\ALittleDream\ALittleDream\ALittleDream\obj\x86\Debug\ALittleDream.pdb
