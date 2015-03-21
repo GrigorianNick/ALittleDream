@@ -9,7 +9,7 @@ namespace ALittleDream
     {
         public override void draw()
         {
-            sprite.
+            
         }
     }
 }

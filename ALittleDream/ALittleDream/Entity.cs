@@ -11,6 +11,7 @@ namespace ALittleDream
 {
     class Entity : GameObject
     {
+        public static ArrayList entityList = new ArrayList();
         public Collision collision;
         public Lighting lighting;
         public Movement movement;
@@ -27,6 +28,11 @@ namespace ALittleDream
             movement = mov;
             draw = drw;
             interaction = inter;
+        }
+
+        public static void AddEntityObject(Entity ent)
+        {
+            entityList.Add(ent);
         }
     }
 }
