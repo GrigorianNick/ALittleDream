@@ -5,7 +5,7 @@ using System.Text;
 
 namespace ALittleDream
 {
-    class Always : Draw
+    class AlwaysDraw : Draw
     {
         public override void draw()
         {

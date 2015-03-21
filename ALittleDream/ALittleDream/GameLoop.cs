@@ -7,6 +7,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Storage;
 using Microsoft.Xna.Framework.GamerServices;
+using System.Collections.Generic;
 #endregion
 
 /* 
@@ -57,6 +58,7 @@ namespace ALittleDream
         Controls controls;
         int windowWidth = 500;
         int windowHeight = 500;
+        Entity player, familiar;
 
         public GameLoop()
             : base()
@@ -84,12 +86,13 @@ namespace ALittleDream
             Console.WriteLine(counter);
             file.Close();
             // TODO: Add your initialization logic here
-            player = new Player(50, 50, 40, 40, "beta_player.png");
-            lantern = new Lantern(180, 50, 20, 20, "beta_lantern.png");
-            GameObject_bak.AddGameObject(new Lightbulb(180, 320, 20, 20, "beta_lightbulb.png"));
-            GameObject_bak.AddGameObject(new Lightbulb(50, 350, 20, 20, "beta_lightbulb.png"));
-            GameObject_bak.AddGameObject(new Crate(200, 0, 50, 50, "beta_crate.png"));
-            //GameObject.AddGameObject(new Crate(0, 200, 1000, 10, "beta_crate.png"));
+
+
+            player = new Entity(new SquareCollision(), new NoLighting(), new Walking(), new AlwaysDraw(), new NoInteraction());
+            familiar = new Entity(new SquareCollision(), new CircleLighting(), new Flying(), new AlwaysDraw(), new NoInteraction());
+            List<Entity> platforms = new List<Entity>();
+            platforms.Add(new Entity(new SquareCollision(), new NoLighting(), new NoMovement(), new DrawIfLit(), new NoInteraction()));
+
             Platform.AddPlatform(new brick(200, 50, 50, 50, "beta_brick.png"));
             Platform.AddPlatform(new brick(200, 100, 50, 50, "beta_brick.png"));
             Platform.AddPlatform(new brick(200, 150, 50, 50, "beta_brick.png"));

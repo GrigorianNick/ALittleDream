@@ -5,7 +5,7 @@ using System.Text;
 
 namespace ALittleDream
 {
-    class Lit : Draw
+    class DrawIfLit : Draw
     {
     }
 }
