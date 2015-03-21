@@ -7,6 +7,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Storage;
 using Microsoft.Xna.Framework.GamerServices;
+using System.Collections.Generic;
 #endregion
 
 /* 
@@ -44,20 +45,22 @@ using Microsoft.Xna.Framework.GamerServices;
  * 
  */
 
+using ALittleDream;
+
 namespace ALittleDream
 {
     /// <summary>
     /// This is the main type for your game
     /// </summary>
-    public class GameLoop : Game
+    public unsafe class GameLoop : Game
     {
+        public static GameTime gameTime;
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
-        Player player;
-        Lantern lantern;
         Controls controls;
         int windowWidth = 500;
         int windowHeight = 500;
+        Entity player, familiar;
 
         public GameLoop()
             : base()
@@ -85,27 +88,30 @@ namespace ALittleDream
             Console.WriteLine(counter);
             file.Close();
             // TODO: Add your initialization logic here
-            player = new Player(50, 50, 40, 40, "beta_player.png");
-            lantern = new Lantern(180, 50, 20, 20, "beta_lantern.png");
-            GameObject_bak.AddGameObject(new Lightbulb(180, 320, 20, 20, "beta_lightbulb.png"));
-            GameObject_bak.AddGameObject(new Lightbulb(50, 350, 20, 20, "beta_lightbulb.png"));
-            GameObject_bak.AddGameObject(new Crate(200, 0, 50, 50, "beta_crate.png"));
-            //GameObject.AddGameObject(new Crate(0, 200, 1000, 10, "beta_crate.png"));
-            Platform.AddPlatform(new brick(200, 50, 50, 50, "beta_brick.png"));
-            Platform.AddPlatform(new brick(200, 100, 50, 50, "beta_brick.png"));
-            Platform.AddPlatform(new brick(200, 150, 50, 50, "beta_brick.png"));
-            Platform.AddPlatform(new brick(200, 200, 50, 50, "beta_brick.png"));
-            Platform.AddPlatform(new brick(200, 300, 50, 50, "beta_brick.png"));
-            Platform.AddPlatform(new brick(0, 400, 50, 50, "beta_brick.png"));
-            Platform.AddPlatform(new brick(50, 400, 50, 50, "beta_brick.png"));
-            Platform.AddPlatform(new brick(100, 400, 50, 50, "beta_brick.png"));
-            Platform.AddPlatform(new brick(150, 400, 50, 50, "beta_brick.png"));
-            Platform.AddPlatform(new brick(200, 400, 50, 50, "beta_brick.png"));
-            Platform.AddPlatform(new brick(250, 400, 50, 50, "beta_brick.png"));
-            Platform.AddPlatform(new brick(300, 400, 50, 50, "beta_brick.png"));
-            Platform.AddPlatform(new brick(350, 400, 50, 50, "beta_brick.png"));
-            Platform.AddPlatform(new brick(400, 400, 50, 50, "beta_brick.png"));
-            Platform.AddPlatform(new brick(450, 400, 50, 50, "beta_brick.png"));
+
+            int playerX = 10, playerY = 10, playerHeight = 40, playerWidth = 40;
+            int familiarX = 20, familiarY = 20, familiarHeight = 10, familiarWidth = 10;
+            player = new Entity(ref playerX, ref playerY, ref playerHeight, ref playerWidth, "beta_player.png", new SquareCollision(), new NoLighting(), new Walking(), new MyDraw(MyDraw.DrawLighting.always), new NoInteraction());
+            familiar = new Entity(ref familiarX, ref familiarY, ref familiarHeight, ref familiarWidth, "beta_lantern.png", new SquareCollision(), new CircleLighting(), new Flying(), new MyDraw(MyDraw.DrawLighting.always), new NoInteraction());
+
+
+            int[] blockX = new int[]{
+                100, 200
+            };
+            int[] blockY = new int[]{
+                100, 200
+            };
+            int[] blockHeight = new int[]{
+                50, 50
+            };
+            int[] blockWidth = new int[]{
+                50, 50
+            };
+
+            for (int i = 0; i < 2; i++)
+            {
+                Entity.AddEntityObject(new Entity(ref blockX[i], ref blockY[i], ref blockHeight[i], ref blockWidth[i], "beta_brick.png", new SquareCollision(), new NoLighting(), new NoMovement(), new MyDraw(MyDraw.DrawLighting.ifLit), new NoInteraction()));
+            }
 
             //GameObject.objects = new ArrayList();
 
@@ -124,15 +130,14 @@ namespace ALittleDream
             // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
             player.LoadContent(this.Content);
-            lantern.LoadContent(this.Content);
+            familiar.LoadContent(this.Content);
+            Console.WriteLine((player.spriteX));
             // Load all GameObject content
-            foreach (GameObject_bak obj in GameObject_bak.objects)
-            {
-                obj.LoadContent(this.Content);
-            }
-            foreach (Platform plat in Platform.platforms)
-            {
-                plat.LoadContent(this.Content);
+            
+            foreach (Entity e in Entity.entityList) {
+            
+                Console.WriteLine((e.spriteX));
+                e.LoadContent(this.Content);
             }
 
             // TODO: use this.Content to load your game content here
@@ -185,12 +190,8 @@ namespace ALittleDream
                 graphics.ApplyChanges();
             }
             player.Update(controls, gameTime);
-            lantern.Update(controls, gameTime);
-            foreach (GameObject_bak obj in GameObject_bak.objects)
-            {
-                obj.Update(controls, gameTime);
-            }
-
+            familiar.Update(controls, gameTime);
+            
             base.Update(gameTime);
         }
 
@@ -204,16 +205,11 @@ namespace ALittleDream
 
             spriteBatch.Begin();
             player.Draw(spriteBatch);
-            foreach (GameObject_bak obj in GameObject_bak.objects)
-            {
-                //obj.Draw(spriteBatch);
-                obj.render(spriteBatch);
+            familiar.Draw(spriteBatch);
+            foreach (Entity e in Entity.entityList)
+            {                
+                e.Draw(spriteBatch);
             }
-            foreach (Platform plat in Platform.platforms)
-            {
-                plat.render(spriteBatch);
-            }
-            lantern.Draw(spriteBatch);
             spriteBatch.End();
             // TODO: Add your drawing code here
 

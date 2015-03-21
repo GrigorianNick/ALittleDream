@@ -6,8 +6,11 @@ using System.Text;
 
 namespace ALittleDream
 {
-    public abstract class Movement : Component
+    public class Flying : Movement
     {
-        public abstract void move(Controls controls, GameTime gameTime);
+        public override void move(Controls controls, GameTime gameTime)
+        {
+            //todo
+        }
     }
 }

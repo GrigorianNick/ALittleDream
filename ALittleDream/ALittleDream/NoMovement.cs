@@ -6,8 +6,10 @@ using System.Text;
 
 namespace ALittleDream
 {
-    public abstract class Movement : Component
+    public class NoMovement : Movement
     {
-        public abstract void move(Controls controls, GameTime gameTime);
+        public override void move(Controls controls, GameTime gameTime) {
+            //take no action
+        }
     }
 }

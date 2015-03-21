@@ -5,7 +5,11 @@ using System.Text;
 
 namespace ALittleDream
 {
-    abstract class Draw
+    class NoCollision : Collision
     {
+        public override bool collide(Entity ent)
+        {
+            return false;
+        }
     }
 }

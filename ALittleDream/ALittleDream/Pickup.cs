@@ -5,8 +5,11 @@ using System.Text;
 
 namespace ALittleDream
 {
-    public abstract class Interaction : Component
+    class Pickup : Interaction
     {
-        public abstract void interact(Entity ent);
+        public override void interact(Entity ent)
+        {
+            //todo
+        }
     }
 }
