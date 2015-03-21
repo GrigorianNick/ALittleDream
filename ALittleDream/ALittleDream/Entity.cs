@@ -11,6 +11,7 @@ namespace ALittleDream
 {
     class Entity : GameObject
     {
+        public static ArrayList entityList = new ArrayList();
         public Collision collision;
         public Lighting lighting;
         public Movement movement;
@@ -18,7 +19,7 @@ namespace ALittleDream
         public Interaction interaction;
         int x, y;
 
-        public Entity(Collision col, Lighting lit, Movement mov, Draw drw, Interaction inter)
+        public Entity(int x_in, int y_in, Collision col, Lighting lit, Movement mov, Draw drw, Interaction inter)
         {
             Lighting.AddLightingObject(this);
             Collision.AddCollisionObject(this);
@@ -28,6 +29,13 @@ namespace ALittleDream
             movement = mov;
             draw = drw;
             interaction = inter;
+            x = x_in;
+            y = y_in;
+        }
+
+        public static void AddEntityObject(Entity ent)
+        {
+            entityList.Add(ent);
         }
     }
 }

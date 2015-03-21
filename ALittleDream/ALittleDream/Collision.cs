@@ -8,7 +8,10 @@ namespace ALittleDream
     abstract class Collision : Component
     {
         public static ArrayList collisionList = new ArrayList();
-        public static void AddCollisionObject(Entity ent);
+        public static void AddCollisionObject(Entity ent)
+        {
+            collisionList.Add(ent);
+        }
         public abstract bool collide(Entity ent);
     }
 }

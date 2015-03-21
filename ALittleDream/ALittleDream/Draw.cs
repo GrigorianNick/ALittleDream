@@ -11,7 +11,10 @@ namespace ALittleDream
     {
         public static SpriteBatch sb;
         public static ArrayList drawList = new ArrayList();
-        public static void AddDrawObject(Entity ent);
+        public static void AddDrawObject(Entity ent)
+        {
+            drawList.Add(ent);
+        }
         public Sprite sprite;
         public override void Update()
         {
