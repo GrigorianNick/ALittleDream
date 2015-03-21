@@ -17,8 +17,9 @@ namespace ALittleDream
         public Movement movement;
         public Draw draw;
         public Interaction interaction;
+        int x, y;
 
-        public Entity(Collision col, Lighting lit, Movement mov, Draw drw, Interaction inter)
+        public Entity(int x_in, int y_in, Collision col, Lighting lit, Movement mov, Draw drw, Interaction inter)
         {
             Lighting.AddLightingObject(this);
             Collision.AddCollisionObject(this);
@@ -28,6 +29,8 @@ namespace ALittleDream
             movement = mov;
             draw = drw;
             interaction = inter;
+            x = x_in;
+            y = y_in;
         }
 
         public static void AddEntityObject(Entity ent)
