@@ -17,6 +17,16 @@ namespace ALittleDream
         public Draw draw;
         public Interaction interaction;
 
-        //public Entity();
+        public Entity(Collision col, Lighting lit, Movement mov, Draw drw, Interaction inter)
+        {
+            Lighting.AddLightingObject(this);
+            Collision.AddCollisionObject(this);
+            Draw.AddDrawObject(this);
+            collision = col;
+            lighting = lit;
+            movement = mov;
+            draw = drw;
+            interaction = inter;
+        }
     }
 }
