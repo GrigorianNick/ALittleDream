@@ -5,8 +5,7 @@ using System.Text;
 
 namespace ALittleDream
 {
-    abstract class Interaction : Component
+    public class Unlit : Draw
     {
-        public abstract void interact(Entity ent);
     }
 }

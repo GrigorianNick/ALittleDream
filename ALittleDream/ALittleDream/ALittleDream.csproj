@@ -35,26 +35,35 @@
     <ApplicationIcon>Icon.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="brick.cs" />
+    <Compile Include="Always.cs" />
+    <Compile Include="CircleCollision.cs" />
+    <Compile Include="CircleLighting.cs" />
     <Compile Include="Collision.cs" />
+    <Compile Include="Component.cs" />
+    <Compile Include="ConeLighting.cs" />
     <Compile Include="Controls.cs" />
     <Compile Include="Draw.cs" />
     <Compile Include="Entity.cs" />
+    <Compile Include="Flying.cs" />
     <Compile Include="GameLoop.cs" />
-    <Compile Include="Crate.cs" />
     <Compile Include="GameObject.cs" />
-    <Compile Include="GameObject_bak.cs" />
+    <Compile Include="Grab.cs" />
     <Compile Include="Interaction.cs" />
-    <Compile Include="Lantern.cs" />
-    <Compile Include="Lightbulb.cs" />
     <Compile Include="Lighting.cs" />
-    <Compile Include="LightSource.cs" />
+    <Compile Include="Lit.cs" />
     <Compile Include="Movement.cs" />
-    <Compile Include="Platform.cs" />
-    <Compile Include="Player.cs" />
+    <Compile Include="NoCollision.cs" />
+    <Compile Include="NoInteraction.cs" />
+    <Compile Include="NoLighting.cs" />
+    <Compile Include="NoMovement.cs" />
+    <Compile Include="Physics.cs" />
+    <Compile Include="Pickup.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Sprite.cs" />
+    <Compile Include="SquareCollision.cs" />
+    <Compile Include="Unlit.cs" />
+    <Compile Include="Walking.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="MonoGame.Framework">

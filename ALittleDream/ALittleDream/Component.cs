@@ -5,8 +5,9 @@ using System.Text;
 
 namespace ALittleDream
 {
-    abstract class Interaction : Component
+    abstract unsafe class Component : GameObject
     {
-        public abstract void interact(Entity ent);
+        public int* x;
+        public int* y;
     }
 }

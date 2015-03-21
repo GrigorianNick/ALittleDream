@@ -5,7 +5,7 @@ using System.Text;
 
 namespace ALittleDream
 {
-    abstract class Movement
+    abstract class Movement : Component
     {
     }
 }

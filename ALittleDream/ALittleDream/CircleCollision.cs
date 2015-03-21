@@ -5,8 +5,7 @@ using System.Text;
 
 namespace ALittleDream
 {
-    abstract class Interaction : Component
+    class CircleCollision : Collision
     {
-        public abstract void interact(Entity ent);
     }
 }

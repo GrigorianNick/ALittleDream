@@ -5,8 +5,11 @@ using System.Text;
 
 namespace ALittleDream
 {
-    abstract class Interaction : Component
+    class Always : Draw
     {
-        public abstract void interact(Entity ent);
+        public override void draw()
+        {
+            sprite.
+        }
     }
 }

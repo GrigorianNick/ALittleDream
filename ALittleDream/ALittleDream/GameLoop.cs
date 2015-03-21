@@ -51,10 +51,9 @@ namespace ALittleDream
     /// </summary>
     public class GameLoop : Game
     {
+        public static GameTime gameTime;
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
-        Player player;
-        Lantern lantern;
         Controls controls;
         int windowWidth = 500;
         int windowHeight = 500;

@@ -9,7 +9,7 @@ using Microsoft.Xna.Framework.Audio;
 
 namespace ALittleDream
 {
-    class Entity
+    class Entity : GameObject
     {
         public Collision collision;
         public Lighting lighting;
