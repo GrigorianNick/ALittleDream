@@ -90,27 +90,27 @@ namespace ALittleDream
             // TODO: Add your initialization logic here
 
             int playerX = 10, playerY = 10, playerHeight = 40, playerWidth = 40;
-            int familiarX = 20, familiarY = 20, familiarHeight = 10, familiarWidth = 10;
-            player = new Entity(ref playerX, ref playerY, ref playerHeight, ref playerWidth, "beta_player.png", new SquareCollision(), new NoLighting(), new Walking(), new MyDraw(MyDraw.DrawLighting.always), new NoInteraction());
-            familiar = new Entity(ref familiarX, ref familiarY, ref familiarHeight, ref familiarWidth, "beta_lantern.png", new SquareCollision(), new CircleLighting(), new Flying(), new MyDraw(MyDraw.DrawLighting.always), new NoInteraction());
+            int familiarX = 100, familiarY = 20, familiarHeight = 10, familiarWidth = 10;
+            player = new Entity(ref playerX, ref playerY, ref playerHeight, ref playerWidth, "beta_player.png", Entity.collision.square, Entity.lightShape.none, Entity.movement.walking, Entity.drawIf.always, Entity.interaction.none);
+            familiar = new Entity(ref familiarX, ref familiarY, ref familiarHeight, ref familiarWidth, "beta_lantern.png", Entity.collision.square, Entity.lightShape.circle, Entity.movement.flying, Entity.drawIf.always, Entity.interaction.none);
 
 
             int[] blockX = new int[]{
-                100, 200
+                10, 200, 250, 300
             };
             int[] blockY = new int[]{
-                100, 200
+                100, 200, 200, 200
             };
             int[] blockHeight = new int[]{
-                50, 50
+                50, 50, 50, 50
             };
             int[] blockWidth = new int[]{
-                50, 50
+                50, 50, 50, 50
             };
 
-            for (int i = 0; i < 2; i++)
+            for (int i = 0; i < 4; i++)
             {
-                Entity.AddEntityObject(new Entity(ref blockX[i], ref blockY[i], ref blockHeight[i], ref blockWidth[i], "beta_brick.png", new SquareCollision(), new NoLighting(), new NoMovement(), new MyDraw(MyDraw.DrawLighting.ifLit), new NoInteraction()));
+                Entity.AddEntityObject(new Entity(ref blockX[i], ref blockY[i], ref blockHeight[i], ref blockWidth[i], "beta_brick.png", Entity.collision.square, Entity.lightShape.none, Entity.movement.stationary, Entity.drawIf.lit, Entity.interaction.none));
             }
 
             //GameObject.objects = new ArrayList();
@@ -191,7 +191,7 @@ namespace ALittleDream
             }
             player.Update(controls, gameTime);
             familiar.Update(controls, gameTime);
-            
+                        
             base.Update(gameTime);
         }
 

@@ -46,7 +46,6 @@
     <Compile Include="Entity.cs" />
     <Compile Include="Flying.cs" />
     <Compile Include="GameLoop.cs" />
-    <Compile Include="GameObject.cs" />
     <Compile Include="Grab.cs" />
     <Compile Include="Interaction.cs" />
     <Compile Include="Lighting.cs" />
