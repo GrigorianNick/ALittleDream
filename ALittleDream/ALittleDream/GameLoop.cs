@@ -61,6 +61,11 @@ namespace ALittleDream
         int windowWidth = 500;
         int windowHeight = 500;
         Entity player, familiar;
+        RenderTarget2D entities;
+        RenderTarget2D lights;
+        Texture2D blackSquare;
+        Texture2D lightmask;
+        const int LIGHTOFFSET = 115;
 
         public GameLoop()
             : base()
@@ -94,23 +99,41 @@ namespace ALittleDream
             player = new Entity(ref playerX, ref playerY, ref playerHeight, ref playerWidth, "beta_player.png", Entity.collision.square, Entity.lightShape.none, Entity.movement.walking, Entity.drawIf.always, Entity.interaction.none);
             familiar = new Entity(ref familiarX, ref familiarY, ref familiarHeight, ref familiarWidth, "beta_lantern.png", Entity.collision.square, Entity.lightShape.circle, Entity.movement.flying, Entity.drawIf.always, Entity.interaction.none);
 
-
             int[] blockX = new int[]{
-                10, 200, 250, 300
+                10, 200, 250, 300, 350, 400
             };
             int[] blockY = new int[]{
-                100, 200, 200, 200
+                100, 200, 200, 200, 200, 200
             };
             int[] blockHeight = new int[]{
-                50, 50, 50, 50
+                50, 50, 50, 50, 50, 50
             };
             int[] blockWidth = new int[]{
-                50, 50, 50, 50
+                50, 50, 50, 50, 50, 50
             };
 
-            for (int i = 0; i < 4; i++)
+            for (int i = 0; i < 6; i++)
             {
                 Entity.AddEntityObject(new Entity(ref blockX[i], ref blockY[i], ref blockHeight[i], ref blockWidth[i], "beta_brick.png", Entity.collision.square, Entity.lightShape.none, Entity.movement.stationary, Entity.drawIf.lit, Entity.interaction.none));
+            }
+
+            int[] lightX = new int[]{
+                80, 200
+            };
+            int[] lightY = new int[]{
+                100, 150
+            };
+            int[] lightHeight = new int[]{
+                20, 20
+            };
+            int[] lightWidth = new int[]{
+                20, 20
+            };
+
+
+            for (int i = 0; i < 2; i++)
+            {
+                Entity.AddEntityObject(new Entity(ref lightX[i], ref lightY[i], ref lightHeight[i], ref lightWidth[i], "beta_lightbulb.png", Entity.collision.square, Entity.lightShape.circle, Entity.movement.stationary, Entity.drawIf.always, Entity.interaction.none));
             }
 
             //GameObject.objects = new ArrayList();
@@ -140,6 +163,12 @@ namespace ALittleDream
                 e.LoadContent(this.Content);
             }
 
+            //loading render targets for Light Mask
+            var pp = GraphicsDevice.PresentationParameters;
+            entities = new RenderTarget2D(GraphicsDevice, pp.BackBufferWidth, pp.BackBufferHeight);
+            lights = new RenderTarget2D(GraphicsDevice, pp.BackBufferWidth, pp.BackBufferHeight);
+            blackSquare = Content.Load<Texture2D>("blacksquare");
+            lightmask = Content.Load<Texture2D>("lightmask");
             // TODO: use this.Content to load your game content here
         }
 
@@ -201,7 +230,22 @@ namespace ALittleDream
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Draw(GameTime gameTime)
         {
+            ///**
             GraphicsDevice.Clear(Color.CornflowerBlue);
+
+            spriteBatch.Begin();
+            player.Draw(spriteBatch);
+            familiar.Draw(spriteBatch);
+            foreach (Entity e in Entity.entityList)
+            {
+                e.Draw(spriteBatch);
+            }
+            spriteBatch.End();
+            //**/
+            /** Light Shader code: uncomment code below and comment code above to use
+            //Set render target to entities then draw all entities
+            GraphicsDevice.SetRenderTarget(entities);
+            GraphicsDevice.Clear(Color.Black);
 
             spriteBatch.Begin();
             player.Draw(spriteBatch);
@@ -211,6 +255,45 @@ namespace ALittleDream
                 e.Draw(spriteBatch);
             }
             spriteBatch.End();
+            GraphicsDevice.SetRenderTarget(null);
+
+            //Set render target to lightMask then draw lightmask.png every instance where there is a light
+            GraphicsDevice.SetRenderTarget(lights);
+            GraphicsDevice.Clear(Color.Black);
+
+            // Create a Black Background
+            spriteBatch.Begin();
+            spriteBatch.Draw(blackSquare, new Vector2(0, 0), new Rectangle(0, 0, 800, 800), Color.White);
+            spriteBatch.End();
+
+            spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.Additive);
+
+            // Draw out lightmasks based on torch positions.
+            foreach (Entity l in Entity.lightingObjects)
+            {
+                var new_pos = new Vector2((float)l.spriteX - LIGHTOFFSET, (float)l.spriteY - LIGHTOFFSET);
+                spriteBatch.Draw(lightmask, new_pos, Color.White);
+            }
+            spriteBatch.Draw(lightmask, new Vector2((float)familiar.spriteX - LIGHTOFFSET, (float)familiar.spriteY - LIGHTOFFSET), Color.White);
+            spriteBatch.End();
+
+            GraphicsDevice.SetRenderTarget(null);
+
+            //Draw everything to screen w/ blendstate
+            GraphicsDevice.Clear(Color.Black);
+            spriteBatch.Begin(SpriteSortMode.Immediate);
+            spriteBatch.Draw(entities, new Vector2(0, 0), Color.White);
+            spriteBatch.End();
+
+            BlendState blend = new BlendState();
+            blend.ColorBlendFunction = BlendFunction.Add;
+            blend.ColorSourceBlend = Blend.DestinationColor;
+            blend.ColorDestinationBlend = Blend.Zero;
+
+            spriteBatch.Begin(SpriteSortMode.Immediate, blend);
+            spriteBatch.Draw(lights, new Vector2(0, 0), Color.White);
+            spriteBatch.End();
+            **/
             // TODO: Add your drawing code here
 
             base.Draw(gameTime);
