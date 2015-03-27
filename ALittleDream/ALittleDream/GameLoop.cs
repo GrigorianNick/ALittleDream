@@ -65,7 +65,7 @@ namespace ALittleDream
         RenderTarget2D lights;
         Texture2D blackSquare;
         Texture2D lightmask;
-        const int LIGHTOFFSET = 115;
+        public const int LIGHTOFFSET = 115;
 
         public GameLoop()
             : base()
@@ -94,25 +94,25 @@ namespace ALittleDream
             file.Close();
             // TODO: Add your initialization logic here
 
-            int playerX = 10, playerY = 10, playerHeight = 40, playerWidth = 40;
-            int familiarX = 100, familiarY = 20, familiarHeight = 10, familiarWidth = 10;
+            int playerX = 10, playerY = 10, playerHeight = 40, playerWidth = 30;
+            int familiarX = 100, familiarY = 20, familiarHeight = 15, familiarWidth = 10;
             player = new Entity(ref playerX, ref playerY, ref playerHeight, ref playerWidth, "beta_player.png", Entity.collision.square, Entity.lightShape.none, Entity.movement.walking, Entity.drawIf.always, Entity.interaction.none);
-            familiar = new Entity(ref familiarX, ref familiarY, ref familiarHeight, ref familiarWidth, "beta_lantern.png", Entity.collision.square, Entity.lightShape.circle, Entity.movement.flying, Entity.drawIf.always, Entity.interaction.none);
+            familiar = new Entity(ref familiarX, ref familiarY, ref familiarHeight, ref familiarWidth, "beta_lantern.png", Entity.collision.none, Entity.lightShape.circle, Entity.movement.flying, Entity.drawIf.always, Entity.interaction.none);
 
             int[] blockX = new int[]{
-                10, 200, 250, 300, 350, 400
+                10, 200, 250, 300, 350, 400, 350, 350
             };
             int[] blockY = new int[]{
-                100, 200, 200, 200, 200, 200
+                100, 200, 200, 200, 200, 200, 150, 100
             };
             int[] blockHeight = new int[]{
-                50, 50, 50, 50, 50, 50
+                50, 50, 50, 50, 50, 50, 50, 50
             };
             int[] blockWidth = new int[]{
-                50, 50, 50, 50, 50, 50
+                50, 50, 50, 50, 50, 50, 50, 50
             };
 
-            for (int i = 0; i < 6; i++)
+            for (int i = 0; i < blockHeight.Length; i++)
             {
                 Entity.AddEntityObject(new Entity(ref blockX[i], ref blockY[i], ref blockHeight[i], ref blockWidth[i], "beta_brick.png", Entity.collision.square, Entity.lightShape.none, Entity.movement.stationary, Entity.drawIf.lit, Entity.interaction.none));
             }
@@ -133,7 +133,7 @@ namespace ALittleDream
 
             for (int i = 0; i < 2; i++)
             {
-                Entity.AddEntityObject(new Entity(ref lightX[i], ref lightY[i], ref lightHeight[i], ref lightWidth[i], "beta_lightbulb.png", Entity.collision.square, Entity.lightShape.circle, Entity.movement.stationary, Entity.drawIf.always, Entity.interaction.none));
+                Entity.AddEntityObject(new Entity(ref lightX[i], ref lightY[i], ref lightHeight[i], ref lightWidth[i], "beta_lightbulb.png", Entity.collision.none, Entity.lightShape.circle, Entity.movement.stationary, Entity.drawIf.always, Entity.interaction.none));
             }
 
             //GameObject.objects = new ArrayList();
@@ -220,7 +220,11 @@ namespace ALittleDream
             }
             player.Update(controls, gameTime);
             familiar.Update(controls, gameTime);
-                        
+            foreach (Entity e in Entity.entityList)
+            {
+                e.Update(controls, gameTime);
+            }
+            //if (Entity.debugLighting)
             base.Update(gameTime);
         }
 
@@ -242,14 +246,12 @@ namespace ALittleDream
             }
             spriteBatch.End();
             //**/
-            /** Light Shader code: uncomment code below and comment code above to use
+            //Light Shader code: uncomment code below and comment code above to use
             //Set render target to entities then draw all entities
             GraphicsDevice.SetRenderTarget(entities);
             GraphicsDevice.Clear(Color.Black);
 
             spriteBatch.Begin();
-            player.Draw(spriteBatch);
-            familiar.Draw(spriteBatch);
             foreach (Entity e in Entity.entityList)
             {                
                 e.Draw(spriteBatch);
@@ -281,7 +283,7 @@ namespace ALittleDream
 
             //Draw everything to screen w/ blendstate
             GraphicsDevice.Clear(Color.Black);
-            spriteBatch.Begin(SpriteSortMode.Immediate);
+            spriteBatch.Begin(SpriteSortMode.Immediate, null);
             spriteBatch.Draw(entities, new Vector2(0, 0), Color.White);
             spriteBatch.End();
 
@@ -293,7 +295,12 @@ namespace ALittleDream
             spriteBatch.Begin(SpriteSortMode.Immediate, blend);
             spriteBatch.Draw(lights, new Vector2(0, 0), Color.White);
             spriteBatch.End();
-            **/
+
+            spriteBatch.Begin(SpriteSortMode.Immediate, null);
+            player.Draw(spriteBatch);
+            familiar.Draw(spriteBatch);
+            spriteBatch.End();
+            
             // TODO: Add your drawing code here
 
             base.Draw(gameTime);

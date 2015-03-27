@@ -22,6 +22,7 @@ namespace ALittleDream
         public int momentumX, momentumY;
         public int maxMomentum = 7;
         public bool debugDistances = false;
+        public bool debugLighting = false;
 
         public enum collision
         {
@@ -97,7 +98,12 @@ namespace ALittleDream
             {
                 this.getInput(controls, gameTime);
                 this.move(controls, gameTime);
-                this.checkCollisions(gameTime);
+                if (this.c != collision.none) this.checkCollisions(gameTime);
+            }
+            else //currently all non moving are blocks
+            {
+                if (this.isIlluminated(gameTime)) this.c = collision.square;
+                else this.c = collision.none;
             }
         }
 
@@ -106,6 +112,10 @@ namespace ALittleDream
             if (controls.onPress(Keys.F1, Buttons.BigButton))
             {
                 debugDistances = true;
+            }
+            if (controls.onPress(Keys.F2, Buttons.BigButton))
+            {
+                debugLighting = true;
             }
             if (m == movement.walking) {
                 bool onTheGround = onGround();
@@ -121,7 +131,7 @@ namespace ALittleDream
                 }
                 if (controls.onPress(Keys.W, Buttons.DPadUp) || controls.onPress(Keys.Space, Buttons.DPadUp)) //TODO: implement differen jump arc based on holding jump button?
                 {
-                    if (onTheGround) momentumY = -12;
+                    if (onTheGround) momentumY = -14;
                 }
                 //if (controls.isPressed(Keys.S, Buttons.DPadDown))
                 //{
@@ -174,6 +184,7 @@ namespace ALittleDream
             int bottomSide = spriteY + spriteHeight;
             foreach (Entity e in collisionObjects)
             {
+                if (e.c == collision.none) continue;
                 if (spriteName == e.spriteName && spriteX == e.spriteX && spriteY == e.spriteY) continue; //checking against itself, so skip
                 if (Math.Abs(bottomSide - e.spriteY) < 1) //bottom of this aligns with top of a collision entity
                 {
@@ -183,33 +194,60 @@ namespace ALittleDream
             return false;
         }
 
+        private bool isIlluminated(GameTime gameTime)
+        {
+            foreach (Entity e in lightingObjects)
+            {
+                if (Math.Pow(spriteX - e.spriteX, 2) + Math.Pow(spriteY - e.spriteY, 2) < Math.Pow(GameLoop.LIGHTOFFSET, 2))
+                {
+                    if (debugLighting) Console.WriteLine("block at (" + spriteX + "," + spriteY + ") is lit by (" + e.spriteX + "," + e.spriteY + ")");
+                    return true;
+                }
+            }
+            return false;
+        }
+
         private void checkCollisions(GameTime gameTime)
         {
-            int leftSide = spriteX, rightSide = spriteX + spriteWidth, topSide = spriteY, bottomSide = spriteY + spriteHeight; //calculate edges of this hitbox
+            int leftSide = spriteX,
+                rightSide = spriteX + spriteWidth,
+                topSide = spriteY,
+                bottomSide = spriteY + spriteHeight; //calculate edges of this hitbox
 
             foreach (Entity e in collisionObjects) //for each entity with collision
             {
                 if (spriteName == e.spriteName && spriteX == e.spriteX && spriteY == e.spriteY) continue; //checking against itself, so skip
-                int eLeftSide = e.spriteX, eRightSide = e.spriteX + e.spriteWidth, eTopSide = e.spriteY, eBottomSide = e.spriteY + spriteHeight; //calculate edges of entity's hitbox
-                int bottomDist = eTopSide - bottomSide, topDist = topSide - eBottomSide, leftDist = leftSide - eRightSide, rightDist = eLeftSide - rightSide; //calculate distances from each side of entity to this
-                if (debugDistances)
+                if (e.c == collision.none) continue; //collision not currently active for other entity
+                int eLeftSide = e.spriteX, 
+                    eRightSide = e.spriteX + e.spriteWidth, 
+                    eTopSide = e.spriteY, 
+                    eBottomSide = e.spriteY + spriteHeight; //calculate edges of entity's hitbox
+                int bottomDist = eTopSide - bottomSide, 
+                    topDist = topSide - eBottomSide, 
+                    leftDist = leftSide - eRightSide, 
+                    rightDist = eLeftSide - rightSide; //calculate distances from each side of entity to this
+                if (debugDistances && spriteName == "beta_player.png")
                 {
                     Console.WriteLine("distances from " + this.spriteName + "(" + spriteX + "," + spriteY + ") to " + e.spriteName + "(" + e.spriteX + "," + e.spriteY + "):");
                     Console.WriteLine("top=" + topDist + ", bottom=" + bottomDist + ", left=" + leftDist + ", right=" + rightDist);
                 }
                 
-                if (bottomDist > 0 || topDist > 0 || leftDist > 0 || rightDist > 0) continue; //if any distances are greater than zero, there is no collision
+                if (bottomDist >= 0 || topDist >= 0 || leftDist >= 0 || rightDist >= 0) continue; //if any distances are greater than zero, there is no collision
                 if (spriteName == "beta_player.png" && e.spriteName == "beta_lantern.png" || spriteName == "beta_lantern.png" && e.spriteName == "beta_player.png") continue; //ignore collisions between familiar and player
+                //TODO: make this hard coding less hacky
                 //else there was a collision, determine which side and kill momentum
                 int[] dists = new int[] { topDist, bottomDist, leftDist, rightDist }; //for comparing: largest is side of collision (other sides will be more negative)
                 if (isLargest(dists, topDist)) //collision is with entity above
                 {
                     momentumY = 0;
                     spriteY -= topDist;
+                    //spriteY -= momentumY;
+                    //momentumY = 0;
                 }
                 else if (isLargest(dists, bottomDist)) //collision is with entity below
                 {
                     momentumY = 0;
+                    if (bottomDist <= 0 - spriteHeight / 2) spriteY = e.spriteY + spriteHeight;
                     spriteY += bottomDist;
                 }
                 else if (isLargest(dists, leftDist)) //collision is with entity to left
@@ -223,7 +261,7 @@ namespace ALittleDream
                     spriteX += rightDist;
                 }
             }
-            if (debugDistances) //turn off flag so debug only prints one frame of distances
+            if (debugDistances && spriteName == "beta_player.png") //turn off flag so debug only prints one frame of distances
             {
                 Console.WriteLine("");
                 debugDistances = false;
