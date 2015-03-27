@@ -100,16 +100,16 @@ namespace ALittleDream
             familiar = new Entity(ref familiarX, ref familiarY, ref familiarHeight, ref familiarWidth, "beta_lantern.png", Entity.collision.none, Entity.lightShape.circle, Entity.movement.flying, Entity.drawIf.always, Entity.interaction.none);
 
             int[] blockX = new int[]{
-                10, 200, 250, 300, 350, 400, 350, 350
+                10, 200, 250, 300, 350, 400, 350, 350, -40
             };
             int[] blockY = new int[]{
-                100, 200, 200, 200, 200, 200, 150, 100
+                100, 200, 200, 200, 200, 200, 150, 100, 50
             };
             int[] blockHeight = new int[]{
-                50, 50, 50, 50, 50, 50, 50, 50
+                50, 50, 50, 50, 50, 50, 50, 50, 50
             };
             int[] blockWidth = new int[]{
-                50, 50, 50, 50, 50, 50, 50, 50
+                50, 50, 50, 50, 50, 50, 50, 50, 50
             };
 
             for (int i = 0; i < blockHeight.Length; i++)
@@ -118,7 +118,7 @@ namespace ALittleDream
             }
 
             int[] lightX = new int[]{
-                80, 200
+                60, 200
             };
             int[] lightY = new int[]{
                 100, 150
@@ -218,6 +218,10 @@ namespace ALittleDream
                 graphics.PreferredBackBufferHeight = windowHeight;
                 graphics.ApplyChanges();
             }
+            else if (controls.onPress(Keys.R, Buttons.A))
+            {
+                resetLevel();
+            }
             player.Update(controls, gameTime);
             familiar.Update(controls, gameTime);
             foreach (Entity e in Entity.entityList)
@@ -226,6 +230,18 @@ namespace ALittleDream
             }
             //if (Entity.debugLighting)
             base.Update(gameTime);
+        }
+
+        public void resetLevel()
+        {
+            player.spriteX = 10;
+            player.spriteY = 10;
+            player.momentumX = 0;
+            player.momentumY = 0;
+            familiar.spriteX = 100;
+            familiar.spriteY = 20;
+            familiar.momentumX = 0;
+            familiar.momentumY = 0;
         }
 
         /// <summary>
