@@ -60,7 +60,6 @@ namespace ALittleDream
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
         Controls controls;
-        int defaultTileSize = 50;
         int windowWidth, windowHeight;
         Entity player, familiar;
         RenderTarget2D entities;
@@ -92,11 +91,8 @@ namespace ALittleDream
 
             List <int[]> blocks = new List<int[]>();
 
-            int windowWidthTiles = Convert.ToInt32(doc.Root.Attribute("width").Value);
-            int windowHeightTiles = Convert.ToInt32(doc.Root.Attribute("height").Value);
-
-            windowWidth = windowWidthTiles * defaultTileSize;
-            windowHeight = windowHeightTiles * defaultTileSize;
+            windowWidth = Convert.ToInt32(doc.Root.Attribute("width").Value) * Convert.ToInt32(doc.Root.Attribute("tilewidth").Value);
+            windowHeight = Convert.ToInt32(doc.Root.Attribute("height").Value) * Convert.ToInt32(doc.Root.Attribute("tileheight").Value);
 
             graphics.PreferredBackBufferWidth = windowWidth;
             graphics.PreferredBackBufferHeight = windowHeight;
