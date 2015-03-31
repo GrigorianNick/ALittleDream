@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections;
+using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
@@ -23,6 +24,9 @@ namespace ALittleDream
         public int maxMomentum = 7;
         public bool debugDistances = false;
         public bool debugLighting = false;
+        public ArrayList animations = new ArrayList();
+        int frames = 0;
+        int animation = 0;
 
         public enum collision
         {
@@ -48,7 +52,7 @@ namespace ALittleDream
         {
             grab, none
         }
-        
+
 
         public Entity(ref int x_in, ref int y_in, ref int height, ref int width, string spriteFile, collision col, lightShape ls, movement mov, drawIf drw, interaction inter)
         {
@@ -85,6 +89,30 @@ namespace ALittleDream
 
             //lighting.x = spriteX;
             //lighting.y = spriteY;
+            facingRight = true;
+            if (m == movement.walking)
+            {
+                animations.Add("beta_player");
+                animations.Add("jump/jump1");
+                animations.Add("jump/jump2");
+                animations.Add("jump/jump3");
+                animations.Add("jump/jump4");
+                animations.Add("jump/jump5");
+                animations.Add("jump/jump6");
+                animations.Add("jump/jump7");
+                animations.Add("jump/jump8");
+                animations.Add("jump/jump9");
+                animations.Add("jump/jump10");
+                animations.Add("jump/jump11");
+                spriteAnimations = new List<Texture2D>();
+            }
+            else if (m == movement.flying)
+            {
+                animations.Add("familiar/familiar");
+                animations.Add("familiar/familiar1");
+                animations.Add("familiar/familiar2");
+                spriteAnimations = new List<Texture2D>();
+            }
         }
 
         public static void AddEntityObject(Entity ent)
@@ -117,17 +145,20 @@ namespace ALittleDream
             {
                 debugLighting = true;
             }
-            if (m == movement.walking) {
+            if (m == movement.walking)
+            {
                 bool onTheGround = onGround();
                 if (controls.isPressed(Keys.A, Buttons.DPadLeft))
                 {
                     momentumX -= 2;
                     if (maxMomentum + momentumX < 0) momentumX = 0 - maxMomentum;
+                    facingRight = false;
                 }
                 if (controls.isPressed(Keys.D, Buttons.DPadRight))
                 {
                     momentumX += 2;
                     if (momentumX > maxMomentum) momentumX = maxMomentum;
+                    facingRight = true;
                 }
                 if (controls.onPress(Keys.W, Buttons.DPadUp) || controls.onPress(Keys.Space, Buttons.DPadUp)) //TODO: implement differen jump arc based on holding jump button?
                 {
@@ -137,7 +168,19 @@ namespace ALittleDream
                 //{
                 //    spriteY++;
                 //}
-            } else if (m == movement.flying) {
+            }
+            else if (m == movement.flying)
+            {
+                if (frames == 10)
+                {
+                    image = spriteAnimations[animation];
+                    if (animation == 2)
+                        animation = 0;
+                    else
+                        animation++;
+                    frames = 0;
+                }
+                frames++;
                 if (controls.isPressed(Keys.Left, Buttons.DPadLeft))
                 {
                     momentumX -= 2;
@@ -148,7 +191,7 @@ namespace ALittleDream
                     momentumX += 2;
                     if (momentumX > maxMomentum) momentumX = maxMomentum;
                 }
-                if (controls.isPressed(Keys.Up, Buttons.DPadUp) )
+                if (controls.isPressed(Keys.Up, Buttons.DPadUp))
                 {
                     momentumY -= 2;
                     if (maxMomentum + momentumY < 0) momentumY = 0 - maxMomentum;
@@ -174,7 +217,11 @@ namespace ALittleDream
             }
             else
             {
-                if (!onGround()) momentumY++;
+                if (!onGround())
+                {
+                    momentumY++;
+                    image = spriteAnimations[3];
+                }
             }
         }
 
@@ -182,6 +229,7 @@ namespace ALittleDream
         {
             if (momentumY != 0) return false; //if vertical momentum, current jumping/falling\
             int bottomSide = spriteY + spriteHeight;
+            image = spriteAnimations[0];
             foreach (Entity e in collisionObjects)
             {
                 if (e.c == collision.none) continue;
@@ -189,7 +237,7 @@ namespace ALittleDream
                 if (Math.Abs(bottomSide - e.spriteY) < 1) //bottom of this aligns with top of a collision entity
                 {
                     if (spriteX + spriteWidth > e.spriteX && spriteX < e.spriteX + e.spriteWidth) return true;
-                }                
+                }
             }
             return false;
         }
@@ -218,20 +266,20 @@ namespace ALittleDream
             {
                 if (spriteName == e.spriteName && spriteX == e.spriteX && spriteY == e.spriteY) continue; //checking against itself, so skip
                 if (e.c == collision.none) continue; //collision not currently active for other entity
-                int eLeftSide = e.spriteX, 
-                    eRightSide = e.spriteX + e.spriteWidth, 
-                    eTopSide = e.spriteY, 
+                int eLeftSide = e.spriteX,
+                    eRightSide = e.spriteX + e.spriteWidth,
+                    eTopSide = e.spriteY,
                     eBottomSide = e.spriteY + spriteHeight; //calculate edges of entity's hitbox
-                int bottomDist = eTopSide - bottomSide, 
-                    topDist = topSide - eBottomSide, 
-                    leftDist = leftSide - eRightSide, 
+                int bottomDist = eTopSide - bottomSide,
+                    topDist = topSide - eBottomSide,
+                    leftDist = leftSide - eRightSide,
                     rightDist = eLeftSide - rightSide; //calculate distances from each side of entity to this
                 if (debugDistances && spriteName == "beta_player.png")
                 {
                     Console.WriteLine("distances from " + this.spriteName + "(" + spriteX + "," + spriteY + ") to " + e.spriteName + "(" + e.spriteX + "," + e.spriteY + "):");
                     Console.WriteLine("top=" + topDist + ", bottom=" + bottomDist + ", left=" + leftDist + ", right=" + rightDist);
                 }
-                
+
                 if (bottomDist >= 0 || topDist >= 0 || leftDist >= 0 || rightDist >= 0) continue; //if any distances are greater than zero, there is no collision
                 if (spriteName == "beta_player.png" && e.spriteName == "beta_lantern.png" || spriteName == "beta_lantern.png" && e.spriteName == "beta_player.png") continue; //ignore collisions between familiar and player
                 //TODO: make this hard coding less hacky
@@ -251,7 +299,7 @@ namespace ALittleDream
                     spriteY += bottomDist;
                 }
                 else if (isLargest(dists, leftDist)) //collision is with entity to left
-                { 
+                {
                     momentumX = 0;
                     spriteX -= leftDist;
                 }
