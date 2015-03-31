@@ -46,6 +46,8 @@ using System.Collections.Generic;
  */
 
 using ALittleDream;
+using System.Linq;
+using System.Xml.Linq;
 
 namespace ALittleDream
 {
@@ -58,8 +60,8 @@ namespace ALittleDream
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
         Controls controls;
-        int windowWidth = 500;
-        int windowHeight = 500;
+        int defaultTileSize = 50;
+        int windowWidth, windowHeight;
         Entity player, familiar;
         RenderTarget2D entities;
         RenderTarget2D lights;
@@ -72,6 +74,8 @@ namespace ALittleDream
         {
             graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
+
+            
         }
 
         /// <summary>
@@ -82,6 +86,25 @@ namespace ALittleDream
         /// </summary>
         protected override void Initialize()
         {
+            // BEGIN TILED XML PARSING
+            System.IO.Stream stream = TitleContainer.OpenStream("Content/levels/test.tmx");
+            XDocument doc = XDocument.Load(stream);
+
+            List <int[]> blocks = new List<int[]>();
+
+            int windowWidthTiles = Convert.ToInt32(doc.Root.Attribute("width").Value);
+            int windowHeightTiles = Convert.ToInt32(doc.Root.Attribute("height").Value);
+
+            windowWidth = windowWidthTiles * defaultTileSize;
+            windowHeight = windowHeightTiles * defaultTileSize;
+
+            graphics.PreferredBackBufferWidth = windowWidth;
+            graphics.PreferredBackBufferHeight = windowHeight;
+            graphics.ApplyChanges();
+
+            // TODO: parse rest of XML, specifically the tile specification
+            // END TILED XML PARSING
+            
             System.IO.StreamReader file = new System.IO.StreamReader("Content/levels/test.txt");
             string line;
             int counter = 0;
