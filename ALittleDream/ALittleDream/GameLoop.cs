@@ -46,6 +46,8 @@ using System.Collections.Generic;
  */
 
 using ALittleDream;
+using System.Linq;
+using System.Xml.Linq;
 
 namespace ALittleDream
 {
@@ -58,8 +60,7 @@ namespace ALittleDream
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
         Controls controls;
-        int windowWidth = 500;
-        int windowHeight = 500;
+        int windowWidth, windowHeight;
         Entity player, familiar;
         RenderTarget2D entities;
         RenderTarget2D lights;
@@ -72,6 +73,8 @@ namespace ALittleDream
         {
             graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
+
+            
         }
 
         /// <summary>
@@ -82,6 +85,22 @@ namespace ALittleDream
         /// </summary>
         protected override void Initialize()
         {
+            // BEGIN TILED XML PARSING
+            System.IO.Stream stream = TitleContainer.OpenStream("Content/levels/test.tmx");
+            XDocument doc = XDocument.Load(stream);
+
+            List <int[]> blocks = new List<int[]>();
+
+            windowWidth = Convert.ToInt32(doc.Root.Attribute("width").Value) * Convert.ToInt32(doc.Root.Attribute("tilewidth").Value);
+            windowHeight = Convert.ToInt32(doc.Root.Attribute("height").Value) * Convert.ToInt32(doc.Root.Attribute("tileheight").Value);
+
+            graphics.PreferredBackBufferWidth = windowWidth;
+            graphics.PreferredBackBufferHeight = windowHeight;
+            graphics.ApplyChanges();
+
+            // TODO: parse rest of XML, specifically the tile specification
+            // END TILED XML PARSING
+            
             System.IO.StreamReader file = new System.IO.StreamReader("Content/levels/test.txt");
             string line;
             int counter = 0;
@@ -94,10 +113,10 @@ namespace ALittleDream
             file.Close();
             // TODO: Add your initialization logic here
 
-            int playerX = 10, playerY = 10, playerHeight = 40, playerWidth = 30;
-            int familiarX = 100, familiarY = 20, familiarHeight = 15, familiarWidth = 10;
+            int playerX = 10, playerY = 10, playerHeight = 40, playerWidth = 25;
+            int familiarX = 100, familiarY = 20, familiarHeight = 20, familiarWidth = 10;
             player = new Entity(ref playerX, ref playerY, ref playerHeight, ref playerWidth, "beta_player.png", Entity.collision.square, Entity.lightShape.none, Entity.movement.walking, Entity.drawIf.always, Entity.interaction.none);
-            familiar = new Entity(ref familiarX, ref familiarY, ref familiarHeight, ref familiarWidth, "beta_lantern.png", Entity.collision.none, Entity.lightShape.circle, Entity.movement.flying, Entity.drawIf.always, Entity.interaction.none);
+            familiar = new Entity(ref familiarX, ref familiarY, ref familiarHeight, ref familiarWidth, "familiar/familiar.png", Entity.collision.none, Entity.lightShape.circle, Entity.movement.flying, Entity.drawIf.always, Entity.interaction.none);
 
             int[] blockX = new int[]{
                 10, 200, 250, 300, 350, 400, 350, 350, -40
@@ -152,8 +171,13 @@ namespace ALittleDream
         {
             // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
-            player.LoadContent(this.Content);
-            familiar.LoadContent(this.Content);
+            foreach (string s in player.animations)
+                player.AnimatedLoadContent(this.Content, s);
+            player.image = player.spriteAnimations[0];
+            //player.LoadContent(this.Content);
+            foreach (string s in familiar.animations)
+                familiar.AnimatedLoadContent(this.Content, s);
+            familiar.image = familiar.spriteAnimations[0];
             Console.WriteLine((player.spriteX));
             // Load all GameObject content
             
@@ -290,6 +314,7 @@ namespace ALittleDream
             foreach (Entity l in Entity.lightingObjects)
             {
                 var new_pos = new Vector2((float)l.spriteX - LIGHTOFFSET, (float)l.spriteY - LIGHTOFFSET);
+                spriteBatch.Draw(lightmask, new_pos, Color.White);
                 spriteBatch.Draw(lightmask, new_pos, Color.White);
             }
             spriteBatch.Draw(lightmask, new Vector2((float)familiar.spriteX - LIGHTOFFSET, (float)familiar.spriteY - LIGHTOFFSET), Color.White);
