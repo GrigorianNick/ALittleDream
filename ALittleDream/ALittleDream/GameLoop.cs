@@ -61,7 +61,7 @@ namespace ALittleDream
         SpriteBatch spriteBatch;
         Controls controls;
         int windowWidth, windowHeight;
-        Entity player, familiar;
+        Entity player, familiar, lantern;
         RenderTarget2D entities;
         RenderTarget2D lights;
         Texture2D blackSquare;
@@ -113,11 +113,15 @@ namespace ALittleDream
             file.Close();
             // TODO: Add your initialization logic here
 
+            //initialize player
             int playerX = 10, playerY = 10, playerHeight = 40, playerWidth = 25;
-            int familiarX = 100, familiarY = 20, familiarHeight = 20, familiarWidth = 10;
             player = new Entity(ref playerX, ref playerY, ref playerHeight, ref playerWidth, "beta_player.png", Entity.collision.square, Entity.lightShape.none, Entity.movement.walking, Entity.drawIf.always, Entity.interaction.none);
+
+            //initialize familiar
+            int familiarX = 100, familiarY = 20, familiarHeight = 20, familiarWidth = 10;            
             familiar = new Entity(ref familiarX, ref familiarY, ref familiarHeight, ref familiarWidth, "familiar/familiar.png", Entity.collision.none, Entity.lightShape.circle, Entity.movement.flying, Entity.drawIf.always, Entity.interaction.none);
 
+            //initialize blocks
             int[] blockX = new int[]{
                 10, 200, 250, 300, 350, 400, 350, 350, -40
             };
@@ -130,12 +134,21 @@ namespace ALittleDream
             int[] blockWidth = new int[]{
                 50, 50, 50, 50, 50, 50, 50, 50, 50
             };
-
             for (int i = 0; i < blockHeight.Length; i++)
             {
                 Entity.AddEntityObject(new Entity(ref blockX[i], ref blockY[i], ref blockHeight[i], ref blockWidth[i], "beta_brick.png", Entity.collision.square, Entity.lightShape.none, Entity.movement.stationary, Entity.drawIf.lit, Entity.interaction.none));
             }
 
+            //initialize lantern
+            int lanternX = 300,
+                lanternY = 50,
+                lanternHeight = 30,
+                lanternWidth = 30;
+            lantern = new Entity(ref lanternX, ref lanternY, ref lanternHeight, ref lanternWidth, "lights/lantern.png", Entity.collision.square, Entity.lightShape.circle, Entity.movement.physics, Entity.drawIf.lit, Entity.interaction.grab);
+            Entity.AddEntityObject(lantern);
+
+            
+            //initialize lightbulbs (beta lampposts?)
             int[] lightX = new int[]{
                 60, 200
             };
@@ -148,8 +161,6 @@ namespace ALittleDream
             int[] lightWidth = new int[]{
                 20, 20
             };
-
-
             for (int i = 0; i < 2; i++)
             {
                 Entity.AddEntityObject(new Entity(ref lightX[i], ref lightY[i], ref lightHeight[i], ref lightWidth[i], "beta_lightbulb.png", Entity.collision.none, Entity.lightShape.circle, Entity.movement.stationary, Entity.drawIf.always, Entity.interaction.none));
@@ -182,8 +193,6 @@ namespace ALittleDream
             // Load all GameObject content
             
             foreach (Entity e in Entity.entityList) {
-            
-                Console.WriteLine((e.spriteX));
                 e.LoadContent(this.Content);
             }
 
@@ -246,10 +255,22 @@ namespace ALittleDream
             {
                 resetLevel();
             }
+            if (player.needsNewSprite)
+            {
+                Console.WriteLine("player sprite=" + player.spriteName);
+                player.spriteAnimations[0] = this.Content.Load<Texture2D>(player.animations[0]);
+                //TODO: other sprites
+                player.needsNewSprite = false;
+            }
             player.Update(controls, gameTime);
             familiar.Update(controls, gameTime);
             foreach (Entity e in Entity.entityList)
             {
+                if (e.needsNewSprite)
+                {
+                    e.LoadContent(this.Content);
+                    e.needsNewSprite = false;
+                }
                 e.Update(controls, gameTime);
             }
             //if (Entity.debugLighting)
@@ -266,6 +287,10 @@ namespace ALittleDream
             familiar.spriteY = 20;
             familiar.momentumX = 0;
             familiar.momentumY = 0;
+            lantern.spriteX = 300;
+            lantern.spriteY = 50;
+            lantern.momentumX = 0;
+            lantern.momentumY = 0;
         }
 
         /// <summary>

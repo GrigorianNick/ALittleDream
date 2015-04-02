@@ -15,6 +15,7 @@ namespace ALittleDream
         public static ArrayList entityList = new ArrayList();
         public static ArrayList collisionObjects = new ArrayList();
         public static ArrayList lightingObjects = new ArrayList();
+        public static int grabDistance = 50;
         public collision c;
         public lightShape l;
         public movement m;
@@ -24,9 +25,11 @@ namespace ALittleDream
         public int maxMomentum = 7;
         public bool debugDistances = false;
         public bool debugLighting = false;
-        public ArrayList animations = new ArrayList();
+        public List<String> animations = new List<String>();
         int frames = 0;
         int animation = 0;
+        public bool isHoldingLantern = false;
+        public bool needsNewSprite = false;
 
         public enum collision
         {
@@ -122,16 +125,30 @@ namespace ALittleDream
 
         public void Update(Controls controls, GameTime gameTime)
         {
+            //handle movement
             if (this.m != movement.stationary)
             {
-                this.getInput(controls, gameTime);
+                if (this.m == movement.walking || this.m == movement.flying)
+                {
+                    this.getInput(controls, gameTime);
+                }
                 this.move(controls, gameTime);
                 if (this.c != collision.none) this.checkCollisions(gameTime);
             }
-            else //currently all non moving are blocks
+
+            //handle illumination
+            if (this.d != drawIf.always)
             {
-                if (this.isIlluminated(gameTime)) this.c = collision.square;
-                else this.c = collision.none;
+                if (this.isIlluminated(gameTime))
+                {
+                    if (this.d == drawIf.lit) this.c = collision.square;
+                    else this.c = collision.none;
+                }
+                else
+                {
+                    if (this.d == drawIf.lit) this.c = collision.none;
+                    else this.c = collision.square;
+                }
             }
         }
 
@@ -164,10 +181,54 @@ namespace ALittleDream
                 {
                     if (onTheGround) momentumY = -14;
                 }
-                //if (controls.isPressed(Keys.S, Buttons.DPadDown))
-                //{
-                //    spriteY++;
-                //}
+
+                if (controls.onPress(Keys.E, Buttons.RightShoulder)) //grab button
+                {
+                    if (!isHoldingLantern) { //if not holding lantern, see if one nearby
+                        foreach (Entity e in Entity.entityList)
+                        {
+                            if (e.i == interaction.grab && e.isInInteractRange(this)) //found a lantern e in range
+                            {
+                                this.isHoldingLantern = true; //now holding a lantern
+
+                                //remove lantern from all relavent lists
+                                Entity.entityList.Remove(e);
+                                Entity.collisionObjects.Remove(e);
+                                Entity.lightingObjects.Remove(e);
+
+                                //change lighting
+                                this.l = lightShape.circle;
+                                Entity.lightingObjects.Add(this);
+                                this.animations[0] = "charHoldingLatern.png";
+                                //TODO: other sprites
+                                this.needsNewSprite = true; //loads new content in GameLoop.Update()
+
+                                //stop trying to find a lantern
+                                break;
+                            }
+                        }
+                    }
+                    else //else player has a lantern, so drop it (if room)
+                    {
+                        this.isHoldingLantern = false; //no longer holding a lantern
+
+                        //make new lantern object
+                        int lanternX = this.spriteX - 31; //default to left of player
+                        int lanternY = this.spriteY + 10;
+                        int lanternHeight = 30, lanternWidth = 30;
+                        if (this.facingRight) lanternX += 31 + this.spriteWidth; //move to right of player if player is facing right
+                        Entity l = new Entity(ref lanternX, ref lanternY, ref lanternHeight, ref lanternWidth, "lights/lantern.png", Entity.collision.square, Entity.lightShape.circle, Entity.movement.physics, Entity.drawIf.lit, Entity.interaction.grab);
+                        Entity.entityList.Add(l);
+                        l.needsNewSprite = true; //loads new content in GameLoop.Update()
+
+                        //change lighting
+                        this.l = lightShape.none;
+                        Entity.lightingObjects.Remove(this);
+                        this.animations[0] = "charSprite.png";
+                        //TODO: other sprites
+                        this.needsNewSprite = true; //loads new content in GameLoop.Update()
+                    }
+                }
             }
             else if (m == movement.flying)
             {
@@ -220,7 +281,7 @@ namespace ALittleDream
                 if (!onGround())
                 {
                     momentumY++;
-                    image = spriteAnimations[3];
+                    if (this.m == movement.walking) image = spriteAnimations[3];
                 }
             }
         }
@@ -229,7 +290,7 @@ namespace ALittleDream
         {
             if (momentumY != 0) return false; //if vertical momentum, current jumping/falling\
             int bottomSide = spriteY + spriteHeight;
-            image = spriteAnimations[0];
+            if (this.m == movement.walking) image = spriteAnimations[0];
             foreach (Entity e in collisionObjects)
             {
                 if (e.c == collision.none) continue;
@@ -240,6 +301,12 @@ namespace ALittleDream
                 }
             }
             return false;
+        }
+
+        private bool isInInteractRange(Entity e)
+        {
+            return Math.Pow(spriteX - e.spriteX, 2) + Math.Pow(spriteY - e.spriteY, 2) < Math.Pow(Entity.grabDistance, 2);
+
         }
 
         private bool isIlluminated(GameTime gameTime)
@@ -295,7 +362,7 @@ namespace ALittleDream
                 else if (isLargest(dists, bottomDist)) //collision is with entity below
                 {
                     momentumY = 0;
-                    if (bottomDist <= 0 - spriteHeight / 2) spriteY = e.spriteY + spriteHeight;
+                    if (this.m == movement.walking && bottomDist <= 0 - spriteHeight / 2) spriteY = e.spriteY + spriteHeight;
                     spriteY += bottomDist;
                 }
                 else if (isLargest(dists, leftDist)) //collision is with entity to left
