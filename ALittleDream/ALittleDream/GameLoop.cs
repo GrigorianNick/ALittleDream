@@ -68,6 +68,7 @@ namespace ALittleDream
         Texture2D lightmask;
         ScreenManager screenManager;
         bool showStartingScreens;
+        public static int LIGHTOFFSET = 115;
 
         public GameLoop()
             : base()
