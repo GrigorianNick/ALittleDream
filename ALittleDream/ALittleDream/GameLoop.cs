@@ -66,7 +66,8 @@ namespace ALittleDream
         RenderTarget2D lights;
         Texture2D blackSquare;
         Texture2D lightmask;
-        public const int LIGHTOFFSET = 115;
+        ScreenManager screenManager;
+        bool showStartingScreens;
 
         public GameLoop()
             : base()
@@ -85,6 +86,7 @@ namespace ALittleDream
         /// </summary>
         protected override void Initialize()
         {
+            showStartingScreens = true;
             // BEGIN TILED XML PARSING
             System.IO.Stream stream = TitleContainer.OpenStream("Content/levels/test.tmx");
             XDocument doc = XDocument.Load(stream);
@@ -115,7 +117,7 @@ namespace ALittleDream
 
             int playerX = 10, playerY = 10, playerHeight = 40, playerWidth = 25;
             int familiarX = 100, familiarY = 20, familiarHeight = 20, familiarWidth = 10;
-            player = new Entity(ref playerX, ref playerY, ref playerHeight, ref playerWidth, "beta_player.png", Entity.collision.square, Entity.lightShape.none, Entity.movement.walking, Entity.drawIf.always, Entity.interaction.none);
+            player = new Entity(ref playerX, ref playerY, ref playerHeight, ref playerWidth, "player.png", Entity.collision.square, Entity.lightShape.none, Entity.movement.walking, Entity.drawIf.always, Entity.interaction.none);
             familiar = new Entity(ref familiarX, ref familiarY, ref familiarHeight, ref familiarWidth, "familiar/familiar.png", Entity.collision.none, Entity.lightShape.circle, Entity.movement.flying, Entity.drawIf.always, Entity.interaction.none);
 
             int[] blockX = new int[]{
@@ -155,6 +157,15 @@ namespace ALittleDream
                 Entity.AddEntityObject(new Entity(ref lightX[i], ref lightY[i], ref lightHeight[i], ref lightWidth[i], "beta_lightbulb.png", Entity.collision.none, Entity.lightShape.circle, Entity.movement.stationary, Entity.drawIf.always, Entity.interaction.none));
             }
 
+            if (showStartingScreens)
+            {
+                SplashScreen splashScreen = new SplashScreen(graphics.PreferredBackBufferWidth, graphics.PreferredBackBufferHeight);
+                MenuScreen menuScreen = new MenuScreen(graphics.PreferredBackBufferWidth, graphics.PreferredBackBufferHeight, this);
+                Stack<Screen> screens = new Stack<Screen>();
+                screens.Push(menuScreen);
+                screens.Push(splashScreen);
+                screenManager = new ScreenManager(screens, graphics.PreferredBackBufferWidth, graphics.PreferredBackBufferHeight);
+            }
             //GameObject.objects = new ArrayList();
 
             base.Initialize();
@@ -169,6 +180,10 @@ namespace ALittleDream
         /// </summary>
         protected override void LoadContent()
         {
+            if (showStartingScreens)
+            {
+                screenManager.LoadContent(this.Content);
+            }
             // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
             foreach (string s in player.animations)
@@ -202,6 +217,10 @@ namespace ALittleDream
         /// </summary>
         protected override void UnloadContent()
         {
+            if (showStartingScreens)
+            {
+                screenManager.UnloadContent(this.Content);
+            }
             // TODO: Unload any non ContentManager content here
         }
 
@@ -217,6 +236,12 @@ namespace ALittleDream
 
             // TODO: Add your update logic here
             controls.Update();
+
+            if (showStartingScreens)
+            {
+                screenManager.Update(controls, gameTime);
+            }
+
             // Window sizing with numpad
             if (controls.isPressed(Keys.NumPad6, Buttons.A))
             {
@@ -313,11 +338,15 @@ namespace ALittleDream
             // Draw out lightmasks based on torch positions.
             foreach (Entity l in Entity.lightingObjects)
             {
-                var new_pos = new Vector2((float)l.spriteX - LIGHTOFFSET, (float)l.spriteY - LIGHTOFFSET);
-                spriteBatch.Draw(lightmask, new_pos, Color.White);
-                spriteBatch.Draw(lightmask, new_pos, Color.White);
+                var new_rect = new Rectangle(l.spriteX - (LIGHTOFFSET - l.spriteWidth), l.spriteY - (LIGHTOFFSET - l.spriteHeight), LIGHTOFFSET * 2, LIGHTOFFSET * 2);
+                spriteBatch.Draw(lightmask, new_rect, Color.White);
+                spriteBatch.Draw(lightmask, new_rect, Color.White);
             }
-            spriteBatch.Draw(lightmask, new Vector2((float)familiar.spriteX - LIGHTOFFSET, (float)familiar.spriteY - LIGHTOFFSET), Color.White);
+
+            spriteBatch.Draw(lightmask, new Rectangle(familiar.spriteX - (LIGHTOFFSET - familiar.spriteWidth), familiar.spriteY - (LIGHTOFFSET - familiar.spriteHeight), LIGHTOFFSET * 2, LIGHTOFFSET * 2)
+, Color.White);
+            spriteBatch.Draw(lightmask, new Rectangle(familiar.spriteX - (LIGHTOFFSET - familiar.spriteWidth), familiar.spriteY - (LIGHTOFFSET - familiar.spriteHeight), LIGHTOFFSET * 2, LIGHTOFFSET * 2)
+, Color.White);
             spriteBatch.End();
 
             GraphicsDevice.SetRenderTarget(null);
@@ -340,11 +369,21 @@ namespace ALittleDream
             spriteBatch.Begin(SpriteSortMode.Immediate, null);
             player.Draw(spriteBatch);
             familiar.Draw(spriteBatch);
+            if (showStartingScreens)
+            {
+                if (!screenManager.play)
+                    screenManager.Draw(spriteBatch);
+            }
             spriteBatch.End();
             
             // TODO: Add your drawing code here
 
             base.Draw(gameTime);
+        }
+
+        public void Quit()
+        {
+            this.Exit();
         }
     }
 }
