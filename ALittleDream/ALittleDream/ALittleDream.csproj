@@ -44,6 +44,7 @@
     <Compile Include="ConeLighting.cs" />
     <Compile Include="Controls.cs" />
     <Compile Include="GameScreen.cs" />
+    <Compile Include="MenuItem.cs" />
     <Compile Include="MenuScreen.cs" />
     <Compile Include="MyDraw.cs" />
     <Compile Include="Entity.cs" />
@@ -145,6 +146,9 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Content\door.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\jump\jumpwOrb.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Content\menu\enter.png">

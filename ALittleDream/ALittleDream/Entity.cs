@@ -95,18 +95,8 @@ namespace ALittleDream
             facingRight = true;
             if (m == movement.walking)
             {
-                animations.Add("beta_player");
-                animations.Add("jump/jump1");
-                animations.Add("jump/jump2");
-                animations.Add("jump/jump3");
-                animations.Add("jump/jump4");
-                animations.Add("jump/jump5");
-                animations.Add("jump/jump6");
-                animations.Add("jump/jump7");
-                animations.Add("jump/jump8");
-                animations.Add("jump/jump9");
-                animations.Add("jump/jump10");
-                animations.Add("jump/jump11");
+                animations.Add("beta_player");//0
+                animations.Add("jump/jump3");//1
                 spriteAnimations = new List<Texture2D>();
             }
             else if (m == movement.flying)
@@ -200,6 +190,7 @@ namespace ALittleDream
                                 this.l = lightShape.circle;
                                 Entity.lightingObjects.Add(this);
                                 this.animations[0] = "charHoldingLatern.png";
+                                this.animations[1] = "jump/jumpwOrb.png";
                                 //TODO: other sprites
                                 this.needsNewSprite = true; //loads new content in GameLoop.Update()
 
@@ -225,6 +216,7 @@ namespace ALittleDream
                         this.l = lightShape.none;
                         Entity.lightingObjects.Remove(this);
                         this.animations[0] = "charSprite.png";
+                        this.animations[1] = "jump/jump3.png";
                         //TODO: other sprites
                         this.needsNewSprite = true; //loads new content in GameLoop.Update()
                     }
@@ -281,7 +273,7 @@ namespace ALittleDream
                 if (!onGround())
                 {
                     momentumY++;
-                    if (this.m == movement.walking) image = spriteAnimations[3];
+                    if (this.m == movement.walking) image = spriteAnimations[1];
                 }
             }
         }

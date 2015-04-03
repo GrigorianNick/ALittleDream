@@ -285,6 +285,7 @@ namespace ALittleDream
             {
                 Console.WriteLine("player sprite=" + player.spriteName);
                 player.spriteAnimations[0] = this.Content.Load<Texture2D>(player.animations[0]);
+                player.spriteAnimations[1] = this.Content.Load<Texture2D>(player.animations[1]);
                 //TODO: other sprites
                 player.needsNewSprite = false;
             }
