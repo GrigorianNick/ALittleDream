@@ -11,52 +11,26 @@ namespace ALittleDream
 {
     class MenuScreen : Screen
     {
-        Vector2 startButtonPosition;
-        Vector2 quitButtonPosition;
-        Vector2 startButtonSize;
-        Vector2 quitButtonSize;
-        Texture2D startButton;
-        Texture2D quitButton;
         List<Texture2D> menuImages; 
         List<MenuItem> menuItems;
         int itemNum;
-        MenuItem item;
         Texture2D menuBackground;
-        float startAlpha;
-        float quitAlpha;
         int screenWidth;
         int screenHeight;
         int i;
         float timeToChange;
         float timeElapsed;
-        bool increase;
-        bool startSelected;
         GameLoop game;
 
 
         public MenuScreen(int screenWidth, int screenHeight, GameLoop game)
         {
             this.game = game;
-            /**
-            startButtonPosition = new Vector2();
-            startButtonSize.X = 130;
-            startButtonSize.Y = 40;
-            startButtonPosition.X = (screenWidth - startButtonSize.X)/ 2;
-            startButtonPosition.Y = (screenHeight - startButtonSize.Y)/ 2;
-            quitButtonPosition = new Vector2();
-            quitButtonSize.X = 130;
-            quitButtonSize.Y = 40;
-            quitButtonPosition.X = (screenWidth - quitButtonSize.X) / 2;
-            quitButtonPosition.Y = ((screenHeight - quitButtonSize.Y) / 2) + 50;
-            **/
             this.screenWidth = screenWidth;
             this.screenHeight = screenHeight;
-            startAlpha = 0.0f;
-            quitAlpha = 1.0f;
             i = 0; 
             timeToChange = 0.11f;
             timeElapsed = 0.0f;
-            increase = true;
             changeScreen = false;
             menuImages = new List<Texture2D>();
             menuItems = new List<MenuItem>();
@@ -64,7 +38,6 @@ namespace ALittleDream
             menuItems.Add(new MenuItem("menu/perish", new Vector2((screenWidth - 130) / 2, ((screenHeight - 40) / 2)+50), new Vector2(130, 40)));
             itemNum = 0;
             menuItems[0].selected = true;
-            startSelected = true;
         }
 
         public override void LoadContent(ContentManager content)

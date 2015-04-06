@@ -151,9 +151,6 @@ C:\Users\Craig\Source\Repos\ALittleDream\ALittleDream\ALittleDream\bin\Windows\D
 C:\Users\Craig\Source\Repos\ALittleDream\ALittleDream\ALittleDream\bin\Windows\Debug\Content\tiles\rock\rockTiles_topbottom2.png
 C:\Users\Craig\Source\Repos\ALittleDream\ALittleDream\ALittleDream\bin\Windows\Debug\Content\tiles\rock\rockTiles_topbottom3.png
 C:\Users\Craig\Source\Repos\ALittleDream\ALittleDream\ALittleDream\bin\Windows\Debug\Content\tiles\rock\rockTiles_topbottom4.png
-C:\Users\Cinephile\Documents\GitHub\ALittleDream\ALittleDream\ALittleDream\obj\x86\Debug\ALittleDream.exe
-C:\Users\Cinephile\Documents\GitHub\ALittleDream\ALittleDream\ALittleDream\obj\x86\Debug\ALittleDream.pdb
-C:\Users\Cinephile\Documents\GitHub\ALittleDream\ALittleDream\ALittleDream\obj\x86\Debug\ALittleDream.csprojResolveAssemblyReference.cache
 C:\Users\Cinephile\Documents\GitHub\ALittleDream\ALittleDream\ALittleDream\bin\Windows\Debug\Content\beta_brick_old.png
 C:\Users\Cinephile\Documents\GitHub\ALittleDream\ALittleDream\ALittleDream\bin\Windows\Debug\Content\controls\a.png
 C:\Users\Cinephile\Documents\GitHub\ALittleDream\ALittleDream\ALittleDream\bin\Windows\Debug\Content\controls\d.png
@@ -176,6 +173,7 @@ C:\Users\Cinephile\Documents\GitHub\ALittleDream\ALittleDream\ALittleDream\bin\W
 C:\Users\Cinephile\Documents\GitHub\ALittleDream\ALittleDream\ALittleDream\bin\Windows\Debug\Content\charHoldingLatern.png
 C:\Users\Cinephile\Documents\GitHub\ALittleDream\ALittleDream\ALittleDream\bin\Windows\Debug\Content\charSprite.png
 C:\Users\Cinephile\Documents\GitHub\ALittleDream\ALittleDream\ALittleDream\bin\Windows\Debug\Content\door.png
+C:\Users\Cinephile\Documents\GitHub\ALittleDream\ALittleDream\ALittleDream\bin\Windows\Debug\Content\jump\jumpwOrb.png
 C:\Users\Cinephile\Documents\GitHub\ALittleDream\ALittleDream\ALittleDream\bin\Windows\Debug\Content\menu\enter.png
 C:\Users\Cinephile\Documents\GitHub\ALittleDream\ALittleDream\ALittleDream\bin\Windows\Debug\Content\familiar\familiar1.png
 C:\Users\Cinephile\Documents\GitHub\ALittleDream\ALittleDream\ALittleDream\bin\Windows\Debug\Content\familiar\familiar2.png
@@ -219,6 +217,10 @@ C:\Users\Cinephile\Documents\GitHub\ALittleDream\ALittleDream\ALittleDream\bin\W
 C:\Users\Cinephile\Documents\GitHub\ALittleDream\ALittleDream\ALittleDream\bin\Windows\Debug\Content\tiles\rock\rockTiles_topbottom2.png
 C:\Users\Cinephile\Documents\GitHub\ALittleDream\ALittleDream\ALittleDream\bin\Windows\Debug\Content\tiles\rock\rockTiles_topbottom3.png
 C:\Users\Cinephile\Documents\GitHub\ALittleDream\ALittleDream\ALittleDream\bin\Windows\Debug\Content\tiles\rock\rockTiles_topbottom4.png
+C:\Users\Cinephile\Documents\GitHub\ALittleDream\ALittleDream\ALittleDream\bin\Windows\Debug\Content\treebranchesBack.png
+C:\Users\Cinephile\Documents\GitHub\ALittleDream\ALittleDream\ALittleDream\bin\Windows\Debug\Content\treebranchesFront.png
+C:\Users\Cinephile\Documents\GitHub\ALittleDream\ALittleDream\ALittleDream\bin\Windows\Debug\Content\treesBack.png
+C:\Users\Cinephile\Documents\GitHub\ALittleDream\ALittleDream\ALittleDream\bin\Windows\Debug\Content\treesFront.png
 C:\Users\Cinephile\Documents\GitHub\ALittleDream\ALittleDream\ALittleDream\bin\Windows\Debug\Content\levels\test.tmx
 C:\Users\Cinephile\Documents\GitHub\ALittleDream\ALittleDream\ALittleDream\bin\Windows\Debug\ALittleDream.exe
 C:\Users\Cinephile\Documents\GitHub\ALittleDream\ALittleDream\ALittleDream\bin\Windows\Debug\ALittleDream.pdb
@@ -242,4 +244,8 @@ C:\Users\Cinephile\Documents\GitHub\ALittleDream\ALittleDream\ALittleDream\bin\W
 C:\Users\Cinephile\Documents\GitHub\ALittleDream\ALittleDream\ALittleDream\bin\Windows\Debug\SharpDX.XInput.xml
 C:\Users\Cinephile\Documents\GitHub\ALittleDream\ALittleDream\ALittleDream\bin\Windows\Debug\SharpDX.RawInput.xml
 C:\Users\Cinephile\Documents\GitHub\ALittleDream\ALittleDream\ALittleDream\bin\Windows\Debug\SharpDX.Direct3D9.xml
-C:\Users\Cinephile\Documents\GitHub\ALittleDream\ALittleDream\ALittleDream\bin\Windows\Debug\Content\jump\jumpwOrb.png
+C:\Users\Cinephile\Documents\GitHub\ALittleDream\ALittleDream\ALittleDream\obj\x86\Debug\ALittleDream.exe
+C:\Users\Cinephile\Documents\GitHub\ALittleDream\ALittleDream\ALittleDream\obj\x86\Debug\ALittleDream.pdb
+C:\Users\Cinephile\Documents\GitHub\ALittleDream\ALittleDream\ALittleDream\bin\Windows\Debug\Content\tiles\rocksHorizontal.png
+C:\Users\Cinephile\Documents\GitHub\ALittleDream\ALittleDream\ALittleDream\bin\Windows\Debug\Content\tiles\rocksVertical.png
+C:\Users\Cinephile\Documents\GitHub\ALittleDream\ALittleDream\ALittleDream\obj\x86\Debug\ALittleDream.csprojResolveAssemblyReference.cache
