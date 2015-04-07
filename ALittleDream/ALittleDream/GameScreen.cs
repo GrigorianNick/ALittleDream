@@ -12,7 +12,7 @@ using System.Xml.Linq;
 
 namespace ALittleDream
 {
-    class GameScreen: Screen
+    class GameScreen : Screen
     {
         public Entity player;
         public Entity familiar;
@@ -28,40 +28,38 @@ namespace ALittleDream
         public int initialPlayerY;
         public int initialFamiliarX;
         public int initialFamiliarY;
-        public int initialDoorPositionX;
-        public int initialDoorPositionY;
-        public List<Vector2> initialLights;
         public GraphicsDevice graphicsDevice;
         private Texture2D treesFront;
         private Texture2D treesBack;
         private ArrayList entityListLevel = new ArrayList();
+        public ArrayList collisionObjects = new ArrayList();
+        public ArrayList lightingObjects = new ArrayList();
+        private bool changed;
 
-        public GameScreen(int level, int playerX, int playerY, int familiarX, int familiarY, int doorPositionX, int doorPositionY, GraphicsDevice graphicsDevice)
+
+        public GameScreen(int level, int playerX, int playerY, int familiarX, int familiarY, GraphicsDevice graphicsDevice)
         {
             this.level = level;
             initialPlayerX = playerX;
             initialPlayerY = playerY;
             initialFamiliarX = familiarX;
             initialFamiliarY = familiarY;
-            initialDoorPositionX = doorPositionX;
-            initialDoorPositionY = doorPositionY;
             this.graphicsDevice = graphicsDevice;
             int playerHeight = 40;
             int playerWidth = 25;
             int familiarHeight = 20;
             int familiarWidth = 10;
-            int doorHeight = 50;
-            int doorWidth = 40;
-            this.player = new Entity(ref playerX, ref playerY, ref playerHeight, ref playerWidth, "beta_player", Entity.collision.square, Entity.lightShape.none, Entity.movement.walking, Entity.drawIf.always, Entity.interaction.none);
-            this.familiar = new Entity(ref familiarX, ref familiarY, ref familiarHeight, ref familiarWidth, "familiar/familiar", Entity.collision.none, Entity.lightShape.circle, Entity.movement.flying, Entity.drawIf.always, Entity.interaction.none);
-            this.door = new Entity(ref doorPositionX, ref doorPositionY, ref doorHeight, ref doorWidth, "door", Entity.collision.none, Entity.lightShape.none, Entity.movement.stationary, Entity.drawIf.always, Entity.interaction.none);
+            this.player = new Entity(ref playerX, ref playerY, ref playerHeight, ref playerWidth, "beta_player", Entity.collision.square, Entity.lightShape.none, Entity.movement.walking, Entity.drawIf.always, Entity.interaction.none, ref collisionObjects, ref lightingObjects);
+            this.familiar = new Entity(ref familiarX, ref familiarY, ref familiarHeight, ref familiarWidth, "familiar/familiar", Entity.collision.none, Entity.lightShape.circle, Entity.movement.flying, Entity.drawIf.always, Entity.interaction.none, ref collisionObjects, ref lightingObjects);
             changeScreen = false;
+            this.changed = false;
             loadXML();
         }
 
-        private void loadXML(){
+        private void loadXML()
+        {
             // BEGIN TILED XML PARSING
-            System.IO.Stream stream = TitleContainer.OpenStream("Content/levels/"+level+".tmx");
+            System.IO.Stream stream = TitleContainer.OpenStream("Content/levels/" + level + ".tmx");
             XDocument doc = XDocument.Load(stream);
 
             List<Tile> tiles = new List<Tile>();
@@ -72,6 +70,8 @@ namespace ALittleDream
                 string draw = "";
                 int xOffset = 0;
                 int yOffset = 0;
+                bool door = false;
+                bool interact = false;
                 if (tileset.Attribute("light") != null)
                     light = tileset.Attribute("light").Value;
                 if (tileset.Attribute("collision") != null)
@@ -84,11 +84,15 @@ namespace ALittleDream
                     xOffset = Convert.ToInt32(tileset.Element("tileoffset").Attribute("x").Value);
                     yOffset = Convert.ToInt32(tileset.Element("tileoffset").Attribute("y").Value);
                 }
+                if (tileset.Attribute("door") != null)
+                    door = true;
+                if (tileset.Attribute("interact") != null)
+                    interact = true;
 
                 tiles.Add(new Tile(tileset.Element("image").Attribute("source").Value,
                 Convert.ToInt32(tileset.Attribute("tileheight").Value),
                 Convert.ToInt32(tileset.Attribute("tilewidth").Value),
-                xOffset, yOffset, light, draw, collision));
+                xOffset, yOffset, light, draw, collision, door, interact));
             }
 
 
@@ -100,25 +104,30 @@ namespace ALittleDream
                 if (tile.Attribute("gid").Value != "0")
                 {
                     Tile t = tiles[Convert.ToInt32(tile.Attribute("gid").Value) - 1];
-                    int x = (counterX * 40);
-                    int y = (counterY * 40);
+                    int x = (counterX * 40) + t.offsetX;
+                    int y = (counterY * 40) + t.offsetY;
                     int width = t.width;
                     int height = t.height;
                     if (t.light != "")
                     {
-                            Entity.AddEntityObject(new Entity(ref x, ref y, ref width, ref height, t.image, Entity.collision.none, Entity.lightShape.circle, Entity.movement.stationary, Entity.drawIf.always, Entity.interaction.none));
+                        if (t.interact)
+                            entityListLevel.Add(new Entity(ref x, ref y, ref width, ref height, t.image, Entity.collision.none, Entity.lightShape.circle, Entity.movement.stationary, Entity.drawIf.always, Entity.interaction.grab, ref collisionObjects, ref lightingObjects));
+                        else
+                            entityListLevel.Add(new Entity(ref x, ref y, ref width, ref height, t.image, Entity.collision.none, Entity.lightShape.circle, Entity.movement.stationary, Entity.drawIf.always, Entity.interaction.none, ref collisionObjects, ref lightingObjects));
                     }
                     else
                     {
-                        if (t.collision == "none")
+                        if (t.door)
                         {
-                            Entity.AddEntityObject(new Entity(ref x, ref y, ref width, ref height, t.image, Entity.collision.none, Entity.lightShape.none, Entity.movement.stationary, Entity.drawIf.always, Entity.interaction.none));
-
+                            this.door = new Entity(ref x, ref y, ref width, ref height, t.image, Entity.collision.none, Entity.lightShape.none, Entity.movement.stationary, Entity.drawIf.lit, Entity.interaction.none, ref collisionObjects, ref lightingObjects);
                         }
                         else
                         {
-                            Console.WriteLine("yescollision");
-                            Entity.AddEntityObject(new Entity(ref x, ref y, ref width, ref height, t.image, Entity.collision.square, Entity.lightShape.none, Entity.movement.stationary, Entity.drawIf.lit, Entity.interaction.none));
+
+                            if (t.collision == "none")
+                                entityListLevel.Add(new Entity(ref x, ref y, ref width, ref height, t.image, Entity.collision.none, Entity.lightShape.none, Entity.movement.stationary, Entity.drawIf.always, Entity.interaction.none, ref collisionObjects, ref lightingObjects));
+                            else
+                                entityListLevel.Add(new Entity(ref x, ref y, ref width, ref height, t.image, Entity.collision.square, Entity.lightShape.none, Entity.movement.stationary, Entity.drawIf.lit, Entity.interaction.none, ref collisionObjects, ref lightingObjects));
                         }
                     }
                 }
@@ -137,7 +146,9 @@ namespace ALittleDream
 
         public override void LoadContent(ContentManager content)
         {
-            //Entity.entityList = entityListLevel;
+            Entity.entityList.Clear();
+            Entity.entityList = entityListLevel;
+
             this.content = content;
             foreach (string s in player.animations)
                 player.AnimatedLoadContent(content, s);
@@ -145,7 +156,7 @@ namespace ALittleDream
             foreach (string s in familiar.animations)
                 familiar.AnimatedLoadContent(content, s);
             familiar.image = familiar.spriteAnimations[0];
-            door.image = content.Load<Texture2D>("door");
+            door.LoadContent(content);
 
             foreach (Entity e in Entity.entityList)
             {
@@ -171,8 +182,12 @@ namespace ALittleDream
         {
             if ((player.spriteX + 15) > door.spriteX && (player.spriteX + player.spriteWidth) < (door.spriteX + door.spriteWidth + 15)
     && (player.spriteY + 15) > door.spriteY && (player.spriteY + player.spriteHeight) < (door.spriteY + door.spriteHeight + 15)
-                && controls.isPressed(Keys.Up, Buttons.DPadUp))
+                && !changed)
+            {
                 changeScreen = true;
+                changed = true;
+            }
+
 
             if (player.needsNewSprite)
             {
@@ -221,16 +236,19 @@ namespace ALittleDream
             spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.Additive);
 
             // Draw out lightmasks based on torch positions.
-            foreach (Entity l in Entity.lightingObjects)
+            foreach (Entity l in lightingObjects)
             {
-                var new_rect = new Rectangle(l.spriteX - (LIGHTOFFSET - l.spriteWidth), l.spriteY - (LIGHTOFFSET - l.spriteHeight), LIGHTOFFSET * 2, LIGHTOFFSET * 2);
-                spriteBatch.Draw(lightmask, new_rect, Color.White);
-                spriteBatch.Draw(lightmask, new_rect, Color.White);
+                if (l.l == Entity.lightShape.circle)
+                {
+                    var new_rect = new Rectangle(l.spriteX - (l.lightRange - l.spriteWidth), l.spriteY - (l.lightRange - l.spriteHeight), l.lightRange * 2, l.lightRange * 2);
+                    spriteBatch.Draw(lightmask, new_rect, Color.White);
+                    spriteBatch.Draw(lightmask, new_rect, Color.White);
+                }
             }
 
-            spriteBatch.Draw(lightmask, new Rectangle(familiar.spriteX - (LIGHTOFFSET - familiar.spriteWidth), familiar.spriteY - (LIGHTOFFSET - familiar.spriteHeight), LIGHTOFFSET * 2, LIGHTOFFSET * 2)
+            spriteBatch.Draw(lightmask, new Rectangle(familiar.spriteX - (familiar.lightRange - familiar.spriteWidth), familiar.spriteY - (familiar.lightRange - familiar.spriteHeight), familiar.lightRange * 2, familiar.lightRange * 2)
 , Color.White);
-            spriteBatch.Draw(lightmask, new Rectangle(familiar.spriteX - (LIGHTOFFSET - familiar.spriteWidth), familiar.spriteY - (LIGHTOFFSET - familiar.spriteHeight), LIGHTOFFSET * 2, LIGHTOFFSET * 2)
+            spriteBatch.Draw(lightmask, new Rectangle(familiar.spriteX - (familiar.lightRange - familiar.spriteWidth), familiar.spriteY - (familiar.lightRange - familiar.spriteHeight), familiar.lightRange * 2, familiar.lightRange * 2)
 , Color.White);
             spriteBatch.End();
 
@@ -254,7 +272,7 @@ namespace ALittleDream
             spriteBatch.Begin(SpriteSortMode.Immediate, null);
             foreach (Entity e in Entity.entityList)
             {
-                if(e.d == Entity.drawIf.always)
+                if (e.d == Entity.drawIf.always)
                     e.Draw(spriteBatch);
             }
             player.Draw(spriteBatch);

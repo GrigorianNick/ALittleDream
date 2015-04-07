@@ -120,7 +120,11 @@ namespace ALittleDream
         }**/
 
         public void skipScreen(){
-            currentScreen.changeScreen = true;
+            if (screens.Count > 0)
+            {
+                currentScreen = screens.Pop();
+                currentScreen.LoadContent(content);
+            }
         }
     }
 }

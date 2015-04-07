@@ -30,10 +30,11 @@
  <tileset firstgid="10" name="rocksVertical3" tilewidth="40" tileheight="40">
   <image source="tiles/rock/rocksVertical3.png" width="40" height="40"/>
  </tileset>
- <tileset firstgid="11" name="doorBottom" tilewidth="40" tileheight="40" collision="none">
+ <tileset firstgid="11" name="doorBottom" tilewidth="40" tileheight="40" collision="none" door="true">
   <image source="doorBottom.png" width="40" height="40"/>
  </tileset>
  <tileset firstgid="12" name="doorTop" tilewidth="40" tileheight="9" collision="none">
+   <tileoffset x="0" y="32"/>
   <image source="doorTop.png" width="40" height="9"/>
  </tileset>
  <tileset firstgid="13" name="lamppostTallBottom" tilewidth="18" tileheight="40" collision="none" draw="always">
@@ -47,8 +48,8 @@
   <tileoffset x="11" y="0"/>
   <image source="lights/lamppostTallTop.png" width="18" height="40"/>
  </tileset>
- <tileset firstgid="16" name="latern" tilewidth="22" tileheight="21" collision="none" light="circle" draw="always">
-  <tileoffset x="9" y="0"/>
+ <tileset firstgid="16" name="latern" tilewidth="22" tileheight="21" collision="none" light="circle" draw="always" interact="true">
+  <tileoffset x="9" y="20"/>
   <image source="lights/lantern.png" width="22" height="21"/>
  </tileset>
  <layer name="Tile Layer 1" width="20" height="12">

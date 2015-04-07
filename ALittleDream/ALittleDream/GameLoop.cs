@@ -56,6 +56,7 @@ namespace ALittleDream
     /// </summary>
     public unsafe class GameLoop : Game
     {
+        public static bool debug = false;
         public static GameTime gameTime;
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
@@ -67,7 +68,6 @@ namespace ALittleDream
         Texture2D blackSquare;
         Texture2D lightmask;
         ScreenManager screenManager;
-        bool showStartingScreens;
         public static int LIGHTOFFSET = 115;
 
         public GameLoop()
@@ -87,106 +87,113 @@ namespace ALittleDream
         /// </summary>
         protected override void Initialize()
         {
-            showStartingScreens = true;
-            // BEGIN TILED XML PARSING
-            System.IO.Stream stream = TitleContainer.OpenStream("Content/levels/test.tmx");
-            XDocument doc = XDocument.Load(stream);
+            if (debug)
+            {/**
+                // BEGIN TILED XML PARSING
+                System.IO.Stream stream = TitleContainer.OpenStream("Content/levels/test.tmx");
+                XDocument doc = XDocument.Load(stream);
 
-            List <int[]> blocks = new List<int[]>();
+                windowWidth = Convert.ToInt32(doc.Root.Attribute("width").Value) * Convert.ToInt32(doc.Root.Attribute("tilewidth").Value);
+                windowHeight = Convert.ToInt32(doc.Root.Attribute("height").Value) * Convert.ToInt32(doc.Root.Attribute("tileheight").Value);
 
-            windowWidth = Convert.ToInt32(doc.Root.Attribute("width").Value) * Convert.ToInt32(doc.Root.Attribute("tilewidth").Value);
-            windowHeight = Convert.ToInt32(doc.Root.Attribute("height").Value) * Convert.ToInt32(doc.Root.Attribute("tileheight").Value);
+                graphics.PreferredBackBufferWidth = windowWidth;
+                graphics.PreferredBackBufferHeight = windowHeight;
+                graphics.ApplyChanges();
 
-            graphics.PreferredBackBufferWidth = windowWidth;
-            graphics.PreferredBackBufferHeight = windowHeight;
-            graphics.ApplyChanges();
+                //initialize player
+                int playerX = 10, playerY = 10, playerHeight = 40, playerWidth = 25;
+                player = new Entity(ref playerX, ref playerY, ref playerHeight, ref playerWidth, "beta_player.png", Entity.collision.square, Entity.lightShape.none, Entity.movement.walking, Entity.drawIf.always, Entity.interaction.none);
 
-            //initialize player
-            int playerX = 10, playerY = 10, playerHeight = 40, playerWidth = 25;
-            player = new Entity(ref playerX, ref playerY, ref playerHeight, ref playerWidth, "beta_player.png", Entity.collision.square, Entity.lightShape.none, Entity.movement.walking, Entity.drawIf.always, Entity.interaction.none);
+                //initialize familiar
+                int familiarX = 100, familiarY = 20, familiarHeight = 20, familiarWidth = 10;
+                familiar = new Entity(ref familiarX, ref familiarY, ref familiarHeight, ref familiarWidth, "familiar/familiar.png", Entity.collision.none, Entity.lightShape.circle, Entity.movement.flying, Entity.drawIf.always, Entity.interaction.none);
+                familiar.setMaxLightRange(115);
 
-            //initialize familiar
-            int familiarX = 100, familiarY = 20, familiarHeight = 20, familiarWidth = 10;            
-            familiar = new Entity(ref familiarX, ref familiarY, ref familiarHeight, ref familiarWidth, "familiar/familiar.png", Entity.collision.none, Entity.lightShape.circle, Entity.movement.flying, Entity.drawIf.always, Entity.interaction.none);
-            familiar.setMaxLightRange(115);
-
-            //initialize blocks
-            int[] blockX = new int[]{
+                //initialize blocks
+                int[] blockX = new int[]{
                 10, 200, 250, 300, 350, 400, 350, 350, -40, 440, 540
             };
-            int[] blockY = new int[]{
+                int[] blockY = new int[]{
                 100, 200, 200, 200, 200, 200, 150, 100, 50, 320, 320
             };
-            int[] blockHeight = new int[]{
+                int[] blockHeight = new int[]{
                 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50
             };
-            int[] blockWidth = new int[]{
+                int[] blockWidth = new int[]{
                 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50
             };
-            for (int i = 0; i < blockHeight.Length; i++)
-            {
-                Entity.AddEntityObject(new Entity(ref blockX[i], ref blockY[i], ref blockHeight[i], ref blockWidth[i], "beta_brick.png", Entity.collision.square, Entity.lightShape.none, Entity.movement.stationary, Entity.drawIf.lit, Entity.interaction.none));
-            }
+                for (int i = 0; i < blockHeight.Length; i++)
+                {
+                    Entity.AddEntityObject(new Entity(ref blockX[i], ref blockY[i], ref blockHeight[i], ref blockWidth[i], "beta_brick.png", Entity.collision.square, Entity.lightShape.none, Entity.movement.stationary, Entity.drawIf.lit, Entity.interaction.none));
+                }
 
-            //initialize lantern
-            int lanternX = 300,
-                lanternY = 50,
-                lanternHeight = 30,
-                lanternWidth = 30;
-            lantern = new Entity(ref lanternX, ref lanternY, ref lanternHeight, ref lanternWidth, "lights/lantern.png", Entity.collision.square, Entity.lightShape.circle, Entity.movement.physics, Entity.drawIf.lit, Entity.interaction.grab);
-            Entity.AddEntityObject(lantern);
-            lantern.setMaxLightRange(115);
-            
-            //initialize lightbulbs (beta lampposts?)
-            int[] lightX = new int[]{
+                //initialize lantern
+                int lanternX = 300,
+                    lanternY = 50,
+                    lanternHeight = 30,
+                    lanternWidth = 30;
+                lantern = new Entity(ref lanternX, ref lanternY, ref lanternHeight, ref lanternWidth, "lights/lantern.png", Entity.collision.square, Entity.lightShape.circle, Entity.movement.physics, Entity.drawIf.lit, Entity.interaction.grab);
+                Entity.AddEntityObject(lantern);
+                lantern.setMaxLightRange(115);
+
+                //initialize lightbulbs (beta lampposts?)
+                int[] lightX = new int[]{
                 60, 200
             };
-            int[] lightY = new int[]{
+                int[] lightY = new int[]{
                 100, 150
             };
-            int[] lightHeight = new int[]{
+                int[] lightHeight = new int[]{
                 20, 20
             };
-            int[] lightWidth = new int[]{
+                int[] lightWidth = new int[]{
                 20, 20
             };
-            for (int i = 0; i < lightX.Length; i++)
-            {
-                Entity.AddEntityObject(new Entity(ref lightX[i], ref lightY[i], ref lightHeight[i], ref lightWidth[i], "beta_lightbulb.png", Entity.collision.none, Entity.lightShape.circle, Entity.movement.stationary, Entity.drawIf.always, Entity.interaction.none));
+                for (int i = 0; i < lightX.Length; i++)
+                {
+                    Entity.AddEntityObject(new Entity(ref lightX[i], ref lightY[i], ref lightHeight[i], ref lightWidth[i], "beta_lightbulb.png", Entity.collision.none, Entity.lightShape.circle, Entity.movement.stationary, Entity.drawIf.always, Entity.interaction.none));
+                }
+
+                //initialize static light sizes
+                ((Entity)Entity.lightingObjects[2]).setMaxLightRange(115);
+                ((Entity)Entity.lightingObjects[3]).setMaxLightRange(115);
+
+                int lightSwitchX = 300;
+                int lightSwitchY = 300;
+                int lightSwitchHeight = 40;
+                int lightSwitchWidth = 40;
+                Entity lightSwitch = new Entity(ref lightSwitchX, ref lightSwitchY, ref lightSwitchHeight, ref lightSwitchWidth, "beta_brick_old.png", Entity.collision.none, Entity.lightShape.none, Entity.movement.stationary, Entity.drawIf.lit, Entity.interaction.toggle);
+
+                int switchableX = 500;
+                int switchableY = 300;
+                int switchableHeight = 80;
+                int switchableWidth = 20;
+                Entity switchable = new Entity(ref switchableX, ref switchableY, ref switchableHeight, ref switchableWidth, "lights/lamppostShort.png", Entity.collision.none, Entity.lightShape.circle, Entity.movement.stationary, Entity.drawIf.lit, Entity.interaction.toggle);
+                switchable.isLit = false;
+                lightSwitch.setMaxLightRange(80);
+                switchable.setMaxLightRange(80);
+
+                Entity.AddEntityObject(lightSwitch);
+                Entity.AddEntityObject(switchable);
+                lightSwitch.assignToggle("toggle1");
+                switchable.assignToggle("toggle1");**/
+
             }
-
-            //initialize static light sizes
-            ((Entity)Entity.lightingObjects[2]).setMaxLightRange(115);
-            ((Entity)Entity.lightingObjects[3]).setMaxLightRange(115);
-
-            int lightSwitchX = 300;
-            int lightSwitchY = 300;
-            int lightSwitchHeight = 40;
-            int lightSwitchWidth = 40;
-            Entity lightSwitch = new Entity(ref lightSwitchX, ref lightSwitchY, ref lightSwitchHeight, ref lightSwitchWidth, "beta_brick_old.png", Entity.collision.none, Entity.lightShape.none, Entity.movement.stationary, Entity.drawIf.lit, Entity.interaction.toggle);
-
-            int switchableX = 500;
-            int switchableY = 300;
-            int switchableHeight = 80;
-            int switchableWidth = 20;
-            Entity switchable = new Entity(ref switchableX, ref switchableY, ref switchableHeight, ref switchableWidth, "lights/lamppostShort.png", Entity.collision.none, Entity.lightShape.circle, Entity.movement.stationary, Entity.drawIf.lit, Entity.interaction.toggle);
-            switchable.isLit = false;
-            lightSwitch.setMaxLightRange(80);
-            switchable.setMaxLightRange(80);
-
-            Entity.AddEntityObject(lightSwitch);
-            Entity.AddEntityObject(switchable);
-            lightSwitch.assignToggle("toggle1");
-            switchable.assignToggle("toggle1");
-            
-
-            if (showStartingScreens)
+            else
             {
+
                 SplashScreen splashScreen = new SplashScreen(graphics.PreferredBackBufferWidth, graphics.PreferredBackBufferHeight);
                 MenuScreen menuScreen = new MenuScreen(graphics.PreferredBackBufferWidth, graphics.PreferredBackBufferHeight, this);
-                //GameScreen gameScreen1 = new GameScreen(1, 150, 0, 100, 20, 300, 100, GraphicsDevice);
+                GameScreen gameScreen1 = new GameScreen(1, 150, 0, 100, 20, GraphicsDevice);
+                GameScreen gameScreen2 = new GameScreen(2, 180, 50, 100, 20, GraphicsDevice);
+                GameScreen gameScreen3 = new GameScreen(3, 600, 0, 100, 20, GraphicsDevice);
+                GameScreen gameScreen4 = new GameScreen(4, 100, 0, 100, 20, GraphicsDevice);
+
                 Stack<Screen> screens = new Stack<Screen>();
-                //screens.Push(gameScreen1);
+                screens.Push(gameScreen4);
+                screens.Push(gameScreen3);
+                screens.Push(gameScreen2);
+                screens.Push(gameScreen1);
                 screens.Push(menuScreen);
                 screens.Push(splashScreen);
                 screenManager = new ScreenManager(screens, graphics.PreferredBackBufferWidth, graphics.PreferredBackBufferHeight);
@@ -205,33 +212,38 @@ namespace ALittleDream
         /// </summary>
         protected override void LoadContent()
         {
-            if (showStartingScreens)
+            // Create a new SpriteBatch, which can be used to draw textures.
+            spriteBatch = new SpriteBatch(GraphicsDevice);
+
+            if (!debug)
             {
                 screenManager.LoadContent(this.Content);
             }
-            // Create a new SpriteBatch, which can be used to draw textures.
-            spriteBatch = new SpriteBatch(GraphicsDevice);
-            foreach (string s in player.animations)
-                player.AnimatedLoadContent(this.Content, s);
-            player.image = player.spriteAnimations[0];
-            //player.LoadContent(this.Content);
-            foreach (string s in familiar.animations)
-                familiar.AnimatedLoadContent(this.Content, s);
-            familiar.image = familiar.spriteAnimations[0];
-            Console.WriteLine((player.spriteX));
-            // Load all GameObject content
-            
-            foreach (Entity e in Entity.entityList) {
-                e.LoadContent(this.Content);
-            }
+            else
+            {
+                foreach (string s in player.animations)
+                    player.AnimatedLoadContent(this.Content, s);
+                player.image = player.spriteAnimations[0];
+                //player.LoadContent(this.Content);
+                foreach (string s in familiar.animations)
+                    familiar.AnimatedLoadContent(this.Content, s);
+                familiar.image = familiar.spriteAnimations[0];
+                Console.WriteLine((player.spriteX));
+                // Load all GameObject content
 
-            //loading render targets for Light Mask
-            var pp = GraphicsDevice.PresentationParameters;
-            entities = new RenderTarget2D(GraphicsDevice, pp.BackBufferWidth, pp.BackBufferHeight);
-            lights = new RenderTarget2D(GraphicsDevice, pp.BackBufferWidth, pp.BackBufferHeight);
-            blackSquare = Content.Load<Texture2D>("blacksquare");
-            lightmask = Content.Load<Texture2D>("lightmask");
-            // TODO: use this.Content to load your game content here
+                foreach (Entity e in Entity.entityList)
+                {
+                    e.LoadContent(this.Content);
+                }
+
+                //loading render targets for Light Mask
+                var pp = GraphicsDevice.PresentationParameters;
+                entities = new RenderTarget2D(GraphicsDevice, pp.BackBufferWidth, pp.BackBufferHeight);
+                lights = new RenderTarget2D(GraphicsDevice, pp.BackBufferWidth, pp.BackBufferHeight);
+                blackSquare = Content.Load<Texture2D>("blacksquare");
+                lightmask = Content.Load<Texture2D>("lightmask");
+                // TODO: use this.Content to load your game content here
+            }
         }
 
         /// <summary>
@@ -240,7 +252,7 @@ namespace ALittleDream
         /// </summary>
         protected override void UnloadContent()
         {
-            if (showStartingScreens)
+            if (!debug)
             {
                 screenManager.UnloadContent(this.Content);
             }
@@ -259,11 +271,6 @@ namespace ALittleDream
 
             // TODO: Add your update logic here
             controls.Update();
-
-            if (showStartingScreens)
-            {
-                screenManager.Update(controls, gameTime);
-            }
 
             // Window sizing with numpad
             if (controls.isPressed(Keys.NumPad6, Buttons.A))
@@ -294,24 +301,37 @@ namespace ALittleDream
             {
                 resetLevel();
             }
-            if (player.needsNewSprite)
+            else if (controls.onPress(Keys.Space, Buttons.A))
             {
-                Console.WriteLine("player sprite=" + player.spriteName);
-                player.spriteAnimations[0] = this.Content.Load<Texture2D>(player.animations[0]);
-                player.spriteAnimations[1] = this.Content.Load<Texture2D>(player.animations[1]);
-                //TODO: other sprites
-                player.needsNewSprite = false;
+                screenManager.skipScreen();
             }
-            player.Update(controls, gameTime);
-            familiar.Update(controls, gameTime);
-            foreach (Entity e in Entity.entityList)
+
+
+            if (!debug)
             {
-                if (e.needsNewSprite)
+                screenManager.Update(controls, gameTime);
+            }
+            else
+            {
+                if (player.needsNewSprite)
                 {
-                    e.LoadContent(this.Content);
-                    e.needsNewSprite = false;
+                    Console.WriteLine("player sprite=" + player.spriteName);
+                    player.spriteAnimations[0] = this.Content.Load<Texture2D>(player.animations[0]);
+                    player.spriteAnimations[1] = this.Content.Load<Texture2D>(player.animations[1]);
+                    //TODO: other sprites
+                    player.needsNewSprite = false;
                 }
-                e.Update(controls, gameTime);
+                player.Update(controls, gameTime);
+                familiar.Update(controls, gameTime);
+                foreach (Entity e in Entity.entityList)
+                {
+                    if (e.needsNewSprite)
+                    {
+                        e.LoadContent(this.Content);
+                        e.needsNewSprite = false;
+                    }
+                    e.Update(controls, gameTime);
+                }
             }
             //if (Entity.debugLighting)
             base.Update(gameTime);
@@ -339,84 +359,76 @@ namespace ALittleDream
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Draw(GameTime gameTime)
         {
-            ///**
-            GraphicsDevice.Clear(Color.CornflowerBlue);
+            if (debug)
+            {/**
+                //Light Shader code: uncomment code below and comment code above to use
+                //Set render target to entities then draw all entities
+                GraphicsDevice.SetRenderTarget(entities);
+                GraphicsDevice.Clear(Color.Black);
 
-            spriteBatch.Begin();
-            player.Draw(spriteBatch);
-            familiar.Draw(spriteBatch);
-            foreach (Entity e in Entity.entityList)
-            {
-                e.Draw(spriteBatch);
+                spriteBatch.Begin();
+                foreach (Entity e in Entity.entityList)
+                {
+                    e.Draw(spriteBatch);
+                }
+                spriteBatch.End();
+                GraphicsDevice.SetRenderTarget(null);
+
+                //Set render target to lightMask then draw lightmask.png every instance where there is a light
+                GraphicsDevice.SetRenderTarget(lights);
+                GraphicsDevice.Clear(Color.Black);
+
+                // Create a Black Background
+                spriteBatch.Begin();
+                spriteBatch.Draw(blackSquare, new Vector2(0, 0), new Rectangle(0, 0, 800, 800), Color.White);
+                spriteBatch.End();
+
+                spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.Additive);
+
+                // Draw out lightmasks based on torch positions.
+                foreach (Entity l in Entity.lightingObjects)
+                {
+                    var new_rect = new Rectangle(l.spriteX - (l.lightRange - l.spriteWidth), l.spriteY - (l.lightRange - l.spriteHeight), l.lightRange * 2, l.lightRange * 2);
+                    spriteBatch.Draw(lightmask, new_rect, Color.White);
+                    spriteBatch.Draw(lightmask, new_rect, Color.White);
+                }
+
+                spriteBatch.Draw(lightmask, new Rectangle(familiar.spriteX - (lantern.lightRange - familiar.spriteWidth), familiar.spriteY - (lantern.lightRange - familiar.spriteHeight), lantern.lightRange * 2, lantern.lightRange * 2)
+    , Color.White);
+                spriteBatch.Draw(lightmask, new Rectangle(familiar.spriteX - (lantern.lightRange - familiar.spriteWidth), familiar.spriteY - (lantern.lightRange - familiar.spriteHeight), lantern.lightRange * 2, lantern.lightRange * 2)
+    , Color.White);
+                spriteBatch.End();
+
+                GraphicsDevice.SetRenderTarget(null);
+
+                //Draw everything to screen w/ blendstate
+                GraphicsDevice.Clear(Color.Black);
+                spriteBatch.Begin(SpriteSortMode.Immediate, null);
+                spriteBatch.Draw(entities, new Vector2(0, 0), Color.White);
+                spriteBatch.End();
+
+                BlendState blend = new BlendState();
+                blend.ColorBlendFunction = BlendFunction.Add;
+                blend.ColorSourceBlend = Blend.DestinationColor;
+                blend.ColorDestinationBlend = Blend.Zero;
+
+                spriteBatch.Begin(SpriteSortMode.Immediate, blend);
+                spriteBatch.Draw(lights, new Vector2(0, 0), Color.White);
+                spriteBatch.End();
+
+                spriteBatch.Begin(SpriteSortMode.Immediate, null);
+                player.Draw(spriteBatch);
+                familiar.Draw(spriteBatch);
+                spriteBatch.End();**/
             }
-            spriteBatch.End();
-            //**/
-            //Light Shader code: uncomment code below and comment code above to use
-            //Set render target to entities then draw all entities
-            GraphicsDevice.SetRenderTarget(entities);
-            GraphicsDevice.Clear(Color.Black);
-
-            spriteBatch.Begin();
-            foreach (Entity e in Entity.entityList)
-            {                
-                e.Draw(spriteBatch);
-            }
-            spriteBatch.End();
-            GraphicsDevice.SetRenderTarget(null);
-
-            //Set render target to lightMask then draw lightmask.png every instance where there is a light
-            GraphicsDevice.SetRenderTarget(lights);
-            GraphicsDevice.Clear(Color.Black);
-
-            // Create a Black Background
-            spriteBatch.Begin();
-            spriteBatch.Draw(blackSquare, new Vector2(0, 0), new Rectangle(0, 0, 800, 800), Color.White);
-            spriteBatch.End();
-
-            spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.Additive);
-
-            // Draw out lightmasks based on torch positions.
-            foreach (Entity l in Entity.lightingObjects)
+            else
             {
-                var new_rect = new Rectangle(l.spriteX - (l.lightRange - l.spriteWidth), l.spriteY - (l.lightRange - l.spriteHeight), l.lightRange * 2, l.lightRange * 2);
-                spriteBatch.Draw(lightmask, new_rect, Color.White);
-                spriteBatch.Draw(lightmask, new_rect, Color.White);
-            }
-
-            spriteBatch.Draw(lightmask, new Rectangle(familiar.spriteX - (lantern.lightRange - familiar.spriteWidth), familiar.spriteY - (lantern.lightRange - familiar.spriteHeight), lantern.lightRange * 2, lantern.lightRange * 2)
-, Color.White);
-            spriteBatch.Draw(lightmask, new Rectangle(familiar.spriteX - (lantern.lightRange - familiar.spriteWidth), familiar.spriteY - (lantern.lightRange - familiar.spriteHeight), lantern.lightRange * 2, lantern.lightRange * 2)
-, Color.White);
-            spriteBatch.End();
-
-            GraphicsDevice.SetRenderTarget(null);
-
-            //Draw everything to screen w/ blendstate
-            GraphicsDevice.Clear(Color.Black);
-            spriteBatch.Begin(SpriteSortMode.Immediate, null);
-            spriteBatch.Draw(entities, new Vector2(0, 0), Color.White);
-            spriteBatch.End();
-
-            BlendState blend = new BlendState();
-            blend.ColorBlendFunction = BlendFunction.Add;
-            blend.ColorSourceBlend = Blend.DestinationColor;
-            blend.ColorDestinationBlend = Blend.Zero;
-
-            spriteBatch.Begin(SpriteSortMode.Immediate, blend);
-            spriteBatch.Draw(lights, new Vector2(0, 0), Color.White);
-            spriteBatch.End();
-
-            spriteBatch.Begin(SpriteSortMode.Immediate, null);
-            player.Draw(spriteBatch);
-            familiar.Draw(spriteBatch);
-
-            if (showStartingScreens)
-            {
+                spriteBatch.Begin(SpriteSortMode.Immediate, null);
                 if (!screenManager.play)
                     screenManager.Draw(spriteBatch);
+                spriteBatch.End();
+
             }
-            spriteBatch.End();
-            
             // TODO: Add your drawing code here
 
             base.Draw(gameTime);
