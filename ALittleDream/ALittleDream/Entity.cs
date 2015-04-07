@@ -92,7 +92,6 @@ namespace ALittleDream
             d = drw;
             i = inter;
 
-            maxLightRange = 115;
             //collision.x = spriteX;
             //collision.y = spriteY;
             //collision.height = height;

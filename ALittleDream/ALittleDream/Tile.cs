@@ -18,8 +18,9 @@ namespace ALittleDream
         public bool door;
         public string interact;
         public string toggle;
+        public int maxLightRange;
 
-        public Tile(string image, int width, int height, int offsetX, int offsetY, string light, string draw, string collision, bool door, string interact, string toggle)
+        public Tile(string image, int width, int height, int offsetX, int offsetY, string light, int maxLightRange, string draw, string collision, bool door, string interact, string toggle)
         {
             this.image = image;
             this.width = width;
@@ -32,6 +33,7 @@ namespace ALittleDream
             this.door = door;
             this.interact = interact;
             this.toggle = toggle;
+            this.maxLightRange = maxLightRange;
         }
 
         public Tile(string image, int width, int height)

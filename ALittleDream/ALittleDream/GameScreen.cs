@@ -22,7 +22,6 @@ namespace ALittleDream
         RenderTarget2D lights;
         Texture2D blackSquare;
         Texture2D lightmask;
-        public static int LIGHTOFFSET = 115;
         public int level;
         public int initialPlayerX;
         public int initialPlayerY;
@@ -73,8 +72,12 @@ namespace ALittleDream
                 bool door = false;
                 string interact = "";
                 string toggle = "";
+                int maxLightRange = 0;
                 if (tileset.Attribute("light") != null)
+                {
                     light = tileset.Attribute("light").Value;
+                    maxLightRange = Convert.ToInt32(tileset.Attribute("maxLightRange").Value);
+                }
                 if (tileset.Attribute("collision") != null)
                     collision = tileset.Attribute("collision").Value;
                 if (tileset.Attribute("draw") != null)
@@ -95,7 +98,7 @@ namespace ALittleDream
                 tiles.Add(new Tile(tileset.Element("image").Attribute("source").Value,
                 Convert.ToInt32(tileset.Attribute("tileheight").Value),
                 Convert.ToInt32(tileset.Attribute("tilewidth").Value),
-                xOffset, yOffset, light, draw, collision, door, interact, toggle));
+                xOffset, yOffset, light, maxLightRange, draw, collision, door, interact, toggle));
             }
 
 
@@ -116,18 +119,23 @@ namespace ALittleDream
                     {
                         if (t.interact == "grab")
                         {
-                            entityListLevel.Add(new Entity(ref x, ref y, ref width, ref height, t.image, Entity.collision.none, Entity.lightShape.circle, Entity.movement.stationary, Entity.drawIf.always, Entity.interaction.grab, ref collisionObjects, ref lightingObjects));
+                            Entity ent = new Entity(ref x, ref y, ref width, ref height, t.image, Entity.collision.none, Entity.lightShape.circle, Entity.movement.stationary, Entity.drawIf.always, Entity.interaction.grab, ref collisionObjects, ref lightingObjects);
+                            ent.maxLightRange = t.maxLightRange;
+                            entityListLevel.Add(ent);
                         }
                         else if (t.interact == "toggle")
                         {
                             Entity ent = new Entity(ref x, ref y, ref width, ref height, t.image, Entity.collision.none, Entity.lightShape.circle, Entity.movement.stationary, Entity.drawIf.lit, Entity.interaction.toggle, ref collisionObjects, ref lightingObjects);
+                            ent.maxLightRange = t.maxLightRange;
                             ent.assignToggle(t.toggle);
                             ent.isLit = false;
                             entityListLevel.Add(ent);
                         }
                         else
                         {
-                            entityListLevel.Add(new Entity(ref x, ref y, ref width, ref height, t.image, Entity.collision.none, Entity.lightShape.circle, Entity.movement.stationary, Entity.drawIf.always, Entity.interaction.none, ref collisionObjects, ref lightingObjects));
+                            Entity ent = new Entity(ref x, ref y, ref width, ref height, t.image, Entity.collision.none, Entity.lightShape.circle, Entity.movement.stationary, Entity.drawIf.always, Entity.interaction.none, ref collisionObjects, ref lightingObjects);
+                            ent.maxLightRange = t.maxLightRange;
+                            entityListLevel.Add(ent);
 
                         }
                     }

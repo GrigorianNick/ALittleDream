@@ -48,7 +48,7 @@
  <tileset firstgid="16" name="w" tilewidth="40" tileheight="40">
   <image source="controls/w.png" width="40" height="40"/>
  </tileset>
- <tileset firstgid="17" name="lamppostTallTop" tilewidth="18" tileheight="40" light="circle" collision="none">
+ <tileset firstgid="17" name="lamppostTallTop" tilewidth="18" tileheight="40" light="circle" collision="none"  maxLightRange="115">
   <tileoffset x="11" y="0"/>
   <image source="lights/lamppostTallTop.png" width="18" height="40"/>
  </tileset>
@@ -63,7 +63,7 @@
    <tileoffset x="0" y="32"/>
   <image source="doorTop.png" width="40" height="9"/>
  </tileset>
- <tileset firstgid="21" name="movingSpotlight2" tilewidth="24" tileheight="35" light="cone" collision="none">
+ <tileset firstgid="21" name="movingSpotlight2" tilewidth="24" tileheight="35" light="cone" collision="none"  maxLightRange="115">
   <tileoffset x="8" y="-5"/>
   <image source="lights/movingSpotlight2.png" width="24" height="35"/>
  </tileset>
