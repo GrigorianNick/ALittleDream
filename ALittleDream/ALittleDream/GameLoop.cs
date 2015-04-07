@@ -101,21 +101,6 @@ namespace ALittleDream
             graphics.PreferredBackBufferHeight = windowHeight;
             graphics.ApplyChanges();
 
-            // TODO: parse rest of XML, specifically the tile specification
-            // END TILED XML PARSING
-            
-            System.IO.StreamReader file = new System.IO.StreamReader("Content/levels/test.txt");
-            string line;
-            int counter = 0;
-            while ((line = file.ReadLine()) != null)
-            {
-                Console.WriteLine(line);
-                counter++;
-            }
-            Console.WriteLine(counter);
-            file.Close();
-            // TODO: Add your initialization logic here
-
             //initialize player
             int playerX = 10, playerY = 10, playerHeight = 40, playerWidth = 25;
             player = new Entity(ref playerX, ref playerY, ref playerHeight, ref playerWidth, "beta_player.png", Entity.collision.square, Entity.lightShape.none, Entity.movement.walking, Entity.drawIf.always, Entity.interaction.none);

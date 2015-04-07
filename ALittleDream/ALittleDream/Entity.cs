@@ -387,13 +387,14 @@ namespace ALittleDream
 
         private void checkCollisions(GameTime gameTime)
         {
-            int leftSide = spriteX,
-                rightSide = spriteX + spriteWidth,
-                topSide = spriteY,
-                bottomSide = spriteY + spriteHeight; //calculate edges of this hitbox
 
             foreach (Entity e in collisionObjects) //for each entity with collision
             {
+                int leftSide = spriteX,
+                    rightSide = spriteX + spriteWidth,
+                    topSide = spriteY,
+                    bottomSide = spriteY + spriteHeight; //calculate edges of this hitbox
+
                 if (spriteName == e.spriteName && spriteX == e.spriteX && spriteY == e.spriteY) continue; //checking against itself, so skip
                 if (e.c == collision.none) continue; //collision not currently active for other entity
                 int eLeftSide = e.spriteX,
