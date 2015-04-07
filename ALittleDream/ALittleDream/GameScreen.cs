@@ -112,9 +112,6 @@ namespace ALittleDream
                     int width = t.width;
                     int height = t.height;
 
-
-
-
                     if (t.light != "")
                     {
                         if (t.interact == "grab")
@@ -123,22 +120,22 @@ namespace ALittleDream
                         }
                         else if (t.interact == "toggle")
                         {
-                            Entity ent = new Entity(ref x, ref y, ref width, ref height, t.image, Entity.collision.none, Entity.lightShape.circle, Entity.movement.stationary, Entity.drawIf.always, Entity.interaction.toggle, ref collisionObjects, ref lightingObjects);
+                            Entity ent = new Entity(ref x, ref y, ref width, ref height, t.image, Entity.collision.none, Entity.lightShape.circle, Entity.movement.stationary, Entity.drawIf.lit, Entity.interaction.toggle, ref collisionObjects, ref lightingObjects);
                             ent.assignToggle(t.toggle);
                             ent.isLit = false;
                             entityListLevel.Add(ent);
                         }
                         else
                         {
+                            entityListLevel.Add(new Entity(ref x, ref y, ref width, ref height, t.image, Entity.collision.none, Entity.lightShape.circle, Entity.movement.stationary, Entity.drawIf.always, Entity.interaction.none, ref collisionObjects, ref lightingObjects));
 
                         }
-                            entityListLevel.Add(new Entity(ref x, ref y, ref width, ref height, t.image, Entity.collision.none, Entity.lightShape.circle, Entity.movement.stationary, Entity.drawIf.always, Entity.interaction.none, ref collisionObjects, ref lightingObjects));
                     }
                     else
                     {
                         if (t.interact == "toggle")
                         {
-                            Entity ent = new Entity(ref x, ref y, ref width, ref height, t.image, Entity.collision.none, Entity.lightShape.none, Entity.movement.stationary, Entity.drawIf.always, Entity.interaction.toggle, ref collisionObjects, ref lightingObjects);
+                            Entity ent = new Entity(ref x, ref y, ref width, ref height, t.image, Entity.collision.none, Entity.lightShape.none, Entity.movement.stationary, Entity.drawIf.lit, Entity.interaction.toggle, ref collisionObjects, ref lightingObjects);
                             ent.assignToggle(t.toggle);
                             entityListLevel.Add(ent);
                         }else if (t.door)
@@ -149,10 +146,17 @@ namespace ALittleDream
                         {
 
                             if (t.collision == "none")
-                                entityListLevel.Add(new Entity(ref x, ref y, ref width, ref height, t.image, Entity.collision.none, Entity.lightShape.none, Entity.movement.stationary, Entity.drawIf.always, Entity.interaction.none, ref collisionObjects, ref lightingObjects));
+                            {
+                                if(t.draw == "always")
+                                    entityListLevel.Add(new Entity(ref x, ref y, ref width, ref height, t.image, Entity.collision.none, Entity.lightShape.none, Entity.movement.stationary, Entity.drawIf.always, Entity.interaction.none, ref collisionObjects, ref lightingObjects));
+                                else
+                                    entityListLevel.Add(new Entity(ref x, ref y, ref width, ref height, t.image, Entity.collision.none, Entity.lightShape.none, Entity.movement.stationary, Entity.drawIf.lit, Entity.interaction.none, ref collisionObjects, ref lightingObjects));
+                            }
                             else
+                            {
                                 entityListLevel.Add(new Entity(ref x, ref y, ref width, ref height, t.image, Entity.collision.square, Entity.lightShape.none, Entity.movement.stationary, Entity.drawIf.lit, Entity.interaction.none, ref collisionObjects, ref lightingObjects));
-                        }
+                            }
+                            }
                     }
                 }
                 counterX++;
@@ -264,6 +268,7 @@ namespace ALittleDream
             {
                 if (l.l == Entity.lightShape.circle)
                 {
+                    Console.WriteLine(l.isLit);
                     var new_rect = new Rectangle(l.spriteX - (l.lightRange - l.spriteWidth), l.spriteY - (l.lightRange - l.spriteHeight), l.lightRange * 2, l.lightRange * 2);
                     spriteBatch.Draw(lightmask, new_rect, Color.White);
                     spriteBatch.Draw(lightmask, new_rect, Color.White);

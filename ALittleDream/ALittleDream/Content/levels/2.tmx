@@ -48,7 +48,7 @@
   <tileoffset x="11" y="0"/>
   <image source="lights/lamppostTallTop.png" width="18" height="40"/>
  </tileset>
- <tileset firstgid="16" name="latern" tilewidth="22" tileheight="21" collision="none" light="circle" draw="always" interact="true">
+ <tileset firstgid="16" name="latern" tilewidth="22" tileheight="21" collision="none" light="circle" draw="always" interact="grab">
   <tileoffset x="9" y="20"/>
   <image source="lights/lantern.png" width="22" height="21"/>
  </tileset>

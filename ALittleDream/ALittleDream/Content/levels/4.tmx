@@ -86,11 +86,11 @@
   <tileoffset x="30" y="-10"/>
   <image source="lights/hangingLight.png" width="22" height="29" />
  </tileset>
- <tileset firstgid="28" name="switchOff" tilewidth="24" tileheight="33" collision="none" interaction="toggle" toggle="toggle1">
+ <tileset firstgid="28" name="switchOff" tilewidth="24" tileheight="33" collision="none" interact="toggle" toggle="toggle1">
   <tileoffset x="12" y="5"/>
   <image source="lights/switchOff.png" width="24" height="33"/>
  </tileset>
-  <tileset firstgid="29" name="lamppostTallTop" tilewidth="18" tileheight="40" collision="none" light="circle" interaction="toggle" toggle="toggle1">
+ <tileset firstgid="29" name="lamppostTallTopToggle" tilewidth="18" tileheight="40" collision="none" light="circle" interact="toggle" toggle="toggle1">
     <tileoffset x="11" y="0"/>
     <image source="lights/lamppostTallTop.png" width="18" height="40"/>
   </tileset>
