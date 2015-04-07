@@ -23,7 +23,7 @@ namespace ALittleDream
         int screenHeight;
         float fadeSpeed;
         public bool play;
-        public bool playFade; 
+        public bool playFade;
 
         public ScreenManager(Stack<Screen> screens, int screenWidth, int screenHeight)
         {
@@ -105,6 +105,19 @@ namespace ALittleDream
         public void Draw(SpriteBatch sb){
             currentScreen.Draw(sb);
             sb.Draw(blackScreen, new Rectangle(0, 0, screenWidth, screenHeight), Color.White*alpha);
+        }
+
+        {
+            if (currentScreen is GameScreen)
+            {
+                GameScreen gameScreen = (GameScreen)currentScreen;
+                restart.LoadContent(content);
+                screens.Push(restart);
+                currentScreen.changeScreen = true;
+            }
+
+        public void skipScreen(){
+            currentScreen.changeScreen = true;
         }
     }
 }

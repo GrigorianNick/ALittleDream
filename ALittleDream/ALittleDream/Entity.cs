@@ -65,6 +65,7 @@ namespace ALittleDream
             spriteHeight = height;
             spriteWidth = width;
             spriteName = spriteFile;
+            d = drw;
 
             //assign entity components
             if (!(col == collision.none))

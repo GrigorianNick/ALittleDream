@@ -396,6 +396,7 @@ namespace ALittleDream
             spriteBatch.Begin(SpriteSortMode.Immediate, null);
             player.Draw(spriteBatch);
             familiar.Draw(spriteBatch);
+
             if (showStartingScreens)
             {
                 if (!screenManager.play)
