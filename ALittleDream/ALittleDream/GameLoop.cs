@@ -173,7 +173,9 @@ namespace ALittleDream
             {
                 SplashScreen splashScreen = new SplashScreen(graphics.PreferredBackBufferWidth, graphics.PreferredBackBufferHeight);
                 MenuScreen menuScreen = new MenuScreen(graphics.PreferredBackBufferWidth, graphics.PreferredBackBufferHeight, this);
+                //GameScreen gameScreen1 = new GameScreen(1, 150, 0, 100, 20, 300, 100, GraphicsDevice);
                 Stack<Screen> screens = new Stack<Screen>();
+                //screens.Push(gameScreen1);
                 screens.Push(menuScreen);
                 screens.Push(splashScreen);
                 screenManager = new ScreenManager(screens, graphics.PreferredBackBufferWidth, graphics.PreferredBackBufferHeight);

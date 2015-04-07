@@ -107,14 +107,17 @@ namespace ALittleDream
             sb.Draw(blackScreen, new Rectangle(0, 0, screenWidth, screenHeight), Color.White*alpha);
         }
 
+        /**public void restartLevel()
         {
             if (currentScreen is GameScreen)
             {
                 GameScreen gameScreen = (GameScreen)currentScreen;
+                GameScreen restart = new GameScreen(gameScreen.level, gameScreen.initialPlayerX, gameScreen.initialPlayerY, gameScreen.initialFamiliarX, gameScreen.initialFamiliarY, gameScreen.initialDoorPositionX, gameScreen.initialDoorPositionY, gameScreen.graphicsDevice);
                 restart.LoadContent(content);
                 screens.Push(restart);
                 currentScreen.changeScreen = true;
             }
+        }**/
 
         public void skipScreen(){
             currentScreen.changeScreen = true;
