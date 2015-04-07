@@ -101,21 +101,6 @@ namespace ALittleDream
             graphics.PreferredBackBufferHeight = windowHeight;
             graphics.ApplyChanges();
 
-            // TODO: parse rest of XML, specifically the tile specification
-            // END TILED XML PARSING
-            
-            System.IO.StreamReader file = new System.IO.StreamReader("Content/levels/test.txt");
-            string line;
-            int counter = 0;
-            while ((line = file.ReadLine()) != null)
-            {
-                Console.WriteLine(line);
-                counter++;
-            }
-            Console.WriteLine(counter);
-            file.Close();
-            // TODO: Add your initialization logic here
-
             //initialize player
             int playerX = 10, playerY = 10, playerHeight = 40, playerWidth = 25;
             player = new Entity(ref playerX, ref playerY, ref playerHeight, ref playerWidth, "beta_player.png", Entity.collision.square, Entity.lightShape.none, Entity.movement.walking, Entity.drawIf.always, Entity.interaction.none);
@@ -123,19 +108,20 @@ namespace ALittleDream
             //initialize familiar
             int familiarX = 100, familiarY = 20, familiarHeight = 20, familiarWidth = 10;            
             familiar = new Entity(ref familiarX, ref familiarY, ref familiarHeight, ref familiarWidth, "familiar/familiar.png", Entity.collision.none, Entity.lightShape.circle, Entity.movement.flying, Entity.drawIf.always, Entity.interaction.none);
+            familiar.setMaxLightRange(115);
 
             //initialize blocks
             int[] blockX = new int[]{
-                10, 200, 250, 300, 350, 400, 350, 350, -40
+                10, 200, 250, 300, 350, 400, 350, 350, -40, 440, 540
             };
             int[] blockY = new int[]{
-                100, 200, 200, 200, 200, 200, 150, 100, 50
+                100, 200, 200, 200, 200, 200, 150, 100, 50, 320, 320
             };
             int[] blockHeight = new int[]{
-                50, 50, 50, 50, 50, 50, 50, 50, 50
+                50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50
             };
             int[] blockWidth = new int[]{
-                50, 50, 50, 50, 50, 50, 50, 50, 50
+                50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50
             };
             for (int i = 0; i < blockHeight.Length; i++)
             {
@@ -149,7 +135,7 @@ namespace ALittleDream
                 lanternWidth = 30;
             lantern = new Entity(ref lanternX, ref lanternY, ref lanternHeight, ref lanternWidth, "lights/lantern.png", Entity.collision.square, Entity.lightShape.circle, Entity.movement.physics, Entity.drawIf.lit, Entity.interaction.grab);
             Entity.AddEntityObject(lantern);
-
+            lantern.setMaxLightRange(115);
             
             //initialize lightbulbs (beta lampposts?)
             int[] lightX = new int[]{
@@ -164,10 +150,35 @@ namespace ALittleDream
             int[] lightWidth = new int[]{
                 20, 20
             };
-            for (int i = 0; i < 2; i++)
+            for (int i = 0; i < lightX.Length; i++)
             {
                 Entity.AddEntityObject(new Entity(ref lightX[i], ref lightY[i], ref lightHeight[i], ref lightWidth[i], "beta_lightbulb.png", Entity.collision.none, Entity.lightShape.circle, Entity.movement.stationary, Entity.drawIf.always, Entity.interaction.none));
             }
+
+            //initialize static light sizes
+            ((Entity)Entity.lightingObjects[2]).setMaxLightRange(115);
+            ((Entity)Entity.lightingObjects[3]).setMaxLightRange(115);
+
+            int lightSwitchX = 300;
+            int lightSwitchY = 300;
+            int lightSwitchHeight = 40;
+            int lightSwitchWidth = 40;
+            Entity lightSwitch = new Entity(ref lightSwitchX, ref lightSwitchY, ref lightSwitchHeight, ref lightSwitchWidth, "beta_brick_old.png", Entity.collision.none, Entity.lightShape.none, Entity.movement.stationary, Entity.drawIf.lit, Entity.interaction.toggle);
+
+            int switchableX = 500;
+            int switchableY = 300;
+            int switchableHeight = 80;
+            int switchableWidth = 20;
+            Entity switchable = new Entity(ref switchableX, ref switchableY, ref switchableHeight, ref switchableWidth, "lights/lamppostShort.png", Entity.collision.none, Entity.lightShape.circle, Entity.movement.stationary, Entity.drawIf.lit, Entity.interaction.toggle);
+            switchable.isLit = false;
+            lightSwitch.setMaxLightRange(80);
+            switchable.setMaxLightRange(80);
+
+            Entity.AddEntityObject(lightSwitch);
+            Entity.AddEntityObject(switchable);
+            lightSwitch.assignToggle("toggle1");
+            switchable.assignToggle("toggle1");
+            
 
             if (showStartingScreens)
             {
@@ -367,14 +378,14 @@ namespace ALittleDream
             // Draw out lightmasks based on torch positions.
             foreach (Entity l in Entity.lightingObjects)
             {
-                var new_rect = new Rectangle(l.spriteX - (LIGHTOFFSET - l.spriteWidth), l.spriteY - (LIGHTOFFSET - l.spriteHeight), LIGHTOFFSET * 2, LIGHTOFFSET * 2);
+                var new_rect = new Rectangle(l.spriteX - (l.lightRange - l.spriteWidth), l.spriteY - (l.lightRange - l.spriteHeight), l.lightRange * 2, l.lightRange * 2);
                 spriteBatch.Draw(lightmask, new_rect, Color.White);
                 spriteBatch.Draw(lightmask, new_rect, Color.White);
             }
 
-            spriteBatch.Draw(lightmask, new Rectangle(familiar.spriteX - (LIGHTOFFSET - familiar.spriteWidth), familiar.spriteY - (LIGHTOFFSET - familiar.spriteHeight), LIGHTOFFSET * 2, LIGHTOFFSET * 2)
+            spriteBatch.Draw(lightmask, new Rectangle(familiar.spriteX - (lantern.lightRange - familiar.spriteWidth), familiar.spriteY - (lantern.lightRange - familiar.spriteHeight), lantern.lightRange * 2, lantern.lightRange * 2)
 , Color.White);
-            spriteBatch.Draw(lightmask, new Rectangle(familiar.spriteX - (LIGHTOFFSET - familiar.spriteWidth), familiar.spriteY - (LIGHTOFFSET - familiar.spriteHeight), LIGHTOFFSET * 2, LIGHTOFFSET * 2)
+            spriteBatch.Draw(lightmask, new Rectangle(familiar.spriteX - (lantern.lightRange - familiar.spriteWidth), familiar.spriteY - (lantern.lightRange - familiar.spriteHeight), lantern.lightRange * 2, lantern.lightRange * 2)
 , Color.White);
             spriteBatch.End();
 
