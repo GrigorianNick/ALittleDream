@@ -15,14 +15,22 @@ namespace ALittleDream
         public static ArrayList entityList = new ArrayList();
         public static ArrayList collisionObjects = new ArrayList();
         public static ArrayList lightingObjects = new ArrayList();
+
+        //TO BE TWEAKED
         public static int grabDistance = 50;
+        public static int toggleDistance = 50;
+        public static int lightToggleRate = 12; //number of pixels per frame lighting changes by when toggled
+        public int maxMomentum = 7;
+
         public collision c;
         public lightShape l;
         public movement m;
         public drawIf d;
         public interaction i;
         public int momentumX, momentumY;
-        public int maxMomentum = 7;
+        public int lightRange = 0; //current lighting amount
+        public int maxLightRange = 0; //max light range
+        public bool isLit = true; //whether current lighting amount heading towards max or towards 0
         public bool debugDistances = false;
         public bool debugLighting = false;
         public List<String> animations = new List<String>();
@@ -30,6 +38,7 @@ namespace ALittleDream
         int animation = 0;
         public bool isHoldingLantern = false;
         public bool needsNewSprite = false;
+        public String toggleSet = "";
 
         public enum collision
         {
@@ -53,7 +62,7 @@ namespace ALittleDream
 
         public enum interaction
         {
-            grab, none
+            grab, toggle, none
         }
 
 
@@ -113,6 +122,16 @@ namespace ALittleDream
             entityList.Add(ent);
         }
 
+        public void assignToggle(String set)
+        {
+            this.toggleSet = set;
+        }
+
+        public void setMaxLightRange(int range)
+        {
+            this.maxLightRange = range;
+        }
+
         public void Update(Controls controls, GameTime gameTime)
         {
             //handle movement
@@ -124,6 +143,28 @@ namespace ALittleDream
                 }
                 this.move(controls, gameTime);
                 if (this.c != collision.none) this.checkCollisions(gameTime);
+            }
+
+            //handle change in light size for fixtures
+            if (this.l != lightShape.none)
+            {
+                if (isLit && this.lightRange < this.maxLightRange)
+                {
+                    lightRange += Entity.lightToggleRate;
+                    if (this.lightRange > this.maxLightRange) //toggle overshot max
+                    {
+                        this.lightRange = this.maxLightRange;
+                    }
+                }
+                
+                if (!isLit && this.lightRange > 0)
+                {
+                    this.lightRange -= Entity.lightToggleRate;
+                    if (this.lightRange < 0)
+                    {
+                        this.lightRange = 0; //toggle overshot 0
+                    }
+                }
             }
 
             //handle illumination
@@ -177,7 +218,7 @@ namespace ALittleDream
                     if (!isHoldingLantern) { //if not holding lantern, see if one nearby
                         foreach (Entity e in Entity.entityList)
                         {
-                            if (e.i == interaction.grab && e.isInInteractRange(this)) //found a lantern e in range
+                            if (e.i == interaction.grab && e.isInGrabRange(this)) //found a lantern e in range
                             {
                                 this.isHoldingLantern = true; //now holding a lantern
 
@@ -189,6 +230,8 @@ namespace ALittleDream
                                 //change lighting
                                 this.l = lightShape.circle;
                                 Entity.lightingObjects.Add(this);
+                                this.setMaxLightRange(e.maxLightRange);
+                                this.lightRange = this.maxLightRange; //no incremental light change, just take light from lantern
                                 this.animations[0] = "charHoldingLatern.png";
                                 this.animations[1] = "jump/jumpwOrb.png";
                                 //TODO: other sprites
@@ -210,10 +253,14 @@ namespace ALittleDream
                         if (this.facingRight) lanternX += 31 + this.spriteWidth; //move to right of player if player is facing right
                         Entity l = new Entity(ref lanternX, ref lanternY, ref lanternHeight, ref lanternWidth, "lights/lantern.png", Entity.collision.square, Entity.lightShape.circle, Entity.movement.physics, Entity.drawIf.lit, Entity.interaction.grab);
                         Entity.entityList.Add(l);
+                        l.setMaxLightRange(this.maxLightRange);
+                        l.lightRange = maxLightRange; //no incremental light change, just instantly max
                         l.needsNewSprite = true; //loads new content in GameLoop.Update()
 
                         //change lighting
                         this.l = lightShape.none;
+                        this.lightRange = 0;
+                        this.maxLightRange = 0;
                         Entity.lightingObjects.Remove(this);
                         this.animations[0] = "charSprite.png";
                         this.animations[1] = "jump/jump3.png";
@@ -253,6 +300,24 @@ namespace ALittleDream
                 {
                     momentumY += 2;
                     if (momentumY > maxMomentum) momentumY = maxMomentum;
+                }
+
+                //handle switches
+                if (controls.onPress(Keys.Q, Buttons.LeftShoulder))
+                {
+                    foreach (Entity e in Entity.entityList)
+                    {
+                        if (e.i == interaction.toggle && e.isInToggleRange(this))
+                        {
+                            foreach (Entity e2 in Entity.lightingObjects)
+                            {
+                                if (e2.toggleSet == e.toggleSet)
+                                {
+                                    e2.isLit = !e2.isLit;
+                                }
+                            }
+                        }
+                    }
                 }
             }
         }
@@ -295,17 +360,23 @@ namespace ALittleDream
             return false;
         }
 
-        private bool isInInteractRange(Entity e)
+        private bool isInGrabRange(Entity e)
         {
             return Math.Pow(spriteX - e.spriteX, 2) + Math.Pow(spriteY - e.spriteY, 2) < Math.Pow(Entity.grabDistance, 2);
 
         }
 
+        private bool isInToggleRange(Entity e)
+        {
+            return Math.Pow(spriteX - e.spriteX, 2) + Math.Pow(spriteY - e.spriteY, 2) < Math.Pow(Entity.toggleDistance, 2);
+        }
+
+
         private bool isIlluminated(GameTime gameTime)
         {
             foreach (Entity e in lightingObjects)
             {
-                if (Math.Pow(spriteX - e.spriteX, 2) + Math.Pow(spriteY - e.spriteY, 2) < Math.Pow(GameLoop.LIGHTOFFSET, 2))
+                if (Math.Pow(spriteX - e.spriteX, 2) + Math.Pow(spriteY - e.spriteY, 2) < Math.Pow(e.lightRange, 2))
                 {
                     if (debugLighting) Console.WriteLine("block at (" + spriteX + "," + spriteY + ") is lit by (" + e.spriteX + "," + e.spriteY + ")");
                     return true;
