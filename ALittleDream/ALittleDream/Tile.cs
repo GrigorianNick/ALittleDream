@@ -16,9 +16,10 @@ namespace ALittleDream
         public string draw;
         public string collision;
         public bool door;
-        public bool interact;
+        public string interact;
+        public string toggle;
 
-        public Tile(string image, int width, int height, int offsetX, int offsetY, string light, string draw, string collision, bool door, bool interact)
+        public Tile(string image, int width, int height, int offsetX, int offsetY, string light, string draw, string collision, bool door, string interact, string toggle)
         {
             this.image = image;
             this.width = width;
@@ -30,6 +31,7 @@ namespace ALittleDream
             this.collision = collision;
             this.door = door;
             this.interact = interact;
+            this.toggle = toggle;
         }
 
         public Tile(string image, int width, int height)

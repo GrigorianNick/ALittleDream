@@ -71,7 +71,8 @@ namespace ALittleDream
                 int xOffset = 0;
                 int yOffset = 0;
                 bool door = false;
-                bool interact = false;
+                string interact = "";
+                string toggle = "";
                 if (tileset.Attribute("light") != null)
                     light = tileset.Attribute("light").Value;
                 if (tileset.Attribute("collision") != null)
@@ -87,12 +88,14 @@ namespace ALittleDream
                 if (tileset.Attribute("door") != null)
                     door = true;
                 if (tileset.Attribute("interact") != null)
-                    interact = true;
+                    interact = tileset.Attribute("interact").Value;
+                if (tileset.Attribute("toggle") != null)
+                    toggle = tileset.Attribute("toggle").Value;
 
                 tiles.Add(new Tile(tileset.Element("image").Attribute("source").Value,
                 Convert.ToInt32(tileset.Attribute("tileheight").Value),
                 Convert.ToInt32(tileset.Attribute("tilewidth").Value),
-                xOffset, yOffset, light, draw, collision, door, interact));
+                xOffset, yOffset, light, draw, collision, door, interact, toggle));
             }
 
 
@@ -108,16 +111,37 @@ namespace ALittleDream
                     int y = (counterY * 40) + t.offsetY;
                     int width = t.width;
                     int height = t.height;
+
+
+
+
                     if (t.light != "")
                     {
-                        if (t.interact)
+                        if (t.interact == "grab")
+                        {
                             entityListLevel.Add(new Entity(ref x, ref y, ref width, ref height, t.image, Entity.collision.none, Entity.lightShape.circle, Entity.movement.stationary, Entity.drawIf.always, Entity.interaction.grab, ref collisionObjects, ref lightingObjects));
+                        }
+                        else if (t.interact == "toggle")
+                        {
+                            Entity ent = new Entity(ref x, ref y, ref width, ref height, t.image, Entity.collision.none, Entity.lightShape.circle, Entity.movement.stationary, Entity.drawIf.always, Entity.interaction.toggle, ref collisionObjects, ref lightingObjects);
+                            ent.assignToggle(t.toggle);
+                            ent.isLit = false;
+                            entityListLevel.Add(ent);
+                        }
                         else
+                        {
+
+                        }
                             entityListLevel.Add(new Entity(ref x, ref y, ref width, ref height, t.image, Entity.collision.none, Entity.lightShape.circle, Entity.movement.stationary, Entity.drawIf.always, Entity.interaction.none, ref collisionObjects, ref lightingObjects));
                     }
                     else
                     {
-                        if (t.door)
+                        if (t.interact == "toggle")
+                        {
+                            Entity ent = new Entity(ref x, ref y, ref width, ref height, t.image, Entity.collision.none, Entity.lightShape.none, Entity.movement.stationary, Entity.drawIf.always, Entity.interaction.toggle, ref collisionObjects, ref lightingObjects);
+                            ent.assignToggle(t.toggle);
+                            entityListLevel.Add(ent);
+                        }else if (t.door)
                         {
                             this.door = new Entity(ref x, ref y, ref width, ref height, t.image, Entity.collision.none, Entity.lightShape.none, Entity.movement.stationary, Entity.drawIf.lit, Entity.interaction.none, ref collisionObjects, ref lightingObjects);
                         }

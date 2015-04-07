@@ -13,8 +13,8 @@ namespace ALittleDream
     public unsafe class Entity : Sprite
     {
         public static ArrayList entityList = new ArrayList();
-        public static ArrayList collisionObjects = new ArrayList();
-        public static ArrayList lightingObjects = new ArrayList();
+        public ArrayList collisionObjects = new ArrayList();
+        public ArrayList lightingObjects = new ArrayList();
 
         //TO BE TWEAKED
         public static int grabDistance = 50;
@@ -66,7 +66,7 @@ namespace ALittleDream
         }
 
 
-        public Entity(ref int x_in, ref int y_in, ref int height, ref int width, string spriteFile, collision col, lightShape ls, movement mov, drawIf drw, interaction inter)
+        public Entity(ref int x_in, ref int y_in, ref int height, ref int width, string spriteFile, collision col, lightShape ls, movement mov, drawIf drw, interaction inter, ref ArrayList collisionObjects, ref ArrayList lightingObjects)
         {
             //assign inherited sprite values
             spriteX = x_in;
@@ -74,7 +74,6 @@ namespace ALittleDream
             spriteHeight = height;
             spriteWidth = width;
             spriteName = spriteFile;
-            d = drw;
 
             //assign entity components
             if (!(col == collision.none))
@@ -85,11 +84,15 @@ namespace ALittleDream
             {
                 lightingObjects.Add(this);
             }
+            this.collisionObjects = collisionObjects;
+            this.lightingObjects = lightingObjects;
             c = col;
             l = ls;
             m = mov;
             d = drw;
             i = inter;
+
+            maxLightRange = 115;
             //collision.x = spriteX;
             //collision.y = spriteY;
             //collision.height = height;
@@ -225,12 +228,12 @@ namespace ALittleDream
 
                                 //remove lantern from all relavent lists
                                 Entity.entityList.Remove(e);
-                                Entity.collisionObjects.Remove(e);
-                                Entity.lightingObjects.Remove(e);
+                                collisionObjects.Remove(e);
+                                lightingObjects.Remove(e);
 
                                 //change lighting
                                 this.l = lightShape.circle;
-                                Entity.lightingObjects.Add(this);
+                                lightingObjects.Add(this);
                                 this.setMaxLightRange(e.maxLightRange);
                                 this.lightRange = this.maxLightRange; //no incremental light change, just take light from lantern
                                 this.animations[0] = "charHoldingLatern.png";
@@ -252,7 +255,7 @@ namespace ALittleDream
                         int lanternY = this.spriteY + 10;
                         int lanternHeight = 30, lanternWidth = 30;
                         if (this.facingRight) lanternX += 31 + this.spriteWidth; //move to right of player if player is facing right
-                        Entity l = new Entity(ref lanternX, ref lanternY, ref lanternHeight, ref lanternWidth, "lights/lantern.png", Entity.collision.square, Entity.lightShape.circle, Entity.movement.physics, Entity.drawIf.lit, Entity.interaction.grab);
+                        Entity l = new Entity(ref lanternX, ref lanternY, ref lanternHeight, ref lanternWidth, "lights/lantern.png", Entity.collision.square, Entity.lightShape.circle, Entity.movement.physics, Entity.drawIf.lit, Entity.interaction.grab, ref this.collisionObjects, ref this.lightingObjects);
                         Entity.entityList.Add(l);
                         l.setMaxLightRange(this.maxLightRange);
                         l.lightRange = maxLightRange; //no incremental light change, just instantly max
@@ -262,7 +265,7 @@ namespace ALittleDream
                         this.l = lightShape.none;
                         this.lightRange = 0;
                         this.maxLightRange = 0;
-                        Entity.lightingObjects.Remove(this);
+                        lightingObjects.Remove(this);
                         this.animations[0] = "charSprite.png";
                         this.animations[1] = "jump/jump3.png";
                         //TODO: other sprites
@@ -310,7 +313,7 @@ namespace ALittleDream
                     {
                         if (e.i == interaction.toggle && e.isInToggleRange(this))
                         {
-                            foreach (Entity e2 in Entity.lightingObjects)
+                            foreach (Entity e2 in lightingObjects)
                             {
                                 if (e2.toggleSet == e.toggleSet)
                                 {

@@ -327,3 +327,4 @@ C:\Users\Cinephile\Documents\GitHub\ALittleDream\ALittleDream\ALittleDream\bin\W
 C:\Users\Cinephile\Documents\GitHub\ALittleDream\ALittleDream\ALittleDream\bin\Windows\Debug\SharpDX.Direct3D9.xml
 C:\Users\Cinephile\Documents\GitHub\ALittleDream\ALittleDream\ALittleDream\obj\x86\Debug\ALittleDream.exe
 C:\Users\Cinephile\Documents\GitHub\ALittleDream\ALittleDream\ALittleDream\obj\x86\Debug\ALittleDream.pdb
+C:\Users\Cinephile\Documents\GitHub\ALittleDream\ALittleDream\ALittleDream\obj\x86\Debug\ALittleDream.csprojResolveAssemblyReference.cache
