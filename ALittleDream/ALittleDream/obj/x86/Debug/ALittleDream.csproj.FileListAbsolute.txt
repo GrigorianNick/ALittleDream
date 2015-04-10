@@ -222,6 +222,7 @@ C:\Users\Cinephile\Documents\GitHub\ALittleDream\ALittleDream\ALittleDream\bin\W
 C:\Users\Cinephile\Documents\GitHub\ALittleDream\ALittleDream\ALittleDream\bin\Windows\Debug\Content\controls\a.png
 C:\Users\Cinephile\Documents\GitHub\ALittleDream\ALittleDream\ALittleDream\bin\Windows\Debug\Content\controls\d.png
 C:\Users\Cinephile\Documents\GitHub\ALittleDream\ALittleDream\ALittleDream\bin\Windows\Debug\Content\controls\down.png
+C:\Users\Cinephile\Documents\GitHub\ALittleDream\ALittleDream\ALittleDream\bin\Windows\Debug\Content\controls\e.png
 C:\Users\Cinephile\Documents\GitHub\ALittleDream\ALittleDream\ALittleDream\bin\Windows\Debug\Content\controls\left.png
 C:\Users\Cinephile\Documents\GitHub\ALittleDream\ALittleDream\ALittleDream\bin\Windows\Debug\Content\controls\q.png
 C:\Users\Cinephile\Documents\GitHub\ALittleDream\ALittleDream\ALittleDream\bin\Windows\Debug\Content\controls\right.png

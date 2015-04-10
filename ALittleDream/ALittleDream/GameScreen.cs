@@ -251,7 +251,7 @@ namespace ALittleDream
             graphicsDevice.SetRenderTarget(entities);
             graphicsDevice.Clear(Color.Black);
             spriteBatch.Begin();
-            //spriteBatch.Draw(treesBack, new Rectangle(-500 - (player.spriteX / 24), 0, graphicsDevice.PresentationParameters.BackBufferWidth * 2, graphicsDevice.PresentationParameters.BackBufferHeight), Color.White);
+            spriteBatch.Draw(treesBack, new Rectangle(-500 - (player.spriteX / 16), 0, graphicsDevice.PresentationParameters.BackBufferWidth * 2, graphicsDevice.PresentationParameters.BackBufferHeight), Color.White);
             foreach (Entity e in Entity.entityList)
             {
                 e.Draw(spriteBatch);
@@ -276,7 +276,6 @@ namespace ALittleDream
             {
                 if (l.l == Entity.lightShape.circle)
                 {
-                    Console.WriteLine(l.isLit);
                     var new_rect = new Rectangle(l.spriteX - (l.lightRange - l.spriteWidth), l.spriteY - (l.lightRange - l.spriteHeight), l.lightRange * 2, l.lightRange * 2);
                     spriteBatch.Draw(lightmask, new_rect, Color.White);
                     spriteBatch.Draw(lightmask, new_rect, Color.White);
@@ -313,9 +312,8 @@ namespace ALittleDream
                     e.Draw(spriteBatch);
             }
             player.Draw(spriteBatch);
-            Console.WriteLine(player.spriteX + "," + player.spriteY);
             familiar.Draw(spriteBatch);
-            //spriteBatch.Draw(treesFront, new Rectangle(-500 - (player.spriteX / 36), 0, graphicsDevice.PresentationParameters.BackBufferWidth * 2, graphicsDevice.PresentationParameters.BackBufferHeight), Color.White);
+            //spriteBatch.Draw(treesFront, new Rectangle(0 - (player.spriteX / 36), 0, graphicsDevice.PresentationParameters.BackBufferWidth+100 , graphicsDevice.PresentationParameters.BackBufferHeight*2), Color.White);
 
         }
     }

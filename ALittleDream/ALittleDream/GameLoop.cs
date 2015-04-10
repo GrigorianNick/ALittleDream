@@ -181,11 +181,20 @@ namespace ALittleDream
             }
             else
             {
+                System.IO.Stream stream = TitleContainer.OpenStream("Content/levels/1.tmx");
+                XDocument doc = XDocument.Load(stream);
+
+                windowWidth = Convert.ToInt32(doc.Root.Attribute("width").Value) * Convert.ToInt32(doc.Root.Attribute("tilewidth").Value);
+                windowHeight = Convert.ToInt32(doc.Root.Attribute("height").Value) * Convert.ToInt32(doc.Root.Attribute("tileheight").Value);
+
+                graphics.PreferredBackBufferWidth = windowWidth;
+                graphics.PreferredBackBufferHeight = windowHeight;
+                graphics.ApplyChanges();
 
                 SplashScreen splashScreen = new SplashScreen(graphics.PreferredBackBufferWidth, graphics.PreferredBackBufferHeight);
                 MenuScreen menuScreen = new MenuScreen(graphics.PreferredBackBufferWidth, graphics.PreferredBackBufferHeight, this);
                 GameScreen gameScreen1 = new GameScreen(1, 150, 0, 100, 20, GraphicsDevice);
-                GameScreen gameScreen2 = new GameScreen(2, 180, 50, 100, 20, GraphicsDevice);
+                GameScreen gameScreen2 = new GameScreen(2, 250, 150, 100, 20, GraphicsDevice);
                 GameScreen gameScreen3 = new GameScreen(3, 600, 0, 100, 20, GraphicsDevice);
                 GameScreen gameScreen4 = new GameScreen(4, 100, 0, 100, 20, GraphicsDevice);
 
