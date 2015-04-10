@@ -328,17 +328,22 @@ namespace ALittleDream
         private void move(Controls controls, GameTime gameTime)
         {
             spriteX += momentumX;
-            if (momentumX > 0) momentumX--;
-            if (momentumX < 0) momentumX++;
             spriteY += momentumY;
             if (m == movement.flying)
             {
                 if (momentumY > 0) momentumY--;
                 if (momentumY < 0) momentumY++;
+                if (momentumX > 0) momentumX--;
+                if (momentumX < 0) momentumX++;
             }
             else
             {
-                if (!onGround())
+                if (onGround())
+                {
+                    if (momentumX > 0) momentumX--;
+                    if (momentumX < 0) momentumX++;
+                }
+                else
                 {
                     momentumY++;
                     if (this.m == movement.walking) image = spriteAnimations[1];
