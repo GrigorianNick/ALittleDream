@@ -131,7 +131,13 @@ namespace ALittleDream
                 animations.Add("lights/switchOff");
                 animations.Add("lights/switchOn");
                 spriteAnimations = new List<Texture2D>();
-        }
+            }
+            else if (l == lightShape.none && i == interaction.toggle)
+            {
+                animations.Add("lights/switchOff");
+                animations.Add("lights/switchOn");
+                spriteAnimations = new List<Texture2D>();
+            }
         }
 
         public static void AddEntityObject(Entity ent)
@@ -328,8 +334,12 @@ namespace ALittleDream
                 {
                     foreach (Entity e in Entity.entityList)
                     {
-                        if (e.i == interaction.toggle && e.isInToggleRange(this))
+                        if (e.i == interaction.toggle && e.isInToggleRange(this) && e.l == lightShape.none)
                         {
+                            if (e.image == e.spriteAnimations[0])
+                                e.image = e.spriteAnimations[1];
+                            else
+                                e.image = e.spriteAnimations[0];
                             foreach (Entity e2 in lightingObjects)
                             {
                                 if (e2.toggleSet == e.toggleSet)

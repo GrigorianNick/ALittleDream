@@ -34,8 +34,8 @@ namespace ALittleDream
             changeScreen = false;
             menuImages = new List<Texture2D>();
             menuItems = new List<MenuItem>();
-            menuItems.Add(new MenuItem("menu/enter", new Vector2((screenWidth - 130) / 2, (screenHeight - 40) / 2), new Vector2(130, 40)));
-            menuItems.Add(new MenuItem("menu/perish", new Vector2((screenWidth - 130) / 2, ((screenHeight - 40) / 2)+50), new Vector2(130, 40)));
+            menuItems.Add(new MenuItem("menu/enter", new Vector2((screenWidth - 150) / 2, (screenHeight - 40) / 2), new Vector2(150, 45)));
+            menuItems.Add(new MenuItem("menu/perish", new Vector2((screenWidth - 150) / 2, ((screenHeight - 40) / 2)+50), new Vector2(150, 45)));
             itemNum = 0;
             menuItems[0].selected = true;
         }

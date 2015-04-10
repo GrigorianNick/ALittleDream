@@ -36,6 +36,9 @@ namespace ALittleDream
         public ArrayList lightingObjects = new ArrayList();
         private bool changed;
         bool playerDied = false;
+        private List<Texture2D> end;
+        private int count = 0;
+        private int frames = 0;
 
 
         public GameScreen(int level, int playerX, int playerY, int familiarX, int familiarY, GraphicsDevice graphicsDevice)
@@ -216,7 +219,16 @@ namespace ALittleDream
 
             foreach (Entity e in Entity.entityList)
             {
-                e.LoadContent(content);
+                if (e.l == Entity.lightShape.none && e.i == Entity.interaction.toggle)
+                {
+                    foreach (string s in e.animations)
+                    {
+                        e.AnimatedLoadContent(content, s);
+
+                    } e.image = e.spriteAnimations[0];
+                }
+                else
+                    e.LoadContent(content);
             }
 
             var pp = graphicsDevice.PresentationParameters;
@@ -228,6 +240,16 @@ namespace ALittleDream
 
             treesBack = content.Load<Texture2D>("treesBack");
             treesFront = content.Load<Texture2D>("treesFront");
+            treesBack = content.Load<Texture2D>("treesBack");
+            treesFront = content.Load<Texture2D>("treesFront");
+            if (level == 8)
+            {
+                end = new List<Texture2D>();
+                end.Add(content.Load<Texture2D>("end1"));
+                end.Add(content.Load<Texture2D>("end2"));
+                end.Add(content.Load<Texture2D>("end3"));
+                end.Add(content.Load<Texture2D>("end4"));
+            }
         }
 
         public override void UnloadContent(ContentManager content)
@@ -283,7 +305,24 @@ namespace ALittleDream
             graphicsDevice.SetRenderTarget(entities);
             graphicsDevice.Clear(Color.Black);
             spriteBatch.Begin();
-            //spriteBatch.Draw(treesBack, new Rectangle(-500 - (player.spriteX / 24), 0, graphicsDevice.PresentationParameters.BackBufferWidth * 2, graphicsDevice.PresentationParameters.BackBufferHeight), Color.White);
+
+            if (level != 8)
+            {
+                spriteBatch.Draw(treesBack, new Rectangle(-500 - (player.spriteX / 16), 0, graphicsDevice.PresentationParameters.BackBufferWidth * 2, graphicsDevice.PresentationParameters.BackBufferHeight), Color.White);
+            }
+            else
+            {
+                spriteBatch.Draw(end[count], new Rectangle(0 - (player.spriteX / 16), 0, graphicsDevice.PresentationParameters.BackBufferWidth, graphicsDevice.PresentationParameters.BackBufferHeight), Color.White);
+                spriteBatch.Draw(treesBack, new Rectangle(-500 - (player.spriteX / 16), 0, graphicsDevice.PresentationParameters.BackBufferWidth * 2, graphicsDevice.PresentationParameters.BackBufferHeight), Color.White);
+                frames++;
+                if (frames % 50 == 0 && (count == 1 || count == 3))
+                    count++;
+                else if (frames % 25 == 0 && (count == 0 || count == 2))
+                    count++;
+                if (count > 3)
+                    count = 0;
+            }
+            
             foreach (Entity e in Entity.entityList)
         {
                 e.Draw(spriteBatch);
