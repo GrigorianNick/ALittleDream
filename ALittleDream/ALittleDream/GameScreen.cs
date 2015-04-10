@@ -196,7 +196,16 @@ namespace ALittleDream
 
             foreach (Entity e in Entity.entityList)
             {
-                e.LoadContent(content);
+                if (e.l == Entity.lightShape.none && e.i == Entity.interaction.toggle)
+                {
+                    foreach (string s in e.animations)
+                    {
+                        e.AnimatedLoadContent(content, s);
+
+                    } e.image = e.spriteAnimations[0];
+                }
+                else
+                    e.LoadContent(content);
             }
 
             var pp = graphicsDevice.PresentationParameters;

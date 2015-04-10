@@ -118,6 +118,12 @@ namespace ALittleDream
                 animations.Add("familiar/familiar2");
                 spriteAnimations = new List<Texture2D>();
             }
+            else if (l == lightShape.none && i == interaction.toggle)
+            {
+                animations.Add("lights/switchOff");
+                animations.Add("lights/switchOn");
+                spriteAnimations = new List<Texture2D>();
+            }
         }
 
         public static void AddEntityObject(Entity ent)
@@ -252,7 +258,7 @@ namespace ALittleDream
                         //make new lantern object
                         int lanternX = this.spriteX - 31; //default to left of player
                         int lanternY = this.spriteY + 10;
-                        int lanternHeight = 30, lanternWidth = 30;
+                        int lanternHeight = 21, lanternWidth = 22;
                         if (this.facingRight) lanternX += 31 + this.spriteWidth; //move to right of player if player is facing right
                         Entity l = new Entity(ref lanternX, ref lanternY, ref lanternHeight, ref lanternWidth, "lights/lantern.png", Entity.collision.square, Entity.lightShape.circle, Entity.movement.physics, Entity.drawIf.lit, Entity.interaction.grab, ref this.collisionObjects, ref this.lightingObjects);
                         Entity.entityList.Add(l);
@@ -310,8 +316,12 @@ namespace ALittleDream
                 {
                     foreach (Entity e in Entity.entityList)
                     {
-                        if (e.i == interaction.toggle && e.isInToggleRange(this))
+                        if (e.i == interaction.toggle && e.isInToggleRange(this) && e.l == lightShape.none)
                         {
+                            if (e.image == e.spriteAnimations[0])
+                                e.image = e.spriteAnimations[1];
+                            else
+                                e.image = e.spriteAnimations[0];
                             foreach (Entity e2 in lightingObjects)
                             {
                                 if (e2.toggleSet == e.toggleSet)
