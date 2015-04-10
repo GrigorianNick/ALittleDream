@@ -33,7 +33,7 @@ namespace ALittleDream
             this.screens = screens;
             currentScreen = this.screens.Pop();
             fadeToBlack = false;
-            appear = true;
+            appear = true; 
             alpha = 1.0f;
             fadeSpeed = 0.65f;
             play = false;
@@ -83,7 +83,7 @@ namespace ALittleDream
                     appear = true; 
                     alpha = 1.0f;
                     if(playFade)//
-                        play = true;
+                        play = true; 
                     if (!playFade)//
                     {
                         oldCurrentScreen = currentScreen;

@@ -270,7 +270,7 @@ namespace ALittleDream
             foreach (Entity e in Entity.entityList)
             {
                 if (e.needsNewSprite)
-                {
+{
                     e.LoadContent(content);
                     e.needsNewSprite = false;
                 }
@@ -278,16 +278,16 @@ namespace ALittleDream
             }
         }
         public override void Draw(SpriteBatch spriteBatch)
-        {
+    {
             spriteBatch.End();
             graphicsDevice.SetRenderTarget(entities);
             graphicsDevice.Clear(Color.Black);
             spriteBatch.Begin();
             //spriteBatch.Draw(treesBack, new Rectangle(-500 - (player.spriteX / 24), 0, graphicsDevice.PresentationParameters.BackBufferWidth * 2, graphicsDevice.PresentationParameters.BackBufferHeight), Color.White);
             foreach (Entity e in Entity.entityList)
-            {
+        {
                 e.Draw(spriteBatch);
-            }
+        }
             door.Draw(spriteBatch);
             spriteBatch.End();
             graphicsDevice.SetRenderTarget(null);
@@ -307,18 +307,18 @@ namespace ALittleDream
             foreach (Entity l in lightingObjects)
             {
                 if (l.l == Entity.lightShape.circle)
-                {
+        {
                     //Console.WriteLine(l.isLit);
                     var new_rect = new Rectangle(l.spriteX - (l.lightRange - l.spriteWidth), l.spriteY - (l.lightRange - l.spriteHeight), l.lightRange * 2, l.lightRange * 2);
                     spriteBatch.Draw(lightmask, new_rect, Color.White);
                     spriteBatch.Draw(lightmask, new_rect, Color.White);
-                }
+        }
                 else if (l.l == Entity.lightShape.cone)
-                {
+        {
                     //wee magic numbers, this needs to get tweaked
                     spriteBatch.Draw(triangleLightMask, new Vector2(l.spriteX - (float) 0.5*(l.lightRange), l.spriteY), null, Color.White, l.angle, new Vector2(l.lightRange/2, 0), 1, SpriteEffects.None, 0);
                 }
-            }
+        }
 
             spriteBatch.Draw(lightmask, new Rectangle(familiar.spriteX - (familiar.lightRange - familiar.spriteWidth), familiar.spriteY - (familiar.lightRange - familiar.spriteHeight), familiar.lightRange * 2, familiar.lightRange * 2)
 , Color.White);
@@ -345,7 +345,7 @@ namespace ALittleDream
 
             spriteBatch.Begin(SpriteSortMode.Immediate, null);
             foreach (Entity e in Entity.entityList)
-            {
+        {
                 if (e.d == Entity.drawIf.always)
                     e.Draw(spriteBatch);
             }

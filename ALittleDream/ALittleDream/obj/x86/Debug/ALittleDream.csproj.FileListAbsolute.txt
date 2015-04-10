@@ -138,6 +138,21 @@ C:\Users\Craig\Source\Repos\ALittleDream\ALittleDream\ALittleDream\bin\Windows\D
 C:\Users\Craig\Source\Repos\ALittleDream\ALittleDream\ALittleDream\bin\Windows\Debug\Content\menu\menuBackground5.png
 C:\Users\Craig\Source\Repos\ALittleDream\ALittleDream\ALittleDream\bin\Windows\Debug\Content\menu\perish.png
 C:\Users\Craig\Source\Repos\ALittleDream\ALittleDream\ALittleDream\bin\Windows\Debug\Content\player.png
+<<<<<<< HEAD
+=======
+C:\Users\Craig\Source\Repos\ALittleDream\ALittleDream\ALittleDream\bin\Windows\Debug\Content\tiles\rock\rockTiles_bottom.png
+C:\Users\Craig\Source\Repos\ALittleDream\ALittleDream\ALittleDream\bin\Windows\Debug\Content\tiles\rock\rockTiles_right.png
+C:\Users\Craig\Source\Repos\ALittleDream\ALittleDream\ALittleDream\bin\Windows\Debug\Content\tiles\rock\rockTiles_rightleft.png
+C:\Users\Craig\Source\Repos\ALittleDream\ALittleDream\ALittleDream\bin\Windows\Debug\Content\tiles\rock\rockTiles_rightleft1.png
+C:\Users\Craig\Source\Repos\ALittleDream\ALittleDream\ALittleDream\bin\Windows\Debug\Content\tiles\rock\rockTiles_rightleft2.png
+C:\Users\Craig\Source\Repos\ALittleDream\ALittleDream\ALittleDream\bin\Windows\Debug\Content\tiles\rock\rockTiles_rightleft3.png
+C:\Users\Craig\Source\Repos\ALittleDream\ALittleDream\ALittleDream\bin\Windows\Debug\Content\tiles\rock\rockTiles_rightleft4.png
+C:\Users\Craig\Source\Repos\ALittleDream\ALittleDream\ALittleDream\bin\Windows\Debug\Content\tiles\rock\rockTiles_topbottom.png
+C:\Users\Craig\Source\Repos\ALittleDream\ALittleDream\ALittleDream\bin\Windows\Debug\Content\tiles\rock\rockTiles_topbottom1.png
+C:\Users\Craig\Source\Repos\ALittleDream\ALittleDream\ALittleDream\bin\Windows\Debug\Content\tiles\rock\rockTiles_topbottom2.png
+C:\Users\Craig\Source\Repos\ALittleDream\ALittleDream\ALittleDream\bin\Windows\Debug\Content\tiles\rock\rockTiles_topbottom3.png
+C:\Users\Craig\Source\Repos\ALittleDream\ALittleDream\ALittleDream\bin\Windows\Debug\Content\tiles\rock\rockTiles_topbottom4.png
+>>>>>>> 09384d0f9d755f34432b31304191918737ff1b15
 C:\Users\student\Source\Repos\ALittleDream\ALittleDream\ALittleDream\bin\Windows\Debug\Content\beta_brick_old.png
 C:\Users\student\Source\Repos\ALittleDream\ALittleDream\ALittleDream\bin\Windows\Debug\Content\controls\a.png
 C:\Users\student\Source\Repos\ALittleDream\ALittleDream\ALittleDream\bin\Windows\Debug\Content\controls\d.png
@@ -210,6 +225,10 @@ C:\Users\Cinephile\Documents\GitHub\ALittleDream\ALittleDream\ALittleDream\bin\W
 C:\Users\Cinephile\Documents\GitHub\ALittleDream\ALittleDream\ALittleDream\bin\Windows\Debug\Content\controls\a.png
 C:\Users\Cinephile\Documents\GitHub\ALittleDream\ALittleDream\ALittleDream\bin\Windows\Debug\Content\controls\d.png
 C:\Users\Cinephile\Documents\GitHub\ALittleDream\ALittleDream\ALittleDream\bin\Windows\Debug\Content\controls\down.png
+<<<<<<< HEAD
+=======
+C:\Users\Cinephile\Documents\GitHub\ALittleDream\ALittleDream\ALittleDream\bin\Windows\Debug\Content\controls\e.png
+>>>>>>> 09384d0f9d755f34432b31304191918737ff1b15
 C:\Users\Cinephile\Documents\GitHub\ALittleDream\ALittleDream\ALittleDream\bin\Windows\Debug\Content\controls\left.png
 C:\Users\Cinephile\Documents\GitHub\ALittleDream\ALittleDream\ALittleDream\bin\Windows\Debug\Content\controls\q.png
 C:\Users\Cinephile\Documents\GitHub\ALittleDream\ALittleDream\ALittleDream\bin\Windows\Debug\Content\controls\right.png
@@ -315,6 +334,7 @@ C:\Users\Cinephile\Documents\GitHub\ALittleDream\ALittleDream\ALittleDream\bin\W
 C:\Users\Cinephile\Documents\GitHub\ALittleDream\ALittleDream\ALittleDream\bin\Windows\Debug\SharpDX.Direct3D9.xml
 C:\Users\Cinephile\Documents\GitHub\ALittleDream\ALittleDream\ALittleDream\obj\x86\Debug\ALittleDream.exe
 C:\Users\Cinephile\Documents\GitHub\ALittleDream\ALittleDream\ALittleDream\obj\x86\Debug\ALittleDream.pdb
+<<<<<<< HEAD
 C:\Users\Craig\Source\Repos\ALittleDream\ALittleDream\ALittleDream\bin\Windows\Debug\Content\doorBottom.png
 C:\Users\Craig\Source\Repos\ALittleDream\ALittleDream\ALittleDream\bin\Windows\Debug\Content\doorTop.png
 C:\Users\Craig\Source\Repos\ALittleDream\ALittleDream\ALittleDream\bin\Windows\Debug\Content\jump\jumpwOrb.png
@@ -347,3 +367,5 @@ C:\Users\Craig\Source\Repos\ALittleDream\ALittleDream\ALittleDream\bin\Windows\D
 C:\Users\Craig\Source\Repos\ALittleDream\ALittleDream\ALittleDream\bin\Windows\Debug\Content\levels\3.tmx
 C:\Users\Craig\Source\Repos\ALittleDream\ALittleDream\ALittleDream\bin\Windows\Debug\Content\levels\4.tmx
 C:\Users\Craig\Source\Repos\ALittleDream\ALittleDream\ALittleDream\bin\Windows\Debug\Content\triangleLightMask.png
+=======
+>>>>>>> 09384d0f9d755f34432b31304191918737ff1b15

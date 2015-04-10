@@ -63,7 +63,11 @@
    <tileoffset x="0" y="32"/>
   <image source="doorTop.png" width="40" height="9"/>
  </tileset>
+<<<<<<< HEAD
  <tileset firstgid="21" name="movingSpotlight2" tilewidth="24" tileheight="35" light="circle"  maxLightRange="115" movement="stationary">
+=======
+ <tileset firstgid="21" name="movingSpotlight2" tilewidth="24" tileheight="35" light="cone"  maxLightRange="115">
+>>>>>>> 09384d0f9d755f34432b31304191918737ff1b15
   <tileoffset x="8" y="-5"/>
   <image source="lights/movingSpotlight2.png" width="24" height="35"/>
  </tileset>
@@ -82,7 +86,11 @@
  <tileset firstgid="26" name="q" tilewidth="40" tileheight="40" collision="none" draw="always">
   <image source="controls/q.png" width="40" height="40"/>
  </tileset>
+<<<<<<< HEAD
  <tileset firstgid="27" name="hangingLight" tilewidth="22" tileheight="29" collision="none" light="circle"  maxLightRange="115" movement="stationary">
+=======
+ <tileset firstgid="27" name="hangingLight" tilewidth="22" tileheight="29" collision="none" light="cone"  maxLightRange="115">
+>>>>>>> 09384d0f9d755f34432b31304191918737ff1b15
   <tileoffset x="30" y="-10"/>
   <image source="lights/hangingLight.png" width="22" height="29" />
  </tileset>

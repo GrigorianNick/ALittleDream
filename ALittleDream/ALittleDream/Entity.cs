@@ -126,6 +126,12 @@ namespace ALittleDream
                 animations.Add("familiar/familiar2");
                 spriteAnimations = new List<Texture2D>();
             }
+            else if (l == lightShape.none && i == interaction.toggle)
+            {
+                animations.Add("lights/switchOff");
+                animations.Add("lights/switchOn");
+                spriteAnimations = new List<Texture2D>();
+        }
         }
 
         public static void AddEntityObject(Entity ent)
@@ -363,22 +369,26 @@ namespace ALittleDream
             //all other movement
             else
             {
-                spriteX += momentumX;
+            spriteX += momentumX;
+            spriteY += momentumY;
+            if (m == movement.flying)
+            {
+                if (momentumY > 0) momentumY--;
+                if (momentumY < 0) momentumY++;
                 if (momentumX > 0) momentumX--;
                 if (momentumX < 0) momentumX++;
-                spriteY += momentumY;
-                if (m == movement.flying)
+            }
+            else
+            {
+                if (onGround())
                 {
-                    if (momentumY > 0) momentumY--;
-                    if (momentumY < 0) momentumY++;
+                    if (momentumX > 0) momentumX--;
+                    if (momentumX < 0) momentumX++;
                 }
                 else
                 {
-                    if (!onGround())
-                    {
-                        momentumY++;
-                        if (this.m == movement.walking) image = spriteAnimations[1];
-                    }
+                    momentumY++;
+                    if (this.m == movement.walking) image = spriteAnimations[1];
                 }
             }
         }
@@ -415,15 +425,15 @@ namespace ALittleDream
         private bool isIlluminated(GameTime gameTime)
         {
             foreach (Entity e in lightingObjects)
-            {                
+            {
                 {
                     if (Math.Pow(spriteX - e.spriteX, 2) + Math.Pow(spriteY - e.spriteY, 2) < Math.Pow(e.lightRange, 2)) //if within light range
                     {
                         if (e.l == Entity.lightShape.circle) //if circle illumination, then illuminated
-                        { 
-                            if (debugLighting) Console.WriteLine("block at (" + spriteX + "," + spriteY + ") is lit by (" + e.spriteX + "," + e.spriteY + ")");
-                            return true;
-                        }
+                {
+                    if (debugLighting) Console.WriteLine("block at (" + spriteX + "," + spriteY + ") is lit by (" + e.spriteX + "," + e.spriteY + ")");
+                    return true;
+                }
                         else //else it's a cone light, must make sure rotation lines up
                         {
                             if (e.angle == 1000) //default position = facing downwards
@@ -451,10 +461,10 @@ namespace ALittleDream
 
             foreach (Entity e in collisionObjects) //for each entity with collision
             {
-                int leftSide = spriteX,
-                    rightSide = spriteX + spriteWidth,
-                    topSide = spriteY,
-                    bottomSide = spriteY + spriteHeight; //calculate edges of this hitbox
+            int leftSide = spriteX,
+                rightSide = spriteX + spriteWidth,
+                topSide = spriteY,
+                bottomSide = spriteY + spriteHeight; //calculate edges of this hitbox
 
                 if (spriteName == e.spriteName && spriteX == e.spriteX && spriteY == e.spriteY) continue; //checking against itself, so skip
                 if (e.c == collision.none) continue; //collision not currently active for other entity
