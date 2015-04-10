@@ -63,11 +63,7 @@
    <tileoffset x="0" y="32"/>
   <image source="doorTop.png" width="40" height="9"/>
  </tileset>
-<<<<<<< HEAD
  <tileset firstgid="21" name="movingSpotlight2" tilewidth="24" tileheight="35" light="cone" collision="none"  maxLightRange="150" movement="rotating">
-=======
- <tileset firstgid="21" name="movingSpotlight2" tilewidth="24" tileheight="35" light="cone" collision="none"  maxLightRange="115">
->>>>>>> 09384d0f9d755f34432b31304191918737ff1b15
   <tileoffset x="8" y="-5"/>
   <image source="lights/movingSpotlight2.png" width="24" height="35"/>
  </tileset>

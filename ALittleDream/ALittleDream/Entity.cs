@@ -369,26 +369,27 @@ namespace ALittleDream
             //all other movement
             else
             {
-            spriteX += momentumX;
-            spriteY += momentumY;
-            if (m == movement.flying)
-            {
-                if (momentumY > 0) momentumY--;
-                if (momentumY < 0) momentumY++;
-                if (momentumX > 0) momentumX--;
-                if (momentumX < 0) momentumX++;
-            }
-            else
-            {
-                if (onGround())
+                spriteX += momentumX;
+                spriteY += momentumY;
+                if (m == movement.flying)
                 {
+                    if (momentumY > 0) momentumY--;
+                    if (momentumY < 0) momentumY++;
                     if (momentumX > 0) momentumX--;
                     if (momentumX < 0) momentumX++;
                 }
                 else
                 {
-                    momentumY++;
-                    if (this.m == movement.walking) image = spriteAnimations[1];
+                    if (onGround())
+                    {
+                        if (momentumX > 0) momentumX--;
+                        if (momentumX < 0) momentumX++;
+                    }
+                    else
+                    {
+                        momentumY++;
+                        if (this.m == movement.walking) image = spriteAnimations[1];
+                    }
                 }
             }
         }
