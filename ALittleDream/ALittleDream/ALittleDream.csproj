@@ -37,36 +37,19 @@
     <ApplicationIcon>Icon.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="CircleCollision.cs" />
-    <Compile Include="CircleLighting.cs" />
-    <Compile Include="Collision.cs" />
-    <Compile Include="Component.cs" />
-    <Compile Include="ConeLighting.cs" />
     <Compile Include="Controls.cs" />
     <Compile Include="GameScreen.cs" />
+    <Compile Include="MenuItem.cs" />
     <Compile Include="MenuScreen.cs" />
-    <Compile Include="MyDraw.cs" />
     <Compile Include="Entity.cs" />
-    <Compile Include="Flying.cs" />
     <Compile Include="GameLoop.cs" />
-    <Compile Include="Grab.cs" />
-    <Compile Include="Interaction.cs" />
-    <Compile Include="Lighting.cs" />
-    <Compile Include="Movement.cs" />
-    <Compile Include="NoCollision.cs" />
-    <Compile Include="NoInteraction.cs" />
-    <Compile Include="NoLighting.cs" />
-    <Compile Include="NoMovement.cs" />
-    <Compile Include="Physics.cs" />
-    <Compile Include="Pickup.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Screen.cs" />
     <Compile Include="ScreenManager.cs" />
     <Compile Include="SplashScreen.cs" />
     <Compile Include="Sprite.cs" />
-    <Compile Include="SquareCollision.cs" />
-    <Compile Include="Walking.cs" />
+    <Compile Include="Tile.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Microsoft.Xna.Framework.GamerServices, Version=4.0.0.0, Culture=neutral, PublicKeyToken=842cf8be1de50553, processorArchitecture=MSIL">
@@ -111,6 +94,12 @@
     <Content Include="Content\controls\w.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="Content\doorBottom.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\doorTop.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="Content\familiar\familiar.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
@@ -145,6 +134,24 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Content\door.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\jump\jumpwOrb.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\lights\lamppostTallBottom.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\lights\lamppostTallTop.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\lights\movingSpotlight2.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\lights\switchOff.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\lights\switchOn.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Content\menu\enter.png">
@@ -240,46 +247,81 @@
     <Content Include="Content\player.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Content\tiles\rock\rockTiles_bottom.png">
+    <Content Include="Content\tiles\rocksHorizontal.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Content\tiles\rock\rockTiles_right.png">
+    <Content Include="Content\tiles\rocksVertical.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Content\tiles\rock\rockTiles_rightleft.png">
+    <Content Include="Content\tiles\rock\middle.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Content\tiles\rock\rockTiles_rightleft1.png">
+    <Content Include="Content\tiles\rock\rocksHorizontal1.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Content\tiles\rock\rockTiles_rightleft2.png">
+    <Content Include="Content\tiles\rock\rocksHorizontal2.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Content\tiles\rock\rockTiles_rightleft3.png">
+    <Content Include="Content\tiles\rock\rocksHorizontal3.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Content\tiles\rock\rockTiles_rightleft4.png">
+    <Content Include="Content\tiles\rock\rocksHorizontal4.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Content\tiles\rock\rockTiles_topbottom.png">
+    <Content Include="Content\tiles\rock\rocksHorizontal5.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Content\tiles\rock\rockTiles_topbottom1.png">
+    <Content Include="Content\tiles\rock\rocksHorizontal6.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Content\tiles\rock\rockTiles_topbottom2.png">
+    <Content Include="Content\tiles\rock\rocksVertical1.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Content\tiles\rock\rockTiles_topbottom3.png">
+    <Content Include="Content\tiles\rock\rocksVertical2.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Content\tiles\rock\rockTiles_topbottom4.png">
+    <Content Include="Content\tiles\rock\rocksVertical3.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\tiles\rock\rocksVertical4.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\tiles\rock\rocksVertical5.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\tiles\rock\rocksVertical6.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\treebranchesBack.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\treebranchesFront.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\treesBack.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\treesFront.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\triangleLightMask.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Icon.ico" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="ClassDiagram1.cd" />
+    <None Include="Content\levels\1.tmx">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Content\levels\2.tmx">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Content\levels\3.tmx">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Content\levels\4.tmx">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Include="Content\levels\test.tmx">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>

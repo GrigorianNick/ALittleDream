@@ -17,13 +17,21 @@ namespace ALittleDream
         public Texture2D image;
         public List<Texture2D> spriteAnimations;
         public bool facingRight;
+        public float angle;
 
         public void Draw(SpriteBatch sb)
         {
-            if (facingRight)
-                sb.Draw(image, new Rectangle(spriteX, spriteY, spriteWidth, spriteHeight), Color.White);
+            if (angle == 1000F)
+            {
+                if (facingRight)
+                    sb.Draw(image, new Rectangle(spriteX, spriteY, spriteWidth, spriteHeight), Color.White);
+                else
+                    sb.Draw(image, new Rectangle(spriteX, spriteY, spriteWidth, spriteHeight), null, Color.White, 0f, Vector2.Zero, SpriteEffects.FlipHorizontally, 1f);
+            }
             else
-                sb.Draw(image, new Rectangle(spriteX, spriteY, spriteWidth, spriteHeight), null, Color.White, 0f, Vector2.Zero, SpriteEffects.FlipHorizontally, 1f);
+            {
+                sb.Draw(image, new Vector2(spriteX, spriteY), null, Color.White, angle, new Vector2(spriteWidth/2, 0), 1, SpriteEffects.None, 0);
+            }
         }
         public void LoadContent(ContentManager content)
         {
