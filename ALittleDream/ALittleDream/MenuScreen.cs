@@ -69,7 +69,7 @@ namespace ALittleDream
 
             if (controls.onPress(Keys.Enter, Buttons.RightShoulder) && !controls.onPress(Keys.U, Buttons.RightShoulder) && !changed)
             {
-                Screen.input = 1;
+                Screen.input = 0;
                 if (menuItems[0].selected == true)
                 {
                     changed = true;
