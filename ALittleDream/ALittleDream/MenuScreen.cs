@@ -67,8 +67,9 @@ namespace ALittleDream
                 i.Update(gametime);
             }
 
-            if (controls.onPress(Keys.Enter, Buttons.A) && !changed)
+            if (controls.onPress(Keys.Enter, Buttons.RightShoulder) && !controls.onPress(Keys.U, Buttons.RightShoulder) && !changed)
             {
+                Screen.input = 1;
                 if (menuItems[0].selected == true)
                 {
                     changed = true;
@@ -79,7 +80,20 @@ namespace ALittleDream
                     game.Quit();
                 }
             }
-            else if (controls.onPress(Keys.Up, Buttons.DPadUp) && itemNum > 0)
+            else if ((controls.onPress(Keys.I, Buttons.A) || controls.onPress(Keys.I, Buttons.Start)) && !changed)
+            {
+                Screen.input = 1;
+                if (menuItems[0].selected == true)
+                {
+                    changed = true;
+                    changeScreen = true;
+                }
+                else
+                {
+                    game.Quit();
+                }
+            }
+            else if (controls.onPress(Keys.Up, Buttons.LeftThumbstickUp) && itemNum > 0)
             {
                 foreach (MenuItem i in menuItems)
                 {
@@ -89,7 +103,7 @@ namespace ALittleDream
                 menuItems[itemNum].selected = true;
                 
             }
-            else if (controls.onPress(Keys.Down, Buttons.DPadDown) && itemNum < menuItems.Count-1)
+            else if (controls.onPress(Keys.Down, Buttons.LeftThumbstickDown) && itemNum < menuItems.Count-1)
             {
                 foreach (MenuItem i in menuItems)
                 {

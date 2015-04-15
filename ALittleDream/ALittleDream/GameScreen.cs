@@ -54,10 +54,9 @@ namespace ALittleDream
             int familiarHeight = 20;
             int familiarWidth = 10;
             this.player = new Entity(ref playerX, ref playerY, ref playerHeight, ref playerWidth, "beta_player", Entity.collision.square, Entity.lightShape.none, Entity.movement.walking, Entity.drawIf.always, Entity.interaction.none, ref collisionObjects, ref lightingObjects);
-            this.familiar = new Entity(ref familiarX, ref familiarY, ref familiarHeight, ref familiarWidth, "familiar/familiar", Entity.collision.none, Entity.lightShape.circle, Entity.movement.flying, Entity.drawIf.always, Entity.interaction.none, ref collisionObjects, ref lightingObjects);
+            this.familiar = new Entity(ref familiarX, ref familiarY, ref familiarHeight, ref familiarWidth, "familiar/familiar", Entity.collision.square, Entity.lightShape.circle, Entity.movement.flying, Entity.drawIf.always, Entity.interaction.none, ref collisionObjects, ref lightingObjects);
             changeScreen = false;
             this.changed = false;
-            loadXML();
         }
 
         private void loadXML()
@@ -79,6 +78,7 @@ namespace ALittleDream
                 string toggle = "";
                 string movement = "";
                 int maxLightRange = 0;
+                string image = "";
                 if (tileset.Attribute("light") != null)
                 {
                     light = tileset.Attribute("light").Value;
@@ -102,9 +102,25 @@ namespace ALittleDream
                     toggle = tileset.Attribute("toggle").Value;
                 if (tileset.Attribute("movement") != null)
                     movement = tileset.Attribute("movement").Value;
+                if (tileset.Attribute("control") != null)
+                {
+                    if (Screen.input == 0)//keyboard
+                        image = tileset.Element("image").Attribute("source1").Value;
+                    else
+                    {//controller
+                        image = tileset.Element("image").Attribute("source2").Value;
+                    }
+
+                }
+                else
+                {
+                    image = tileset.Element("image").Attribute("source").Value;
+                }
+                   
 
 
-                tiles.Add(new Tile(tileset.Element("image").Attribute("source").Value,
+
+                tiles.Add(new Tile(image,
                 Convert.ToInt32(tileset.Attribute("tileheight").Value),
                 Convert.ToInt32(tileset.Attribute("tilewidth").Value),
                 xOffset, yOffset, light, maxLightRange, draw, collision, door, interact, toggle, movement));
@@ -205,6 +221,7 @@ namespace ALittleDream
 
         public override void LoadContent(ContentManager content)
         {
+            loadXML();
             Entity.entityList.Clear();
             Entity.entityList = entityListLevel;
 
@@ -240,16 +257,15 @@ namespace ALittleDream
 
             treesBack = content.Load<Texture2D>("treesBack");
             treesFront = content.Load<Texture2D>("treesFront");
-            treesBack = content.Load<Texture2D>("treesBack");
-            treesFront = content.Load<Texture2D>("treesFront");
-            if (level == 8)
+
+            /**if (level == 8)
             {
                 end = new List<Texture2D>();
                 end.Add(content.Load<Texture2D>("end1"));
                 end.Add(content.Load<Texture2D>("end2"));
                 end.Add(content.Load<Texture2D>("end3"));
                 end.Add(content.Load<Texture2D>("end4"));
-            }
+            }**/
         }
 
         public override void UnloadContent(ContentManager content)
@@ -306,11 +322,11 @@ namespace ALittleDream
             graphicsDevice.Clear(Color.Black);
             spriteBatch.Begin();
 
-            if (level != 8)
-            {
+            //if (level != 8)
+            //{
                 spriteBatch.Draw(treesBack, new Rectangle(-500 - (player.spriteX / 16), 0, graphicsDevice.PresentationParameters.BackBufferWidth * 2, graphicsDevice.PresentationParameters.BackBufferHeight), Color.White);
-            }
-            else
+            //}
+            /**else
             {
                 spriteBatch.Draw(end[count], new Rectangle(0 - (player.spriteX / 16), 0, graphicsDevice.PresentationParameters.BackBufferWidth, graphicsDevice.PresentationParameters.BackBufferHeight), Color.White);
                 spriteBatch.Draw(treesBack, new Rectangle(-500 - (player.spriteX / 16), 0, graphicsDevice.PresentationParameters.BackBufferWidth * 2, graphicsDevice.PresentationParameters.BackBufferHeight), Color.White);
@@ -321,7 +337,7 @@ namespace ALittleDream
                     count++;
                 if (count > 3)
                     count = 0;
-            }
+            }**/
             
             foreach (Entity e in Entity.entityList)
         {
@@ -391,7 +407,7 @@ namespace ALittleDream
             player.Draw(spriteBatch);
             //Console.WriteLine(player.spriteX + "," + player.spriteY);
             familiar.Draw(spriteBatch);
-            //spriteBatch.Draw(treesFront, new Rectangle(-500 - (player.spriteX / 36), 0, graphicsDevice.PresentationParameters.BackBufferWidth * 2, graphicsDevice.PresentationParameters.BackBufferHeight), Color.White);
+            //spriteBatch.Draw(treesFront, new Rectangle( (player.spriteX / 36), 0, graphicsDevice.PresentationParameters.BackBufferWidth , graphicsDevice.PresentationParameters.BackBufferHeight*2), Color.White);
 
         }
     }

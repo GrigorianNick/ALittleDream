@@ -320,7 +320,7 @@ namespace ALittleDream
             {
                 resetLevel();
             }
-            else if (controls.onPress(Keys.Space, Buttons.A))
+            else if (controls.onPress(Keys.Space, Buttons.RightShoulder))///TO DELETE
             {
                 screenManager.skipScreen();
             }

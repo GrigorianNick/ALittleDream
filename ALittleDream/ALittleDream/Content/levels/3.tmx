@@ -45,7 +45,7 @@
  <tileset firstgid="15" name="d" tilewidth="40" tileheight="40">
   <image source="controls/d.png" width="40" height="40"/>
  </tileset>
- <tileset firstgid="16" name="w" tilewidth="40" tileheight="40">
+ <tileset firstgid="16" name="w" tilewidth="40" tileheight="40" >
   <image source="controls/w.png" width="40" height="40"/>
  </tileset>
  <tileset firstgid="17" name="lamppostTallTop" tilewidth="18" tileheight="40" light="circle" collision="none"  maxLightRange="115">

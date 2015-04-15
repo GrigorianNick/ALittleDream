@@ -52,8 +52,8 @@
   <tileoffset x="9" y="20"/>
   <image source="lights/lantern.png" width="22" height="21"/>
  </tileset>
- <tileset firstgid="17" name="e" tilewidth="40" tileheight="40" collision="none" draw="always">
-  <image source="controls/e.png" width="40" height="40"/>
+ <tileset firstgid="17" name="e" tilewidth="40" tileheight="40" collision="none" draw="always" control="true">
+  <image source1="controls/e.png" source2="controls/lt.png" width="40" height="40"/>
  </tileset>
  <layer name="Tile Layer 1" width="25" height="15">
   <data>

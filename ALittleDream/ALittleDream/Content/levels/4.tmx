@@ -67,20 +67,20 @@
    <tileoffset x="8" y="-10"/>
   <image source="lights/movingSpotlight2.png" width="24" height="35"/>
  </tileset>
- <tileset firstgid="22" name="down" tilewidth="40" tileheight="40" collision="none" draw="always">
-  <image source="controls/down.png" width="40" height="40"/>
+ <tileset firstgid="22" name="down" tilewidth="40" tileheight="40" collision="none" draw="always" control="true">
+  <image source1="controls/down.png" source2="controls/downDpad.png" width="40" height="40"/>
  </tileset>
- <tileset firstgid="23" name="left" tilewidth="40" tileheight="40" collision="none" draw="always">
-  <image source="controls/left.png" width="40" height="40"/>
+ <tileset firstgid="23" name="left" tilewidth="40" tileheight="40" collision="none" draw="always" control="true">
+  <image source1="controls/left.png" source2="controls/leftDpad.png" width="40" height="40"/>
  </tileset>
- <tileset firstgid="24" name="right" tilewidth="40" tileheight="40" collision="none" draw="always">
-  <image source="controls/right.png" width="40" height="40"/>
+ <tileset firstgid="24" name="right" tilewidth="40" tileheight="40" collision="none" draw="always" control="true">
+  <image source1="controls/right.png" source2="controls/rightDpad.png" width="40" height="40"/>
  </tileset>
- <tileset firstgid="25" name="up" tilewidth="40" tileheight="40" collision="none" draw="always">
-  <image source="controls/up.png" width="40" height="40"/>
+ <tileset firstgid="25" name="up" tilewidth="40" tileheight="40" collision="none" draw="always" control="true">
+  <image source1="controls/up.png" source2="controls/upDpad.png" width="40" height="40"/>
  </tileset>
- <tileset firstgid="26" name="q" tilewidth="40" tileheight="40" collision="none" draw="always">
-  <image source="controls/q.png" width="40" height="40"/>
+ <tileset firstgid="26" name="q" tilewidth="40" tileheight="40" collision="none" draw="always" control="true">
+  <image source1="controls/q.png" source2="controls/rt.png" width="40" height="40"/>
  </tileset>
  <tileset firstgid="27" name="hangingLight" tilewidth="22" tileheight="29" collision="none" light="circle"  maxLightRange="115" movement="stationary">
   <tileoffset x="30" y="-10"/>
