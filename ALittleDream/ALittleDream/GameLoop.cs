@@ -200,12 +200,14 @@ namespace ALittleDream
                 GameScreen gameScreen5 = new GameScreen(5, 350, 150, 100, 20, GraphicsDevice);
                 GameScreen gameScreen6 = new GameScreen(6, 400, 100, 100, 20, GraphicsDevice);
                 GameScreen gameScreen7 = new GameScreen(7, 450, 0, 100, 20, GraphicsDevice);
-               // GameScreen gameScreen8 = new GameScreen(8, 450, 0, 100, 20, GraphicsDevice);
+                //GameScreen gameScreen8 = new GameScreen(8, 450, 0, 100, 20, GraphicsDevice);
+                //EndScreen end = new EndScreen(graphics.PreferredBackBufferWidth, graphics.PreferredBackBufferHeight);
 
 
 
                 Stack<Screen> screens = new Stack<Screen>();
                 //screens.Push(gameScreen8);
+                //screens.Push(end);
                 screens.Push(gameScreen7);
                 screens.Push(gameScreen6);
                 screens.Push(gameScreen5);
@@ -320,7 +322,7 @@ namespace ALittleDream
             {
                 resetLevel();
             }
-            else if (controls.onPress(Keys.Space, Buttons.A))
+            else if (controls.onPress(Keys.Space, Buttons.RightShoulder))///TO DELETE
             {
                 screenManager.skipScreen();
             }
@@ -358,7 +360,9 @@ namespace ALittleDream
 
         public void resetLevel()
         {
-            player.spriteX = 10;
+            screenManager.restartLevel();
+            
+            /*player.spriteX = 10;
             player.spriteY = 10;
             player.momentumX = 0;
             player.momentumY = 0;
@@ -369,7 +373,7 @@ namespace ALittleDream
             lantern.spriteX = 300;
             lantern.spriteY = 50;
             lantern.momentumX = 0;
-            lantern.momentumY = 0;
+            lantern.momentumY = 0;*/
         }
 
         /// <summary>

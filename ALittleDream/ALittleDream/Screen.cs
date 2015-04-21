@@ -12,7 +12,8 @@ namespace ALittleDream
     public abstract class Screen
     {
         public bool changeScreen;
-        public bool changed; 
+        public bool changed;
+        public static int input; //0 - keyboard //1 - controller
 
         public abstract void LoadContent(ContentManager content);
 
