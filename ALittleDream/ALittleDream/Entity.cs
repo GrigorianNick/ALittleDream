@@ -43,6 +43,8 @@ namespace ALittleDream
         public bool needsNewSprite = false;
         public String toggleSet = "";
 
+        private bool switchGlowing;
+
         public enum collision
         {
             square, none
@@ -100,6 +102,7 @@ namespace ALittleDream
             d = drw;
             i = inter;
 
+            switchGlowing = false;
             //collision.x = spriteX;
             //collision.y = spriteY;
             //collision.height = height;
@@ -130,14 +133,11 @@ namespace ALittleDream
             {
                 animations.Add("lights/switchOff");
                 animations.Add("lights/switchOn");
+                animations.Add("lights/switchOffGLOW");
+                animations.Add("lights/switchOnGLOW");
                 spriteAnimations = new List<Texture2D>();
             }
-            else if (l == lightShape.none && i == interaction.toggle)
-            {
-                animations.Add("lights/switchOff");
-                animations.Add("lights/switchOn");
-                spriteAnimations = new List<Texture2D>();
-            }
+          
         }
 
         public static void AddEntityObject(Entity ent)
@@ -279,7 +279,7 @@ namespace ALittleDream
                         int lanternY = this.spriteY + 10;
                         int lanternHeight = 21, lanternWidth = 22;
                         if (this.facingRight) lanternX += 31 + this.spriteWidth; //move to right of player if player is facing right
-                        Entity l = new Entity(ref lanternX, ref lanternY, ref lanternHeight, ref lanternWidth, "lights/lantern.png", Entity.collision.square, Entity.lightShape.circle, Entity.movement.physics, Entity.drawIf.lit, Entity.interaction.grab, ref this.collisionObjects, ref this.lightingObjects);
+                        Entity l = new Entity(ref lanternX, ref lanternY, ref lanternHeight, ref lanternWidth, "lights/lantern.png", Entity.collision.none, Entity.lightShape.circle, Entity.movement.physics, Entity.drawIf.lit, Entity.interaction.grab, ref this.collisionObjects, ref this.lightingObjects);
                         Entity.entityList.Add(l);
                         l.setMaxLightRange(this.maxLightRange);
                         l.lightRange = maxLightRange; //no incremental light change, just instantly max
@@ -331,22 +331,44 @@ namespace ALittleDream
                 }
 
                 //handle switches
-                if (controls.onPress(Keys.Q, Buttons.LeftShoulder))
+                if (this.m == movement.flying)
                 {
                     foreach (Entity e in Entity.entityList)
                     {
-                        if (e.i == interaction.toggle && e.isInToggleRange(this) && e.l == lightShape.none)
+                        if (e.i == interaction.toggle && e.isInToggleRange(this) && e.l == lightShape.none && controls.onPress(Keys.Q, Buttons.LeftShoulder))
                         {
-                            if (e.image == e.spriteAnimations[0])
-                                e.image = e.spriteAnimations[1];
+                            if (e.image == e.spriteAnimations[2])
+                                e.image = e.spriteAnimations[3];
                             else
-                                e.image = e.spriteAnimations[0];
+                                e.image = e.spriteAnimations[2];
                             foreach (Entity e2 in lightingObjects)
                             {
                                 if (e2.toggleSet == e.toggleSet)
                                 {
                                     e2.isLit = !e2.isLit;
                                 }
+                            }
+                        }
+                        else if (e.i == interaction.toggle && e.isInToggleRange(this) && e.l == lightShape.none)
+                        {
+                            if (!e.switchGlowing)
+                            {
+                                e.switchGlowing = true;
+                                if (e.image == e.spriteAnimations[0])
+                                    e.image = e.spriteAnimations[2];
+                                else
+                                    e.image = e.spriteAnimations[3];
+                            }
+                        }
+                        else if (e.i == interaction.toggle && e.l == lightShape.none)
+                        {
+                            if (e.switchGlowing)
+                            {
+                                e.switchGlowing = false;
+                                if (e.image == e.spriteAnimations[2])
+                                    e.image = e.spriteAnimations[0];
+                                else
+                                    e.image = e.spriteAnimations[1];
                             }
                         }
                     }
