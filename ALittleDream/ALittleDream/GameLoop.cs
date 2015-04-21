@@ -210,9 +210,9 @@ namespace ALittleDream
                 screens.Push(gameScreen6);
                 screens.Push(gameScreen5);
                 screens.Push(gameScreen4);
-                screens.Push(gameScreen3);
                 screens.Push(gameScreen2);
                 screens.Push(gameScreen1);
+                screens.Push(gameScreen3);
                 screens.Push(menuScreen);
                 screens.Push(splashScreen);
                 screenManager = new ScreenManager(screens, graphics.PreferredBackBufferWidth, graphics.PreferredBackBufferHeight);
