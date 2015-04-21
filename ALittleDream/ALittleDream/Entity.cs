@@ -21,7 +21,7 @@ namespace ALittleDream
         public static int toggleDistance = 50;
         public static int lightToggleRate = 12; //number of pixels per frame lighting changes by when toggled
         public int maxMomentum = 7;
-        public static float maxAngle = (float) Math.PI / 4; //for rotating lights
+        public static float maxAngle = (float)Math.PI / 4; //for rotating lights
         public static float rotateRate = 0.008F; //for rotating lights
 
         public collision c;
@@ -179,7 +179,7 @@ namespace ALittleDream
                         this.lightRange = this.maxLightRange;
                     }
                 }
-                
+
                 if (!isLit && this.lightRange > 0)
                 {
                     this.lightRange -= Entity.lightToggleRate;
@@ -242,7 +242,8 @@ namespace ALittleDream
 
                 if (controls.onPress(Keys.E, Buttons.RightShoulder)) //grab button
                 {
-                    if (!isHoldingLantern) { //if not holding lantern, see if one nearby
+                    if (!isHoldingLantern)
+                    { //if not holding lantern, see if one nearby
                         foreach (Entity e in Entity.entityList)
                         {
                             if (e.i == interaction.grab && e.isInGrabRange(this)) //found a lantern e in range
@@ -435,36 +436,42 @@ namespace ALittleDream
 
         private bool isIlluminated(GameTime gameTime)
         {
+            bool isIlluminated = false;
             foreach (Entity e in lightingObjects)
             {
+                bool withinRange = Math.Pow(spriteX - e.spriteX, 2) + Math.Pow(spriteY - e.spriteY, 2) < Math.Pow(e.lightRange, 2);
+                
+                if (withinRange) //if within light range
                 {
-                    if (Math.Pow(spriteX - e.spriteX, 2) + Math.Pow(spriteY - e.spriteY, 2) < Math.Pow(e.lightRange, 2)) //if within light range
+                    if (e.l == Entity.lightShape.circle) //if circle illumination, then illuminated
                     {
-                        if (e.l == Entity.lightShape.circle) //if circle illumination, then illuminated
-                {
-                    if (debugLighting) Console.WriteLine("block at (" + spriteX + "," + spriteY + ") is lit by (" + e.spriteX + "," + e.spriteY + ")");
-                    return true;
-                }
-                        else //else it's a cone light, must make sure rotation lines up
+                        if (debugLighting) Console.WriteLine("block at (" + spriteX + "," + spriteY + ") is lit by (" + e.spriteX + "," + e.spriteY + ")");
+                        return true;
+                    }
+                    else //else it's a cone light, must make sure rotation lines up
+                    {
+                        if (e.angle == 1000) //default position = facing downwards
                         {
-                            if (e.angle == 1000) //default position = facing downwards
-                            {
-                                //illuminated if below light fixture and x position is within cone (this is a little hacky)
-                                return (spriteY > e.spriteY && spriteX > e.spriteX - 1 / Math.Sqrt(2) * e.lightRange && spriteX < e.spriteX + 1 / Math.Sqrt(2) * e.lightRange);
-                            }
-                            else
-                            {
-                                //magic number 0.52 in the Sin calculation accounts for about the angle of the light fixture's cone relative to fixture's position
-                                int leftBound = (int) (e.spriteX - Math.Sin(0.52 + e.angle) * e.lightRange / Math.Sqrt(2) - 80);
-                                int rightBound = (int) (e.spriteX + Math.Sin(0.52 - e.angle) * e.lightRange / Math.Sqrt(2));
-                                Console.WriteLine(leftBound + " " + rightBound);
-                                return (spriteY > e.spriteY && spriteX > leftBound && spriteX < rightBound);
-                            }
+                            //illuminated if below light fixture and x position is within cone (this is a little hacky)
+                            if (spriteY > e.spriteY && spriteX > e.spriteX - 1 / Math.Sqrt(2) * e.lightRange && spriteX < e.spriteX + 1 / Math.Sqrt(2) * e.lightRange)
+                                isIlluminated = true;
+                        }
+                        else
+                        {
+                            //Console.WriteLine("Block at (" + spriteX + ", " + spriteY + ") is lit");
+                            //return withinRange;
+                            //magic number 0.52 in the Sin calculation accounts for about the angle of the light fixture's cone relative to fixture's position
+                            int leftBound = (int)(e.spriteX - Math.Sin(0.52 + e.angle) * e.lightRange / Math.Sqrt(2) - 80);
+                            int rightBound = (int)(e.spriteX + Math.Sin(0.52 - e.angle) * e.lightRange / Math.Sqrt(2));
+                            //Console.WriteLine(leftBound + " " + rightBound);
+
+                            if (spriteY > e.spriteY && spriteX > leftBound && spriteX < rightBound)
+                                isIlluminated = true;
                         }
                     }
-                }               
+                }
             }
-            return false;
+            return isIlluminated;
         }
 
         private void checkCollisions(GameTime gameTime)
@@ -472,10 +479,10 @@ namespace ALittleDream
 
             foreach (Entity e in collisionObjects) //for each entity with collision
             {
-            int leftSide = spriteX,
-                rightSide = spriteX + spriteWidth,
-                topSide = spriteY,
-                bottomSide = spriteY + spriteHeight; //calculate edges of this hitbox
+                int leftSide = spriteX,
+                    rightSide = spriteX + spriteWidth,
+                    topSide = spriteY,
+                    bottomSide = spriteY + spriteHeight; //calculate edges of this hitbox
 
                 if (spriteName == e.spriteName && spriteX == e.spriteX && spriteY == e.spriteY) continue; //checking against itself, so skip
                 if (e.c == collision.none) continue; //collision not currently active for other entity

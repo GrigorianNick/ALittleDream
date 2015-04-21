@@ -358,7 +358,9 @@ namespace ALittleDream
 
         public void resetLevel()
         {
-            player.spriteX = 10;
+            screenManager.restartLevel();
+            
+            /*player.spriteX = 10;
             player.spriteY = 10;
             player.momentumX = 0;
             player.momentumY = 0;
@@ -369,7 +371,7 @@ namespace ALittleDream
             lantern.spriteX = 300;
             lantern.spriteY = 50;
             lantern.momentumX = 0;
-            lantern.momentumY = 0;
+            lantern.momentumY = 0;*/
         }
 
         /// <summary>
