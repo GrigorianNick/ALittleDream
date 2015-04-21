@@ -200,12 +200,14 @@ namespace ALittleDream
                 GameScreen gameScreen5 = new GameScreen(5, 350, 150, 100, 20, GraphicsDevice);
                 GameScreen gameScreen6 = new GameScreen(6, 400, 100, 100, 20, GraphicsDevice);
                 GameScreen gameScreen7 = new GameScreen(7, 450, 0, 100, 20, GraphicsDevice);
-               // GameScreen gameScreen8 = new GameScreen(8, 450, 0, 100, 20, GraphicsDevice);
+                //GameScreen gameScreen8 = new GameScreen(8, 450, 0, 100, 20, GraphicsDevice);
+                //EndScreen end = new EndScreen(graphics.PreferredBackBufferWidth, graphics.PreferredBackBufferHeight);
 
 
 
                 Stack<Screen> screens = new Stack<Screen>();
                 //screens.Push(gameScreen8);
+                //screens.Push(end);
                 screens.Push(gameScreen7);
                 screens.Push(gameScreen6);
                 screens.Push(gameScreen5);

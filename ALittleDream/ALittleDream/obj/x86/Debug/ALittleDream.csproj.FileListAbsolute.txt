@@ -246,3 +246,9 @@ C:\Users\Cinephile\Documents\GitHub\ALittleDream\ALittleDream\ALittleDream\bin\W
 C:\Users\Cinephile\Documents\GitHub\ALittleDream\ALittleDream\ALittleDream\bin\Windows\Debug\SharpDX.Direct3D9.xml
 C:\Users\Cinephile\Documents\GitHub\ALittleDream\ALittleDream\ALittleDream\obj\x86\Debug\ALittleDream.exe
 C:\Users\Cinephile\Documents\GitHub\ALittleDream\ALittleDream\ALittleDream\obj\x86\Debug\ALittleDream.pdb
+C:\Users\Cinephile\Documents\GitHub\ALittleDream\ALittleDream\ALittleDream\bin\Windows\Debug\Content\tiles\rock\rocksBottomTopRight.png
+C:\Users\Cinephile\Documents\GitHub\ALittleDream\ALittleDream\ALittleDream\bin\Windows\Debug\Content\tiles\rock\rocksTopRight.png
+C:\Users\Cinephile\Documents\GitHub\ALittleDream\ALittleDream\ALittleDream\bin\Windows\Debug\Content\tiles\rock\single.png
+C:\Users\Cinephile\Documents\GitHub\ALittleDream\ALittleDream\ALittleDream\bin\Windows\Debug\Content\menu\theEnd.png
+C:\Users\Cinephile\Documents\GitHub\ALittleDream\ALittleDream\ALittleDream\bin\Windows\Debug\Content\lights\switchOffGLOW.png
+C:\Users\Cinephile\Documents\GitHub\ALittleDream\ALittleDream\ALittleDream\bin\Windows\Debug\Content\lights\switchOnGLOW.png

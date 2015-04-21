@@ -277,42 +277,45 @@ namespace ALittleDream
 
         public override void Update(Controls controls, GameTime gameTime)
         {
-            //handle player reaching door
-            if ((player.spriteX + 15) > door.spriteX && (player.spriteX + player.spriteWidth) < (door.spriteX + door.spriteWidth + 15)
-    && (player.spriteY + 15) > door.spriteY && (player.spriteY + player.spriteHeight) < (door.spriteY + door.spriteHeight + 15)
-                && !changed)
-            {
-                changeScreen = true;
-                changed = true;
-            }
-
-
-            //if player falls below game area, reset level
-            if (player.spriteY > ScreenManager.screenHeight && !playerDied)
-            {
-                playerDied = true;
-                ScreenManager.playerFellOffScreen = true;
-            }
-
-
-            if (player.needsNewSprite)
-            {
-                //Console.WriteLine("player sprite=" + player.spriteName);
-                player.spriteAnimations[0] = content.Load<Texture2D>(player.animations[0]);
-                player.spriteAnimations[1] = content.Load<Texture2D>(player.animations[1]);
-                //TODO: other sprites
-                player.needsNewSprite = false;
-            }
-            player.Update(controls, gameTime);
-            familiar.Update(controls, gameTime);
-            foreach (Entity e in Entity.entityList)
-            {
-                if (e.needsNewSprite)
-{
-                    e.LoadContent(content);
-                    e.needsNewSprite = false;
+            if (!changed)
+            { //checking to see if player already made it to do if true - dont update screen
+                //handle player reaching door
+                if ((player.spriteX + 15) > door.spriteX && (player.spriteX + player.spriteWidth) < (door.spriteX + door.spriteWidth + 15)
+        && (player.spriteY + 15) > door.spriteY && (player.spriteY + player.spriteHeight) < (door.spriteY + door.spriteHeight + 15)
+                    && !changed)
+                {
+                    changeScreen = true;
+                    changed = true;
                 }
-                e.Update(controls, gameTime);
+
+
+                //if player falls below game area, reset level
+                if (player.spriteY > ScreenManager.screenHeight && !playerDied)
+                {
+                    playerDied = true;
+                    ScreenManager.playerFellOffScreen = true;
+                }
+
+
+                if (player.needsNewSprite)
+                {
+                    //Console.WriteLine("player sprite=" + player.spriteName);
+                    player.spriteAnimations[0] = content.Load<Texture2D>(player.animations[0]);
+                    player.spriteAnimations[1] = content.Load<Texture2D>(player.animations[1]);
+                    //TODO: other sprites
+                    player.needsNewSprite = false;
+                }
+                player.Update(controls, gameTime);
+                familiar.Update(controls, gameTime);
+                foreach (Entity e in Entity.entityList)
+                {
+                    if (e.needsNewSprite)
+                    {
+                        e.LoadContent(content);
+                        e.needsNewSprite = false;
+                    }
+                    e.Update(controls, gameTime);
+                }
             }
         }
         public override void Draw(SpriteBatch spriteBatch)
