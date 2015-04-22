@@ -288,7 +288,7 @@ namespace ALittleDream
             //handle player reaching door
             if ((player.spriteX + 15) > door.spriteX && (player.spriteX + player.spriteWidth) < (door.spriteX + door.spriteWidth + 15)
     && (player.spriteY + 15) > door.spriteY && (player.spriteY + player.spriteHeight) < (door.spriteY + door.spriteHeight + 15)
-                && !changed && controls.isPressed(Keys.E, Buttons.RightShoulder))
+                && !changed && controls.isPressed(Keys.E, Buttons.LeftShoulder))
             {
                 changeScreen = true;
                 changed = true;

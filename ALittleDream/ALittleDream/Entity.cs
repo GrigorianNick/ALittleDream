@@ -234,19 +234,19 @@ namespace ALittleDream
             if (m == movement.walking)
             {
                 bool onTheGround = onGround();
-                if (controls.isPressed(Keys.A, Buttons.DPadLeft))
+                if (controls.isPressed(Keys.A, Buttons.LeftThumbstickLeft))
                 {
                     momentumX -= 2;
                     if (maxMomentum + momentumX < 0) momentumX = 0 - maxMomentum;
                     facingRight = false;
                 }
-                if (controls.isPressed(Keys.D, Buttons.DPadRight))
+                if (controls.isPressed(Keys.D, Buttons.LeftThumbstickRight))
                 {
                     momentumX += 2;
                     if (momentumX > maxMomentum) momentumX = maxMomentum;
                     facingRight = true;
                 }
-                if (controls.onPress(Keys.W, Buttons.DPadUp) || controls.onPress(Keys.Space, Buttons.DPadUp)) //TODO: implement differen jump arc based on holding jump button?
+                if (controls.onPress(Keys.W, Buttons.A) || controls.onPress(Keys.Space, Buttons.A)) //TODO: implement differen jump arc based on holding jump button?
                 {
                     if (onTheGround) momentumY = -14;
                 }
@@ -255,7 +255,7 @@ namespace ALittleDream
                     Console.WriteLine("Player Pos: (" + spriteX + "," + spriteY + ")");
                 }
 
-                if (controls.onPress(Keys.E, Buttons.RightShoulder)) //grab button
+                if (controls.onPress(Keys.E, Buttons.LeftShoulder)) //grab button
                 {
                     if (!isHoldingLantern)
                     { //if not holding lantern, see if one nearby
@@ -350,7 +350,7 @@ namespace ALittleDream
                 {
                     foreach (Entity e in Entity.entityList)
                     {
-                        if (e.i == interaction.toggle && e.isInToggleRange(this) && e.l == lightShape.none && controls.onPress(Keys.Q, Buttons.LeftShoulder))
+                        if (e.i == interaction.toggle && e.isInToggleRange(this) && e.l == lightShape.none && controls.onPress(Keys.Q, Buttons.RightShoulder))
                         {
                             if (e.image == e.spriteAnimations[2])
                                 e.image = e.spriteAnimations[3];

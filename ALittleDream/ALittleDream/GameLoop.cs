@@ -211,7 +211,7 @@ namespace ALittleDream
             controls.Update();
 
             // Window sizing with numpad
-            if (controls.isPressed(Keys.NumPad6, Buttons.A))
+            /*if (controls.isPressed(Keys.NumPad6, Buttons.A))
             {
                 windowWidth += 10;
                 graphics.PreferredBackBufferWidth = windowWidth;
@@ -234,12 +234,12 @@ namespace ALittleDream
                 windowHeight = Math.Max(0, windowHeight - 10);
                 graphics.PreferredBackBufferHeight = windowHeight;
                 graphics.ApplyChanges();
-            }
-            else if (controls.onPress(Keys.R, Buttons.A))
+            }*/
+            if (controls.onPress(Keys.R, Buttons.B))
             {
                 resetLevel();
             }
-            else if (controls.onPress(Keys.Space, Buttons.RightShoulder))///TO DELETE
+            else if (controls.onPress(Keys.Space, Buttons.Back))///TO DELETE
             {
                 screenManager.skipScreen();
             }
@@ -270,6 +270,11 @@ namespace ALittleDream
                         e.LoadContent(Content);
                     }
                     else if (e.spriteName == "controls/q.png")
+                    {
+                        e.spriteName = "controls/rb.png";
+                        e.LoadContent(Content);
+                    }
+                    else if (e.spriteName == "controls/e.png")
                     {
                         e.spriteName = "controls/lb.png";
                         e.LoadContent(Content);
@@ -315,6 +320,11 @@ namespace ALittleDream
                     else if (e.spriteName == "controls/lb.png")
                     {
                         e.spriteName = "controls/q.png";
+                        e.LoadContent(Content);
+                    }
+                    else if (e.spriteName == "controls/lb.png")
+                    {
+                        e.spriteName = "controls/e.png";
                         e.LoadContent(Content);
                     }
                     else if (e.spriteName == "controls/aGP.png")
