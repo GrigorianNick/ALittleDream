@@ -190,6 +190,7 @@ namespace ALittleDream
                 graphics.PreferredBackBufferWidth = windowWidth;
                 graphics.PreferredBackBufferHeight = windowHeight;
                 graphics.ApplyChanges();
+                graphics.ToggleFullScreen();
 
                 SplashScreen splashScreen = new SplashScreen(graphics.PreferredBackBufferWidth, graphics.PreferredBackBufferHeight);
                 MenuScreen menuScreen = new MenuScreen(graphics.PreferredBackBufferWidth, graphics.PreferredBackBufferHeight, this);
