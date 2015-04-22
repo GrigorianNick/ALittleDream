@@ -88,95 +88,7 @@ namespace ALittleDream
         protected override void Initialize()
         {
             if (debug)
-            {/**
-                // BEGIN TILED XML PARSING
-                System.IO.Stream stream = TitleContainer.OpenStream("Content/levels/test.tmx");
-                XDocument doc = XDocument.Load(stream);
-
-                windowWidth = Convert.ToInt32(doc.Root.Attribute("width").Value) * Convert.ToInt32(doc.Root.Attribute("tilewidth").Value);
-                windowHeight = Convert.ToInt32(doc.Root.Attribute("height").Value) * Convert.ToInt32(doc.Root.Attribute("tileheight").Value);
-
-                graphics.PreferredBackBufferWidth = windowWidth;
-                graphics.PreferredBackBufferHeight = windowHeight;
-                graphics.ApplyChanges();
-
-                //initialize player
-                int playerX = 10, playerY = 10, playerHeight = 40, playerWidth = 25;
-                player = new Entity(ref playerX, ref playerY, ref playerHeight, ref playerWidth, "beta_player.png", Entity.collision.square, Entity.lightShape.none, Entity.movement.walking, Entity.drawIf.always, Entity.interaction.none);
-
-                //initialize familiar
-                int familiarX = 100, familiarY = 20, familiarHeight = 20, familiarWidth = 10;
-                familiar = new Entity(ref familiarX, ref familiarY, ref familiarHeight, ref familiarWidth, "familiar/familiar.png", Entity.collision.none, Entity.lightShape.circle, Entity.movement.flying, Entity.drawIf.always, Entity.interaction.none);
-                familiar.setMaxLightRange(115);
-
-                //initialize blocks
-                int[] blockX = new int[]{
-                10, 200, 250, 300, 350, 400, 350, 350, -40, 440, 540
-            };
-                int[] blockY = new int[]{
-                100, 200, 200, 200, 200, 200, 150, 100, 50, 320, 320
-            };
-                int[] blockHeight = new int[]{
-                50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50
-            };
-                int[] blockWidth = new int[]{
-                50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50
-            };
-                for (int i = 0; i < blockHeight.Length; i++)
-                {
-                    Entity.AddEntityObject(new Entity(ref blockX[i], ref blockY[i], ref blockHeight[i], ref blockWidth[i], "beta_brick.png", Entity.collision.square, Entity.lightShape.none, Entity.movement.stationary, Entity.drawIf.lit, Entity.interaction.none));
-                }
-
-                //initialize lantern
-                int lanternX = 300,
-                    lanternY = 50,
-                    lanternHeight = 30,
-                    lanternWidth = 30;
-                lantern = new Entity(ref lanternX, ref lanternY, ref lanternHeight, ref lanternWidth, "lights/lantern.png", Entity.collision.square, Entity.lightShape.circle, Entity.movement.physics, Entity.drawIf.lit, Entity.interaction.grab);
-                Entity.AddEntityObject(lantern);
-                lantern.setMaxLightRange(115);
-
-                //initialize lightbulbs (beta lampposts?)
-                int[] lightX = new int[]{
-                60, 200
-            };
-                int[] lightY = new int[]{
-                100, 150
-            };
-                int[] lightHeight = new int[]{
-                20, 20
-            };
-                int[] lightWidth = new int[]{
-                20, 20
-            };
-                for (int i = 0; i < lightX.Length; i++)
-                {
-                    Entity.AddEntityObject(new Entity(ref lightX[i], ref lightY[i], ref lightHeight[i], ref lightWidth[i], "beta_lightbulb.png", Entity.collision.none, Entity.lightShape.circle, Entity.movement.stationary, Entity.drawIf.always, Entity.interaction.none));
-                }
-
-                //initialize static light sizes
-                ((Entity)Entity.lightingObjects[2]).setMaxLightRange(115);
-                ((Entity)Entity.lightingObjects[3]).setMaxLightRange(115);
-
-                int lightSwitchX = 300;
-                int lightSwitchY = 300;
-                int lightSwitchHeight = 40;
-                int lightSwitchWidth = 40;
-                Entity lightSwitch = new Entity(ref lightSwitchX, ref lightSwitchY, ref lightSwitchHeight, ref lightSwitchWidth, "beta_brick_old.png", Entity.collision.none, Entity.lightShape.none, Entity.movement.stationary, Entity.drawIf.lit, Entity.interaction.toggle);
-
-                int switchableX = 500;
-                int switchableY = 300;
-                int switchableHeight = 80;
-                int switchableWidth = 20;
-                Entity switchable = new Entity(ref switchableX, ref switchableY, ref switchableHeight, ref switchableWidth, "lights/lamppostShort.png", Entity.collision.none, Entity.lightShape.circle, Entity.movement.stationary, Entity.drawIf.lit, Entity.interaction.toggle);
-                switchable.isLit = false;
-                lightSwitch.setMaxLightRange(80);
-                switchable.setMaxLightRange(80);
-
-                Entity.AddEntityObject(lightSwitch);
-                Entity.AddEntityObject(switchable);
-                lightSwitch.assignToggle("toggle1");
-                switchable.assignToggle("toggle1");**/
+            {
 
             }
             else
@@ -201,6 +113,8 @@ namespace ALittleDream
                 GameScreen gameScreen5 = new GameScreen(5, 350, 150, 100, 20, GraphicsDevice);
                 GameScreen gameScreen6 = new GameScreen(6, 400, 100, 100, 20, GraphicsDevice);
                 GameScreen gameScreen7 = new GameScreen(7, 450, 0, 100, 20, GraphicsDevice);
+                GameScreen gameScreen8 = new GameScreen(8, 450, 0, 100, 20, GraphicsDevice);
+                GameScreen gameScreen9 = new GameScreen(9, 450, 0, 100, 20, GraphicsDevice);
                 //GameScreen gameScreen8 = new GameScreen(8, 450, 0, 100, 20, GraphicsDevice);
                 //EndScreen end = new EndScreen(graphics.PreferredBackBufferWidth, graphics.PreferredBackBufferHeight);
 
@@ -209,13 +123,15 @@ namespace ALittleDream
                 Stack<Screen> screens = new Stack<Screen>();
                 //screens.Push(gameScreen8);
                 //screens.Push(end);
+                screens.Push(gameScreen9);
+                screens.Push(gameScreen8);
                 screens.Push(gameScreen7);
                 screens.Push(gameScreen6);
                 screens.Push(gameScreen5);
-                screens.Push(gameScreen4);
                 screens.Push(gameScreen2);
                 screens.Push(gameScreen1);
                 screens.Push(gameScreen3);
+                screens.Push(gameScreen4);
                 screens.Push(menuScreen);
                 screens.Push(splashScreen);
                 screenManager = new ScreenManager(screens, graphics.PreferredBackBufferWidth, graphics.PreferredBackBufferHeight);
@@ -328,6 +244,96 @@ namespace ALittleDream
                 screenManager.skipScreen();
             }
 
+            foreach (Entity e in Entity.entityList)
+            {
+                if (controls.gamepadConnected()) // Gamepad plugged in, time to swap out sprites
+                {
+                    // Begin the fat if else block
+                    if (e.spriteName == "controls/down.png")
+                    {
+                        e.spriteName = "controls/downDpad.png";
+                        e.LoadContent(Content);
+                    }
+                    else if (e.spriteName == "controls/up.png")
+                    {
+                        e.spriteName = "controls/upDpad.png";
+                        e.LoadContent(Content);
+                    }
+                    else if (e.spriteName == "controls/left.png")
+                    {
+                        e.spriteName = "controls/leftDpad.png";
+                        e.LoadContent(Content);
+                    }
+                    else if (e.spriteName == "controls/right.png")
+                    {
+                        e.spriteName = "controls/rightDpad.png";
+                        e.LoadContent(Content);
+                    }
+                    else if (e.spriteName == "controls/q.png")
+                    {
+                        e.spriteName = "controls/lb.png";
+                        e.LoadContent(Content);
+                    }
+                    else if (e.spriteName == "controls/w.png")
+                    {
+                        e.spriteName = "controls/aGP.png";
+                        e.LoadContent(Content);
+                    }
+                    else if (e.spriteName == "controls/a.png")
+                    {
+                        e.spriteName = "controls/leftLeftStick.png";
+                        e.LoadContent(Content);
+                    }
+                    else if (e.spriteName == "controls/d.png")
+                    {
+                        e.spriteName = "controls/rightLeftStick.png";
+                        e.LoadContent(Content);
+                    }
+                }
+                else
+                {
+                    if (e.spriteName == "controls/downDpad.png")
+                    {
+                        e.spriteName = "controls/down.png";
+                        e.LoadContent(Content);
+                    }
+                    else if (e.spriteName == "controls/upDpad.png")
+                    {
+                        e.spriteName = "controls/up.png";
+                        e.LoadContent(Content);
+                    }
+                    else if (e.spriteName == "controls/leftDpad.png")
+                    {
+                        e.spriteName = "controls/left.png";
+                        e.LoadContent(Content);
+                    }
+                    else if (e.spriteName == "controls/rightDpad.png")
+                    {
+                        e.spriteName = "controls/right.png";
+                        e.LoadContent(Content);
+                    }
+                    else if (e.spriteName == "controls/lb.png")
+                    {
+                        e.spriteName = "controls/q.png";
+                        e.LoadContent(Content);
+                    }
+                    else if (e.spriteName == "controls/aGP.png")
+                    {
+                        e.spriteName = "controls/w.png";
+                        e.LoadContent(Content);
+                    }
+                    else if (e.spriteName == "controls/leftLeftStick.png")
+                    {
+                        e.spriteName = "controls/a.png";
+                        e.LoadContent(Content);
+                    }
+                    else if (e.spriteName == "controls/rightLeftStick.png")
+                    {
+                        e.spriteName = "controls/d.png";
+                        e.LoadContent(Content);
+                    }
+                }
+            }
 
             if (!debug)
             {
@@ -384,66 +390,7 @@ namespace ALittleDream
         protected override void Draw(GameTime gameTime)
         {
             if (debug)
-            {/**
-                //Light Shader code: uncomment code below and comment code above to use
-                //Set render target to entities then draw all entities
-                GraphicsDevice.SetRenderTarget(entities);
-                GraphicsDevice.Clear(Color.Black);
-
-                spriteBatch.Begin();
-                foreach (Entity e in Entity.entityList)
-                {
-                    e.Draw(spriteBatch);
-                }
-                spriteBatch.End();
-                GraphicsDevice.SetRenderTarget(null);
-
-                //Set render target to lightMask then draw lightmask.png every instance where there is a light
-                GraphicsDevice.SetRenderTarget(lights);
-                GraphicsDevice.Clear(Color.Black);
-
-                // Create a Black Background
-                spriteBatch.Begin();
-                spriteBatch.Draw(blackSquare, new Vector2(0, 0), new Rectangle(0, 0, 800, 800), Color.White);
-                spriteBatch.End();
-
-                spriteBatch.Begin(SpriteSortMode.Immediate, BlendState.Additive);
-
-                // Draw out lightmasks based on torch positions.
-                foreach (Entity l in Entity.lightingObjects)
-                {
-                    var new_rect = new Rectangle(l.spriteX - (l.lightRange - l.spriteWidth), l.spriteY - (l.lightRange - l.spriteHeight), l.lightRange * 2, l.lightRange * 2);
-                    spriteBatch.Draw(lightmask, new_rect, Color.White);
-                    spriteBatch.Draw(lightmask, new_rect, Color.White);
-                }
-
-                spriteBatch.Draw(lightmask, new Rectangle(familiar.spriteX - (lantern.lightRange - familiar.spriteWidth), familiar.spriteY - (lantern.lightRange - familiar.spriteHeight), lantern.lightRange * 2, lantern.lightRange * 2)
-    , Color.White);
-                spriteBatch.Draw(lightmask, new Rectangle(familiar.spriteX - (lantern.lightRange - familiar.spriteWidth), familiar.spriteY - (lantern.lightRange - familiar.spriteHeight), lantern.lightRange * 2, lantern.lightRange * 2)
-    , Color.White);
-                spriteBatch.End();
-
-                GraphicsDevice.SetRenderTarget(null);
-
-                //Draw everything to screen w/ blendstate
-                GraphicsDevice.Clear(Color.Black);
-                spriteBatch.Begin(SpriteSortMode.Immediate, null);
-                spriteBatch.Draw(entities, new Vector2(0, 0), Color.White);
-                spriteBatch.End();
-
-                BlendState blend = new BlendState();
-                blend.ColorBlendFunction = BlendFunction.Add;
-                blend.ColorSourceBlend = Blend.DestinationColor;
-                blend.ColorDestinationBlend = Blend.Zero;
-
-                spriteBatch.Begin(SpriteSortMode.Immediate, blend);
-                spriteBatch.Draw(lights, new Vector2(0, 0), Color.White);
-                spriteBatch.End();
-
-                spriteBatch.Begin(SpriteSortMode.Immediate, null);
-                player.Draw(spriteBatch);
-                familiar.Draw(spriteBatch);
-                spriteBatch.End();**/
+            {
             }
             else
             {

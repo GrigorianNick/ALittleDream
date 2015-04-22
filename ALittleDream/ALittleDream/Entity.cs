@@ -785,6 +785,7 @@ namespace ALittleDream
                     else
                     {
                         spriteX -= leftDist;
+                        momentumX = 0;
                     }
                 }
                 else

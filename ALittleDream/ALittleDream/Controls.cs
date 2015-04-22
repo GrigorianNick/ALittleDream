@@ -24,6 +24,11 @@ namespace ALittleDream
 
         }
 
+        public bool gamepadConnected()
+        {
+            return this.gp.IsConnected;
+        }
+
         public void Update()
         {
             kbo = kb;
