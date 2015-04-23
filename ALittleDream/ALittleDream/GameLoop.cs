@@ -112,7 +112,7 @@ namespace ALittleDream
                 GameScreen gameScreen4 = new GameScreen(4, 225, 0, 100, 20, GraphicsDevice);
                 GameScreen gameScreen5 = new GameScreen(5, 350, 150, 100, 20, GraphicsDevice);
                 GameScreen gameScreen6 = new GameScreen(6, 400, 100, 100, 20, GraphicsDevice);
-                GameScreen gameScreen7 = new GameScreen(7, 450, 0, 100, 20, GraphicsDevice);
+                GameScreen gameScreen7 = new GameScreen(7, 500, 50, 480, 20, GraphicsDevice);
                 GameScreen gameScreen8 = new GameScreen(8, 450, 0, 100, 20, GraphicsDevice);
                 GameScreen gameScreen9 = new GameScreen(9, 450, 0, 100, 20, GraphicsDevice);
                 //GameScreen gameScreen8 = new GameScreen(8, 450, 0, 100, 20, GraphicsDevice);
@@ -128,10 +128,10 @@ namespace ALittleDream
                 screens.Push(gameScreen7);
                 screens.Push(gameScreen6);
                 screens.Push(gameScreen5);
+                screens.Push(gameScreen4);
+                screens.Push(gameScreen3);
                 screens.Push(gameScreen2);
                 screens.Push(gameScreen1);
-                screens.Push(gameScreen3);
-                screens.Push(gameScreen4);
                 screens.Push(menuScreen);
                 screens.Push(splashScreen);
                 screenManager = new ScreenManager(screens, graphics.PreferredBackBufferWidth, graphics.PreferredBackBufferHeight);

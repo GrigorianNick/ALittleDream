@@ -566,6 +566,7 @@ namespace ALittleDream
                 if (e.c == collision.none || e.m == movement.walking || e.spriteName == "beta_player.png" || e.spriteName == "familiar.png") continue;
                     foreach (Entity l in lightingObjects)
                     {
+                        if (l.l == Entity.lightShape.cone) continue;
                         if (!isIllum(e, l)) continue; // e isn't illuminated by l
                         if (l.spriteX == e.spriteX && l.spriteY == e.spriteY) continue; // Skipping checking against ourselves
                         double e_x = e.spriteX + (e.spriteWidth / 2);

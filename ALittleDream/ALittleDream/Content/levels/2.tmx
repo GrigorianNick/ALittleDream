@@ -44,7 +44,7 @@
   <tileoffset x="11" y="0"/>
   <image source="lights/lamppostTallBottom.png" width="18" height="40"/>
  </tileset>
- <tileset firstgid="15" name="lamppostTallTop" tilewidth="18" tileheight="40" light="circle" collision="none" draw="always"  maxLightRange="115">
+ <tileset firstgid="15" name="lamppostTallTop" tilewidth="18" tileheight="40" light="circle" collision="none" draw="always"  maxLightRange="100">
   <tileoffset x="11" y="0"/>
   <image source="lights/lamppostTallTop.png" width="18" height="40"/>
  </tileset>

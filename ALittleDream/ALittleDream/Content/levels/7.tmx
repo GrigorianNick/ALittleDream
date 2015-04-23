@@ -46,7 +46,7 @@
    <tileoffset x="0" y="32"/>
   <image source="doorTop.png" width="40" height="9"/>
  </tileset>
- <tileset firstgid="16" name="lamppostShort" tilewidth="18" tileheight="40" collision="none" light="circle" maxLightRange="115" interact="toggle" toggle="toggle1">
+ <tileset firstgid="16" name="lamppostShort" tilewidth="18" tileheight="40" collision="none" light="circle" maxLightRange="59" interact="toggle" toggle="toggle1">
   <tileoffset x="11" y="0"/>
   <image source="lights/lamppostShort.png" width="18" height="40"/>
  </tileset>
@@ -67,7 +67,7 @@
    <tileoffset x="9" y="20"/>
   <image source="lights/lantern.png" width="22" height="21"/>
  </tileset>
-  <tileset firstgid="22" name="lamppostShort" tilewidth="18" tileheight="40" collision="none" light="circle" maxLightRange="90" interact="toggle" toggle="toggle2">
+  <tileset firstgid="22" name="lamppostShort" tilewidth="18" tileheight="40" collision="none" light="circle" maxLightRange="59" interact="toggle" toggle="toggle2">
     <tileoffset x="11" y="0"/>
     <image source="lights/lamppostShort.png" width="18" height="40"/>
   </tileset>
