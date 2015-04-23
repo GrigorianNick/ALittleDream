@@ -106,9 +106,9 @@ namespace ALittleDream
 
                 SplashScreen splashScreen = new SplashScreen(graphics.PreferredBackBufferWidth, graphics.PreferredBackBufferHeight);
                 MenuScreen menuScreen = new MenuScreen(graphics.PreferredBackBufferWidth, graphics.PreferredBackBufferHeight, this);
-                GameScreen gameScreen1 = new GameScreen(1, 200, 0, 100, 20, GraphicsDevice);
-                GameScreen gameScreen2 = new GameScreen(2, 350, 150, 100, 20, GraphicsDevice);
-                GameScreen gameScreen3 = new GameScreen(3, 675, 0, 100, 20, GraphicsDevice);
+                GameScreen gameScreen1 = new GameScreen(1, 200, 0, -9001, -9001, GraphicsDevice);
+                GameScreen gameScreen2 = new GameScreen(2, 350, 150, -9001, -9001, GraphicsDevice);
+                GameScreen gameScreen3 = new GameScreen(3, 675, 0, -9001, -9001, GraphicsDevice);
                 GameScreen gameScreen4 = new GameScreen(4, 225, 0, 100, 20, GraphicsDevice);
                 GameScreen gameScreen5 = new GameScreen(5, 350, 150, 100, 20, GraphicsDevice);
                 GameScreen gameScreen6 = new GameScreen(6, 400, 100, 100, 20, GraphicsDevice);

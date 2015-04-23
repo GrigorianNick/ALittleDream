@@ -762,7 +762,35 @@ namespace ALittleDream
                     leftDist = leftSide - cRightSide,
                     rightDist = cLeftSide - rightSide;
                 if (bottomDist >= 0 || topDist >= 0 || leftDist >= 0 || rightDist >= 0) continue; //if any distances are greater than zero, there is no collision
+                /*
                 if (momentumX == 0) // Moving straight up/down
+                {
+                    if (topDist < bottomDist) // Moving down
+                    {
+                        spriteY += bottomDist;
+                        momentumY = 0;
+                    }
+                    else // Moving up
+                    {
+                        spriteY -= topDist;
+                        momentumY = 0;
+                    }
+                }
+                else if (momentumY == 0)
+                {
+                    if (leftDist < rightDist)
+                    {
+                        spriteX += rightDist;
+                        momentumX = 0;
+                    }
+                    else
+                    {
+                        spriteX -= leftDist;
+                        momentumX = 0;
+                    }
+                }
+                 */
+                if (momentumX == 0 ) // Moving straight up/down
                 {
                     if (topDist < bottomDist) // Moving down
                     {
@@ -790,28 +818,68 @@ namespace ALittleDream
                 }
                 else
                 {
-                    double deltX, deltY;
+                    int[] dists = new int[] { topDist, bottomDist, leftDist, rightDist }; //for comparing: largest is side of collision (other sides will be more negative)
+                    if (isLargest(dists, topDist)) //collision is with entity above
+                    {
+                        momentumY = 0;
+                        spriteY -= topDist;
+                        //spriteY -= momentumY;
+                        //momentumY = 0;
+                    }
+                    else if (isLargest(dists, bottomDist)) //collision is with entity below
+                    {
+                        momentumY = 0;
+                        //if (this.m == movement.walking && bottomDist <= 0 - spriteHeight / 2) spriteY = e.spriteY + spriteHeight;
+                        spriteY += bottomDist;
+                    }
+                    else if (isLargest(dists, leftDist)) //collision is with entity to left
+                    {
+                        momentumX = 0;
+                        spriteX -= leftDist;
+                    }
+                    else //collision is with entity to the right
+                    {
+                        momentumX = 0;
+                        spriteX += rightDist;
+                    }
+                    /*double deltX, deltY;
                     if (leftDist > rightDist)
                     {
-                        deltX = leftDist / momentumX;
+                        deltX = leftDist;
                     }
                     else
                     {
-                        deltX = rightDist / momentumX;
+                        deltX = rightDist;
                     }
                     if (topDist > bottomDist)
                     {
-                        deltY = topDist / momentumY;
+                        deltY = topDist;
                     }
                     else
                     {
-                        deltY = bottomDist / momentumY;
+                        deltY = bottomDist;
                     }
-                    deltY = Math.Abs(deltY);
-                    deltX = Math.Abs(deltX);
-                    spriteX -= (int)((double)momentumX * min(deltY, deltX));
+                    deltY = Math.Abs(deltY / momentumY);
+                    deltX = Math.Abs(deltX / momentumX);
+                    /*for (int i = 0; i <= (int)Math.Abs(deltX); i++)
+                    {
+                        if (momentumX > 0) spriteX--;
+                        else spriteX++;
+                        spriteY -= momentumY / Math.Abs(momentumX);
+                        if (spriteY > c.y + c.height || spriteY + spriteHeight < c.y)
+                        {
+                            Console.WriteLine("Break!");
+                            break;
+                        }
+                    }
+                    if (spriteY > c.y + c.height || spriteY + spriteHeight < c.y) momentumX = 0;
+                    else momentumY = 0;*/
+                    /*spriteX -= (int)((double)momentumX * min(deltY, deltX));
                     spriteY -= (int)((double)momentumY * min(deltX, deltY));
-                    Console.WriteLine("{0}, {1}", spriteX, spriteY);
+                    if (momentumX > 0) spriteX--;
+                    else spriteX++;
+                    if (momentumY > 0) spriteY--;
+                    else spriteY++;
                     if (deltY < deltX)
                     {
                         momentumX = 0;
@@ -819,7 +887,7 @@ namespace ALittleDream
                     else
                     {
                         momentumY = 0;
-                    }
+                    }*/
                 }
             }
         }
