@@ -67,11 +67,11 @@
   <tileoffset x="8" y="-10"/>
   <image source="lights/movingSpotlight2.png" width="24" height="35"/>
  </tileset>
- <tileset firstgid="22" name="lantern" tilewidth="22" tileheight="21" collision="none" light="circle" draw="always" interact="grab"  maxLightRange="100">
+ <tileset firstgid="22" name="lantern" tilewidth="22" tileheight="21" collision="none" light="circle" draw="always" interact="grab"  maxLightRange="80">
    <tileoffset x="9" y="20"/>
   <image source="lights/lantern.png" width="22" height="21"/>
  </tileset>
- <tileset firstgid="23" name="QuantumUnlit" tilewidth="40" tileheight="40" interact="grab" collision="none" light="circle" maxLightRange="100">
+ <tileset firstgid="23" name="QuantumUnlit" tilewidth="40" tileheight="40" interact="grab" collision="none" light="none" maxLightRange="80">
   <image source="lights/QuantumUnlit.png" width="40" height="40"/>
  </tileset>
  <layer name="Tile Layer 1" width="25" height="15">
