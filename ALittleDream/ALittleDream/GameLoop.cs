@@ -115,6 +115,7 @@ namespace ALittleDream
                 GameScreen gameScreen7 = new GameScreen(7, 500, 50, 480, 20, GraphicsDevice);
                 GameScreen gameScreen8 = new GameScreen(8, 450, 0, 100, 20, GraphicsDevice);
                 GameScreen gameScreen9 = new GameScreen(9, 450, 0, 100, 20, GraphicsDevice);
+                GameScreen gameScreen10 = new GameScreen(10, 440, 280, -9001, -9001, GraphicsDevice);
                 //GameScreen gameScreen8 = new GameScreen(8, 450, 0, 100, 20, GraphicsDevice);
                 //EndScreen end = new EndScreen(graphics.PreferredBackBufferWidth, graphics.PreferredBackBufferHeight);
 
@@ -132,6 +133,7 @@ namespace ALittleDream
                 screens.Push(gameScreen3);
                 screens.Push(gameScreen2);
                 screens.Push(gameScreen1);
+                screens.Push(gameScreen10);
                 screens.Push(menuScreen);
                 screens.Push(splashScreen);
                 screenManager = new ScreenManager(screens, graphics.PreferredBackBufferWidth, graphics.PreferredBackBufferHeight);

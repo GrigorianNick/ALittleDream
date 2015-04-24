@@ -16,6 +16,7 @@ namespace ALittleDream
         public ArrayList collisionObjects = new ArrayList();
         public ArrayList lightingObjects = new ArrayList();
         public ArrayList collisionZoneList = new ArrayList();
+        public static ArrayList quantumList = new ArrayList();
 
         public class collisionZone
         {
@@ -263,22 +264,46 @@ namespace ALittleDream
                         {
                             if (e.i == interaction.grab && e.isInGrabRange(this)) //found a lantern e in range
                             {
-                                this.isHoldingLantern = true; //now holding a lantern
 
-                                //remove lantern from all relavent lists
-                                Entity.entityList.Remove(e);
-                                collisionObjects.Remove(e);
-                                lightingObjects.Remove(e);
+                                if (e.spriteName == "lights/QuantumLit.png")
+                                {
+                                    foreach (Entity f in Entity.quantumList)
+                                    {
+                                        f.spriteName = "lights/QuantumUnlit.png";
+                                        f.needsNewSprite = true;
+                                        f.isLit = false;
+                                    }
+                                    this.isHoldingLantern = true;
 
-                                //change lighting
-                                this.l = lightShape.circle;
-                                lightingObjects.Add(this);
-                                this.setMaxLightRange(e.maxLightRange);
-                                this.lightRange = this.maxLightRange; //no incremental light change, just take light from lantern
-                                this.animations[0] = "charHoldingLatern.png";
-                                this.animations[1] = "jump/jumpwOrb.png";
-                                //TODO: other sprites
-                                this.needsNewSprite = true; //loads new content in GameLoop.Update()
+                                    //change lighting
+                                    this.l = lightShape.circle;
+                                    lightingObjects.Add(this);
+                                    this.setMaxLightRange(e.maxLightRange);
+                                    this.lightRange = this.maxLightRange; //no incremental light change, just take light from lantern
+                                    this.animations[0] = "charHoldingLatern.png";
+                                    this.animations[1] = "jump/jumpwOrb.png";
+                                    //TODO: other sprites
+                                    this.needsNewSprite = true; //loads new content in GameLoop.Update()
+
+                                }
+                                else if (e.spriteName != "lights/QuantumUnlit.png")
+                                {
+                                    this.isHoldingLantern = true; //now holding a lantern
+                                    //remove lantern from all relavent lists
+                                    Entity.entityList.Remove(e);
+                                    collisionObjects.Remove(e);
+                                    lightingObjects.Remove(e);
+
+                                    //change lighting
+                                    this.l = lightShape.circle;
+                                    lightingObjects.Add(this);
+                                    this.setMaxLightRange(e.maxLightRange);
+                                    this.lightRange = this.maxLightRange; //no incremental light change, just take light from lantern
+                                    this.animations[0] = "charHoldingLatern.png";
+                                    this.animations[1] = "jump/jumpwOrb.png";
+                                    //TODO: other sprites
+                                    this.needsNewSprite = true; //loads new content in GameLoop.Update()
+                                }
 
                                 //stop trying to find a lantern
                                 break;
@@ -289,17 +314,36 @@ namespace ALittleDream
                     {
                         this.isHoldingLantern = false; //no longer holding a lantern
 
-                        //make new lantern object
-                        int lanternX = this.spriteX - 31; //default to left of player
-                        int lanternY = this.spriteY + 10;
-                        int lanternHeight = 21, lanternWidth = 22;
-                        if (this.facingRight) lanternX += 31 + this.spriteWidth; //move to right of player if player is facing right
-                        Entity l = new Entity(ref lanternX, ref lanternY, ref lanternHeight, ref lanternWidth, "lights/lantern.png", Entity.collision.none, Entity.lightShape.circle, Entity.movement.physics, Entity.drawIf.lit, Entity.interaction.grab, ref this.collisionObjects, ref this.lightingObjects);
-                        Entity.entityList.Add(l);
-                        l.setMaxLightRange(this.maxLightRange);
-                        l.lightRange = maxLightRange; //no incremental light change, just instantly max
-                        l.needsNewSprite = true; //loads new content in GameLoop.Update()
-
+                        bool drop = true;
+                        foreach (Entity e in Entity.quantumList)
+                        {
+                            if (e.i == interaction.grab && e.isInGrabRange(this) && e.spriteName == "lights/QuantumUnlit.png")
+                            {
+                                drop = false;
+                                foreach (Entity f in Entity.quantumList)
+                                {
+                                    f.spriteName = "lights/QuantumLit.png";
+                                    f.needsNewSprite = true;
+                                    f.isLit = true;
+                                }
+                                e.lightRange = this.lightRange;
+                                break;
+                            }
+                        }
+                        if (drop)
+                        {
+                            //make new lantern object
+                            int lanternX = this.spriteX - 31; //default to left of player
+                            int lanternY = this.spriteY + 10;
+                            int lanternHeight = 21, lanternWidth = 22;
+                            if (this.facingRight) lanternX += 31 + this.spriteWidth; //move to right of player if player is facing right
+                            Entity l = new Entity(ref lanternX, ref lanternY, ref lanternHeight, ref lanternWidth, "lights/lantern.png", Entity.collision.none, Entity.lightShape.circle, Entity.movement.physics, Entity.drawIf.lit, Entity.interaction.grab, ref this.collisionObjects, ref this.lightingObjects);
+                            Entity.entityList.Add(l);
+                            l.momentumX = this.momentumX; // Don't inherit momentumY because it feels weird
+                            l.setMaxLightRange(this.maxLightRange);
+                            l.lightRange = maxLightRange; //no incremental light change, just instantly max
+                            l.needsNewSprite = true; //loads new content in GameLoop.Update()
+                        }
                         //change lighting
                         this.l = lightShape.none;
                         this.lightRange = 0;

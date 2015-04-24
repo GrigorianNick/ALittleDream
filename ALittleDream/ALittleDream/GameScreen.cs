@@ -144,6 +144,13 @@ namespace ALittleDream
                             Entity ent = new Entity(ref x, ref y, ref width, ref height, t.image, Entity.collision.none, Entity.lightShape.circle, Entity.movement.stationary, Entity.drawIf.always, Entity.interaction.grab, ref collisionObjects, ref lightingObjects);
                             ent.maxLightRange = t.maxLightRange;
                             entityListLevel.Add(ent);
+                            Console.WriteLine(t.image);
+                            if (t.image == "lights/QuantumUnlit.png")
+                            {
+                                Console.WriteLine("Quant");
+                                Entity.quantumList.Add(ent);
+                                ent.isLit = false;
+                            }
                         }
                         else if (t.interact == "toggle")
                         {
