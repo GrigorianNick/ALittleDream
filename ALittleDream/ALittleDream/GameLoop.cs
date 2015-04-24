@@ -119,13 +119,13 @@ namespace ALittleDream
                 GameScreen gameScreen11 = new GameScreen(11, 880, 80, 860, 20, GraphicsDevice);
                 GameScreen gameScreen12 = new GameScreen(12, 40, 280, -9001, -9001, GraphicsDevice);
                 //GameScreen gameScreen8 = new GameScreen(8, 450, 0, 100, 20, GraphicsDevice);
-                //EndScreen end = new EndScreen(graphics.PreferredBackBufferWidth, graphics.PreferredBackBufferHeight);
+                EndScreen end = new EndScreen(graphics.PreferredBackBufferWidth, graphics.PreferredBackBufferHeight);
 
 
 
                 Stack<Screen> screens = new Stack<Screen>();
                 //screens.Push(gameScreen8);
-                //screens.Push(end);
+                screens.Push(end);
                 /*screens.Push(gameScreen5);
                 screens.Push(gameScreen6);*/
                 screens.Push(gameScreen7); // Quantom & Switch puzzle
