@@ -667,10 +667,13 @@ namespace ALittleDream
                     foreach (Entity l in lightingObjects)
                     {
                     if (l.l == Entity.lightShape.cone && isIllum(e)) {
-                        for (int i = 0; i < 8; i++)
+                        for (int i = 0; i < 5; i++)
                         {
-                            if(insideCone(l, e.spriteX + (e.spriteWidth*i)/8 + e.spriteWidth/16, e.spriteY + e.spriteHeight/2))
-                                collisionZoneList.Add(new collisionZone(e.spriteX + (e.spriteWidth * i) / 8, e.spriteY, e.spriteWidth / 8, e.spriteHeight));
+                            for (int j = 0; j < 5; j++)
+                            {
+                                if (insideCone(l, e.spriteX + (e.spriteWidth * i) / 5 + e.spriteWidth / 10, e.spriteY + (e.spriteHeight * j) / 5 + e.spriteHeight / 10))
+                                    collisionZoneList.Add(new collisionZone(e.spriteX + (e.spriteWidth * i) / 5, e.spriteY + (e.spriteHeight * j) / 5, e.spriteWidth / 5, e.spriteHeight / 5));
+                            }
                         }
                         continue;
                     }

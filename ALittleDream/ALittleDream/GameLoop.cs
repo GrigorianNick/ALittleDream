@@ -126,13 +126,13 @@ namespace ALittleDream
                 Stack<Screen> screens = new Stack<Screen>();
                 //screens.Push(gameScreen8);
                 screens.Push(end);
-                /*screens.Push(gameScreen5);
-                screens.Push(gameScreen6);*/
+                //screens.Push(gameScreen5);
                 screens.Push(gameScreen7); // Quantom & Switch puzzle
                 screens.Push(gameScreen11); // Quantom & Switch puzzle
                 screens.Push(gameScreen4); // Switch tutorial
                 screens.Push(gameScreen10); // Quantom tutorial
                 screens.Push(gameScreen2); // Lantern Puzzle
+                screens.Push(gameScreen6); // Light jumping puzzle
                 screens.Push(gameScreen9); // Lantern Puzzle
                 screens.Push(gameScreen12); // Lantern tutorial
                 screens.Push(gameScreen3); // Lighting tutorial
