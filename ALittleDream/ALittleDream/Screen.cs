@@ -19,8 +19,10 @@ namespace ALittleDream
 
         public abstract void UnloadContent(ContentManager content);
 
-        public abstract void Update(Controls controls, GameTime gametime);
+        public abstract void Update(Controls controls, GameTime gametime, AudioMixer audioMixer);
 
         public abstract void Draw(SpriteBatch sb);
+
+        public abstract string identify();
     }
 }

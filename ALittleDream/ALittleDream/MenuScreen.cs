@@ -60,7 +60,7 @@ namespace ALittleDream
             content.Unload();
         }
 
-        public override void Update(Controls controls, GameTime gametime)
+        public override void Update(Controls controls, GameTime gametime, AudioMixer audioMixer)
         {
             foreach (MenuItem i in menuItems)
             {
@@ -74,6 +74,7 @@ namespace ALittleDream
                 {
                     changed = true;
                     changeScreen = true;
+                    audioMixer.playEffect("Menu Confirm");
                 }
                 else
                 {
@@ -87,6 +88,7 @@ namespace ALittleDream
                 {
                     changed = true;
                     changeScreen = true;
+                    audioMixer.playEffect("Menu Confirm");
                 }
                 else
                 {
@@ -101,6 +103,7 @@ namespace ALittleDream
                 }
                 itemNum--;
                 menuItems[itemNum].selected = true;
+                audioMixer.playEffect("Menu Switch");
                 
             }
             else if (controls.onPress(Keys.Down, Buttons.LeftThumbstickDown) && itemNum < menuItems.Count-1)
@@ -111,6 +114,7 @@ namespace ALittleDream
                 }
                 itemNum++;
                 menuItems[itemNum].selected = true;
+                audioMixer.playEffect("Menu Switch");
             }
 
             timeElapsed += (float)gametime.ElapsedGameTime.TotalSeconds;
@@ -141,6 +145,11 @@ namespace ALittleDream
             {
                 i.Draw(sb);
             }
+        }
+
+        public override string identify()
+        {
+            return "I am a menu screen!";
         }
 
     }

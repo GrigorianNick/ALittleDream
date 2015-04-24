@@ -25,6 +25,36 @@ namespace ALittleDream
         float fadeSpeed;
         public bool play;
         public static bool playFade;
+        AudioMixer audioMixer;
+
+        //music sound files (all play together, can be adjusted mid-play
+        Dictionary<string, string> musicFiles = new Dictionary<string, string>
+        {
+            {"Bass and Piano", "draft1_bassAndPiano"},
+            {"Cello", "draft1_cello"},
+            {"Dreamy Synth", "draft1_dreamsynth"},
+            {"Strings", "draft1_strings"},
+            {"Splash Screen", "LittleDream_Intro"},
+            {"Title Screen", "LittleDream_Title"},
+            {"Loop1", "LittleDream_Loop1"},
+            {"Loop2", "LittleDream_Loop2"},
+            {"Loop3", "LittleDream_Loop3"},
+            {"Loop4", "LittleDream_Loop4"}
+            //add more here
+        };
+
+        //effects sound files (played on command, just play once and done
+        Dictionary<string, string> effectsFiles = new Dictionary<string, string>
+        {
+            {"Menu Switch", "LittleDream_MenuSwitch"},
+            {"Menu Confirm", "LittleDream_MenuConfirm"},
+            {"Interact", "LittleDream_Interact"},
+            {"Jump", "LittleDream_Jump"},
+            {"Toggle On", "LittleDream_ToggleOn"},
+            {"Toggle Off", "LittleDream_ToggleOff"}
+            //add more here
+        };
+
 
         public ScreenManager(Stack<Screen> screens, int sw, int sh)
         {
@@ -37,13 +67,15 @@ namespace ALittleDream
             alpha = 1.0f;
             fadeSpeed = 0.65f;
             play = false;
-            playFade = false; 
+            playFade = false;
+            audioMixer = new AudioMixer(musicFiles, effectsFiles);
         }
 
         public void LoadContent(ContentManager content)
         {
             blackScreen = content.Load<Texture2D>("blacksquare");
             currentScreen.LoadContent(content);
+            audioMixer.LoadContent(content);
             this.content = content;
         }
 
@@ -59,6 +91,10 @@ namespace ALittleDream
                 //Console.WriteLine("player fell off screen!");
                 restartLevel();
                 playerFellOffScreen = false;
+            }
+
+            if (controls.onPress(Keys.I, Buttons.BigButton)) {
+                Console.WriteLine(currentScreen.identify());
             }
 
             if (currentScreen.changeScreen && screens.Count == 0)//
@@ -106,7 +142,8 @@ namespace ALittleDream
                     }
                 }
             }
-            currentScreen.Update(controls, gametime);
+            currentScreen.Update(controls, gametime, audioMixer);
+            audioMixer.Update(currentScreen);
         }
 
         public void Draw(SpriteBatch sb){

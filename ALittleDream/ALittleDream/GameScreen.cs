@@ -218,6 +218,10 @@ namespace ALittleDream
             // END TILED XML PARSING
         }
 
+        public override string identify()
+        {
+            return "I am a Game Screen! level " + this.level;
+        }
 
         public override void LoadContent(ContentManager content)
         {
@@ -275,7 +279,7 @@ namespace ALittleDream
 
 
 
-        public override void Update(Controls controls, GameTime gameTime)
+        public override void Update(Controls controls, GameTime gameTime, AudioMixer audioMixer)
         {
             //handle player reaching door
             if ((player.spriteX + 15) > door.spriteX && (player.spriteX + player.spriteWidth) < (door.spriteX + door.spriteWidth + 15)
@@ -303,8 +307,8 @@ namespace ALittleDream
                 //TODO: other sprites
                 player.needsNewSprite = false;
             }
-            player.Update(controls, gameTime);
-            familiar.Update(controls, gameTime);
+            player.Update(controls, gameTime, audioMixer);
+            familiar.Update(controls, gameTime, audioMixer);
             foreach (Entity e in Entity.entityList)
             {
                 if (e.needsNewSprite)
@@ -312,8 +316,11 @@ namespace ALittleDream
                     e.LoadContent(content);
                     e.needsNewSprite = false;
                 }
-                e.Update(controls, gameTime);
+                e.Update(controls, gameTime, audioMixer);
             }
+
+
+
         }
         public override void Draw(SpriteBatch spriteBatch)
     {

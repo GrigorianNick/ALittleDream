@@ -155,14 +155,14 @@ namespace ALittleDream
             this.maxLightRange = range;
         }
 
-        public void Update(Controls controls, GameTime gameTime)
+        public void Update(Controls controls, GameTime gameTime, AudioMixer audioMixer)
         {
             //handle movement
             if (this.m != movement.stationary)
             {
                 if (this.m == movement.walking || this.m == movement.flying)
                 {
-                    this.getInput(controls, gameTime);
+                    this.getInput(controls, gameTime, audioMixer);
                 }
                 this.move(controls, gameTime);
                 if (this.c != collision.none) this.checkCollisions(gameTime);
@@ -206,7 +206,7 @@ namespace ALittleDream
             }
         }
 
-        private void getInput(Controls controls, GameTime gameTime)
+        private void getInput(Controls controls, GameTime gameTime, AudioMixer audioMixer)
         {
             if (controls.onPress(Keys.F1, Buttons.BigButton))
             {
@@ -233,7 +233,11 @@ namespace ALittleDream
                 }
                 if (controls.onPress(Keys.W, Buttons.DPadUp) || controls.onPress(Keys.Space, Buttons.DPadUp)) //TODO: implement differen jump arc based on holding jump button?
                 {
-                    if (onTheGround) momentumY = -14;
+                    if (onTheGround)
+                    {
+                        momentumY = -14;
+                        audioMixer.playEffect("Jump");
+                    }
                 }
                 if (controls.onPress(Keys.T, Buttons.DPadDown))
                 {
@@ -264,6 +268,9 @@ namespace ALittleDream
                                 //TODO: other sprites
                                 this.needsNewSprite = true; //loads new content in GameLoop.Update()
 
+                                //play audio
+                                audioMixer.playEffect("Interact");
+
                                 //stop trying to find a lantern
                                 break;
                             }
@@ -292,6 +299,9 @@ namespace ALittleDream
                         this.animations[0] = "charSprite.png";
                         this.animations[1] = "jump/jump3.png";
                         //TODO: other sprites
+
+                        audioMixer.playEffect("Interact");
+
                         this.needsNewSprite = true; //loads new content in GameLoop.Update()
                     }
                 }
@@ -336,6 +346,7 @@ namespace ALittleDream
                     {
                         if (e.i == interaction.toggle && e.isInToggleRange(this) && e.l == lightShape.none)
                         {
+                            audioMixer.playEffect("Interact");                            
                             if (e.image == e.spriteAnimations[0])
                                 e.image = e.spriteAnimations[1];
                             else

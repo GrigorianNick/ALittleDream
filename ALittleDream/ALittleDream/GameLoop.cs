@@ -328,7 +328,7 @@ namespace ALittleDream
 
             if (!debug)
             {
-                screenManager.Update(controls, gameTime);
+                screenManager.Update(controls, gameTime);                
             }
             else
             {
@@ -340,8 +340,8 @@ namespace ALittleDream
                     //TODO: other sprites
                     player.needsNewSprite = false;
                 }
-                player.Update(controls, gameTime);
-                familiar.Update(controls, gameTime);
+                player.Update(controls, gameTime, null);
+                familiar.Update(controls, gameTime, null);
                 foreach (Entity e in Entity.entityList)
                 {
                     if (e.needsNewSprite)
@@ -349,7 +349,7 @@ namespace ALittleDream
                         e.LoadContent(this.Content);
                         e.needsNewSprite = false;
                     }
-                    e.Update(controls, gameTime);
+                    e.Update(controls, gameTime, null);
                 }
             }
             //if (Entity.debugLighting)
