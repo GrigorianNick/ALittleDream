@@ -62,7 +62,7 @@ namespace ALittleDream
         {
             content.Unload();
         }
-        public override void Update(Controls controls, GameTime gametime)
+        public override void Update(Controls controls, GameTime gametime, AudioMixer audioMixer)
         {
             timeElapsed += gametime.ElapsedGameTime.TotalSeconds;
             totalTimeElapsed += gametime.ElapsedGameTime.TotalSeconds;
@@ -97,6 +97,11 @@ namespace ALittleDream
         {
             sb.Draw(blackScreen, new Rectangle(0, 0, screenWidth, screenHeight), Color.White);
             sb.Draw(background, new Rectangle((int)titlePosition.X, (int)titlePosition.Y, (int)titleSize.X, (int)titleSize.Y), Color.White);
+        }
+
+        public override string identify()
+        {
+            return "I am a splash screen!";
         }
     }
 }

@@ -35,7 +35,7 @@ namespace ALittleDream
         public static int toggleDistance = 50;
         public static int lightToggleRate = 12; //number of pixels per frame lighting changes by when toggled
         public int maxMomentum = 4;
-        public float maxAngle = (float)Math.PI / 4; //for rotating lights
+        public static float maxAngle = (float) Math.PI / 4; //for rotating lights
         public static float rotateRate = 0.008F; //for rotating lights
 
         public collision c;
@@ -168,14 +168,14 @@ namespace ALittleDream
             this.maxLightRange = range;
         }
 
-        public void Update(Controls controls, GameTime gameTime)
+        public void Update(Controls controls, GameTime gameTime, AudioMixer audioMixer)
         {
             //handle movement
             if (this.m != movement.stationary)
             {
                 if (this.m == movement.walking || this.m == movement.flying)
                 {
-                    this.getInput(controls, gameTime);
+                    this.getInput(controls, gameTime, audioMixer);
                 }
                 this.move(controls, gameTime);
                 buildCollisionZones();
@@ -221,7 +221,7 @@ namespace ALittleDream
             }
         }
 
-        private void getInput(Controls controls, GameTime gameTime)
+        private void getInput(Controls controls, GameTime gameTime, AudioMixer audioMixer)
         {
             if (controls.onPress(Keys.F1, Buttons.BigButton))
             {
@@ -248,7 +248,11 @@ namespace ALittleDream
                 }
                 if (controls.onPress(Keys.W, Buttons.A) || controls.onPress(Keys.Space, Buttons.A)) //TODO: implement differen jump arc based on holding jump button?
                 {
-                    if (onTheGround) momentumY = -14;
+                    if (onTheGround)
+                    {
+                        momentumY = -14;
+                        audioMixer.playEffect("Jump");
+                    }
                 }
                 if (controls.onPress(Keys.T, Buttons.DPadDown))
                 {
@@ -304,6 +308,9 @@ namespace ALittleDream
                                     this.needsNewSprite = true; //loads new content in GameLoop.Update()
                                 }
 
+                                //play audio
+                                audioMixer.playEffect("Interact");
+
                                 //stop trying to find a lantern
                                 break;
                             }
@@ -325,7 +332,7 @@ namespace ALittleDream
                                     f.needsNewSprite = true;
                                     f.isLit = true;
                                 }
-                                e.lightRange = this.lightRange;
+                                e.lightRange = e.maxLightRange;
                                 break;
                             }
                         }
@@ -351,6 +358,9 @@ namespace ALittleDream
                         this.animations[0] = "charSprite.png";
                         this.animations[1] = "jump/jump3.png";
                         //TODO: other sprites
+
+                        audioMixer.playEffect("Interact");
+
                         this.needsNewSprite = true; //loads new content in GameLoop.Update()
                     }
                 }
@@ -395,6 +405,7 @@ namespace ALittleDream
                     {
                         if (e.i == interaction.toggle && e.isInToggleRange(this) && e.l == lightShape.none && controls.onPress(Keys.Q, Buttons.RightShoulder))
                         {
+                            audioMixer.playEffect("Interact");
                             if (e.image == e.spriteAnimations[2])
                                 e.image = e.spriteAnimations[3];
                             else
@@ -525,36 +536,36 @@ namespace ALittleDream
 
             if (e.l == Entity.lightShape.circle)
             {
-                double delta_x = (ent.spriteX + (ent.spriteWidth / 2)) - (e.spriteX + (e.spriteWidth / 2));
-                double delta_y = (ent.spriteY + (ent.spriteHeight / 2)) - (e.spriteY + (e.spriteHeight / 2));
+            double delta_x = (ent.spriteX + (ent.spriteWidth / 2)) - (e.spriteX + (e.spriteWidth / 2));
+            double delta_y = (ent.spriteY + (ent.spriteHeight / 2)) - (e.spriteY + (e.spriteHeight / 2));
                 
-                if (delta_x == 0) // We're on the same column
-                {
-                    if (e.lightRange + (e.spriteHeight / 2) > delta_y) return true;
-                    else return false;
-                }
-                else if (delta_y == 0) // We're on the same height
-                {
-                    if (e.lightRange + (e.spriteWidth / 2) > delta_x) return true;
-                    else return false;
-                }
-                // Find offsets to calculate square's radius
-                double x_offset, y_offset;
-                if (Math.Abs(delta_y) > Math.Abs(delta_x))
-                {
-                    y_offset = ent.spriteHeight / 2;
-                    x_offset = (y_offset / delta_y) * delta_x;
-                }
-                else
-                {
-                    x_offset = ent.spriteWidth / 2;
-                    y_offset = (x_offset / delta_x) * delta_y;
-                }
-                double radius = Math.Sqrt((x_offset * x_offset) + (y_offset * y_offset));
-                double distance = Math.Sqrt((delta_x * delta_x) + (delta_y * delta_y));
-
-                return distance < radius + e.lightRange;
+            if (delta_x == 0) // We're on the same column
+            {
+                if (e.lightRange + (e.spriteHeight / 2) > delta_y) return true;
+                else return false;
             }
+            else if (delta_y == 0) // We're on the same height
+            { 
+                if (e.lightRange + (e.spriteWidth / 2) > delta_x) return true;
+                else return false;
+            }
+            // Find offsets to calculate square's radius
+            double x_offset, y_offset;
+            if (Math.Abs(delta_y) > Math.Abs(delta_x))
+            {
+                y_offset = ent.spriteHeight / 2;
+                x_offset = (y_offset / delta_y) * delta_x;
+            }
+            else
+            {
+                x_offset = ent.spriteWidth / 2;
+                y_offset = (x_offset / delta_x) * delta_y;
+            }
+            double radius = Math.Sqrt((x_offset * x_offset) + (y_offset * y_offset));
+            double distance = Math.Sqrt((delta_x * delta_x) + (delta_y * delta_y));
+
+            return distance < radius + e.lightRange;
+        }
             else if (e.l == Entity.lightShape.cone)
             {
                 double pointX = ent.spriteX + (ent.spriteWidth / 2);
@@ -572,35 +583,35 @@ namespace ALittleDream
 
                 if (e.l == Entity.lightShape.circle)
                 {
-                    double delta_x = (ent.spriteX + (ent.spriteWidth / 2)) - (e.spriteX + (e.spriteWidth / 2));
-                    double delta_y = (ent.spriteY + (ent.spriteHeight / 2)) - (e.spriteY + (e.spriteHeight / 2));
+                double delta_x = (ent.spriteX + (ent.spriteWidth / 2)) - (e.spriteX + (e.spriteWidth / 2));
+                double delta_y = (ent.spriteY + (ent.spriteHeight / 2)) - (e.spriteY + (e.spriteHeight / 2));
                     
-                    if (delta_x == 0) // We're on the same height
-                    {
-                        if (e.lightRange + (e.spriteWidth / 2) > delta_y) return true;
-                        else continue;
-                    }
+                if (delta_x == 0) // We're on the same height
+                {
+                    if (e.lightRange + (e.spriteWidth / 2) > delta_y) return true;
+                    else continue;
+                }
                     else if (delta_y == 0)
                     { // We're above/below each other
-                        if (e.lightRange + (e.spriteHeight / 2) > delta_x) return true;
-                        else continue;
-                    }
-                    // Find offsets to calculate square's radius
-                    double x_offset, y_offset;
-                    if (Math.Abs(delta_y) > Math.Abs(delta_x))
-                    {
-                        y_offset = ent.spriteHeight / 2;
-                        x_offset = (y_offset / delta_y) * delta_x;
-                    }
-                    else
-                    {
-                        x_offset = ent.spriteWidth / 2;
-                        y_offset = (x_offset / delta_x) * delta_y;
-                    }
-                    double radius = Math.Sqrt((x_offset * x_offset) + (y_offset * y_offset));
-                    double distance = Math.Sqrt((delta_x * delta_x) + (delta_y * delta_y));
-                    if (distance < radius + e.lightRange) return true;
+                    if (e.lightRange + (e.spriteHeight / 2) > delta_x) return true;
+                    else continue;
                 }
+                // Find offsets to calculate square's radius
+                double x_offset, y_offset;
+                if (Math.Abs(delta_y) > Math.Abs(delta_x))
+                {
+                    y_offset = ent.spriteHeight / 2;
+                    x_offset = (y_offset / delta_y) * delta_x;
+                }
+                else
+                {
+                    x_offset = ent.spriteWidth / 2;
+                    y_offset = (x_offset / delta_x) * delta_y;
+                }
+                double radius = Math.Sqrt((x_offset * x_offset) + (y_offset * y_offset));
+                double distance = Math.Sqrt((delta_x * delta_x) + (delta_y * delta_y));
+                if (distance < radius + e.lightRange) return true;
+            }
                 else if (e.l == Entity.lightShape.cone)
                 {
                     double pointX = ent.spriteX + (ent.spriteWidth / 2);
@@ -653,8 +664,8 @@ namespace ALittleDream
             {
                 //if (isIllum(e)) // We're illuminated
                 if (e.c == collision.none || e.m == movement.walking || e.spriteName == "beta_player.png" || e.spriteName == "familiar.png") continue;
-                foreach (Entity l in lightingObjects)
-                {
+                    foreach (Entity l in lightingObjects)
+                    {
                     if (l.l == Entity.lightShape.cone && isIllum(e)) {
                         for (int i = 0; i < 8; i++)
                         {
@@ -663,179 +674,179 @@ namespace ALittleDream
                         }
                         continue;
                     }
-                    if (!isIllum(e, l)) continue; // e isn't illuminated by l
-                    if (l.spriteX == e.spriteX && l.spriteY == e.spriteY) continue; // Skipping checking against ourselves
-                    double e_x = e.spriteX + (e.spriteWidth / 2);
-                    double e_y = e.spriteY + (e.spriteHeight / 2);
-                    double l_x = l.spriteX + (l.spriteWidth / 2);
-                    double l_y = l.spriteY + (l.spriteHeight / 2);
-                    double l_r = l.lightRange;
-                    // Check top line intersection
-                    double top_min, top_max,
-                        bot_min, bot_max,
-                        left_min, left_max,
-                        right_min, right_max;
-                    double discrim = (Math.Pow(l_r, 2) - Math.Pow(e.spriteY - l_y, 2));
-                    if (discrim >= 0) // We actually intersect
-                    {
-                        top_min = -Math.Sqrt(discrim) + l_x;
-                        top_max = Math.Sqrt(discrim) + l_x;
-                    }
-                    else
-                    {
-                        top_min = -9001;
-                        top_max = -9001;
-                    }
-                    // Check bottom line intersection
-                    discrim = (Math.Pow(l_r, 2) - Math.Pow((e.spriteY + e.spriteHeight) - l_y, 2));
-                    if (discrim >= 0)
-                    {
-                        bot_min = -Math.Sqrt(discrim) + l_x;
-                        bot_max = Math.Sqrt(discrim) + l_x;
-                    }
-                    else
-                    {
-                        bot_min = -9001;
-                        bot_max = -9001;
-                    }
-                    // Check left line intersection
-                    discrim = (Math.Pow(l_r, 2) - Math.Pow(e.spriteX - l_x, 2));
-                    if (discrim >= 0)
-                    {
-                        left_min = -Math.Sqrt(discrim) + l_y;
-                        left_max = Math.Sqrt(discrim) + l_y;
-                    }
-                    else
-                    {
-                        left_min = -9001;
-                        left_max = -9001;
-                    }
-                    // Check right line intersection
-                    discrim = (Math.Pow(l_r, 2) - Math.Pow((e.spriteX + e.spriteWidth) - l_x, 2));
-                    if (discrim >= 0)
-                    {
-                        right_min = -Math.Sqrt(discrim) + l_y;
-                        right_max = Math.Sqrt(discrim) + l_y;
-                    }
-                    else
-                    {
-                        right_min = -9001;
-                        right_max = -9001;
-                    }
-                    double c_x,
-                        c_y,
-                        c_width,
-                        c_height;
-                    bool left = left_max > e.spriteY && left_min < e.spriteY + e.spriteHeight,
-                        right = right_max > e.spriteY && right_min < e.spriteY + e.spriteHeight,
-                        top = top_max > e.spriteX && top_min < e.spriteX + e.spriteWidth,
-                        bot = bot_max > e.spriteX && bot_min < e.spriteX + e.spriteWidth;
-                    if (!left && !right && !top && !bot) continue; // We aren't intersecting. Somehow.
-                    // Find c_x
-                    if (left) // Circle intersects our left
-                    {
-                        c_x = e.spriteX;
-                    }
-                    else
-                    {
-                        // Downwards is incorrect, use the above formula to check for bounded intersection
-                        if (top && bot) // Circle spans entire height
+                        if (!isIllum(e, l)) continue; // e isn't illuminated by l
+                        if (l.spriteX == e.spriteX && l.spriteY == e.spriteY) continue; // Skipping checking against ourselves
+                        double e_x = e.spriteX + (e.spriteWidth / 2);
+                        double e_y = e.spriteY + (e.spriteHeight / 2);
+                        double l_x = l.spriteX + (l.spriteWidth / 2);
+                        double l_y = l.spriteY + (l.spriteHeight / 2);
+                        double l_r = l.lightRange;
+                        // Check top line intersection
+                        double top_min, top_max,
+                            bot_min, bot_max,
+                            left_min, left_max,
+                            right_min, right_max;
+                        double discrim = (Math.Pow(l_r, 2) - Math.Pow(e.spriteY - l_y, 2));
+                        if (discrim >= 0) // We actually intersect
                         {
-                            c_x = min(top_min, bot_min);
+                            top_min = -Math.Sqrt(discrim) + l_x;
+                            top_max = Math.Sqrt(discrim) + l_x;
                         }
-                        else if (top) // Only top intersects
+                        else
                         {
-                            c_x = top_min;
+                            top_min = -9001;
+                            top_max = -9001;
                         }
-                        else if (bot) // Only bot intersects
+                        // Check bottom line intersection
+                        discrim = (Math.Pow(l_r, 2) - Math.Pow((e.spriteY + e.spriteHeight) - l_y, 2));
+                        if (discrim >= 0)
                         {
-                            c_x = bot_min;
+                            bot_min = -Math.Sqrt(discrim) + l_x;
+                            bot_max = Math.Sqrt(discrim) + l_x;
                         }
-                        else // Neither top nor bot intersects
+                        else
                         {
-                            c_x = l_x - l_r;
+                            bot_min = -9001;
+                            bot_max = -9001;
                         }
-                    }
+                        // Check left line intersection
+                        discrim = (Math.Pow(l_r, 2) - Math.Pow(e.spriteX - l_x, 2));
+                        if (discrim >= 0)
+                        {
+                            left_min = -Math.Sqrt(discrim) + l_y;
+                            left_max = Math.Sqrt(discrim) + l_y;
+                        }
+                        else
+                        {
+                            left_min = -9001;
+                            left_max = -9001;
+                        }
+                        // Check right line intersection
+                        discrim = (Math.Pow(l_r, 2) - Math.Pow((e.spriteX + e.spriteWidth) - l_x, 2));
+                        if (discrim >= 0)
+                        {
+                            right_min = -Math.Sqrt(discrim) + l_y;
+                            right_max = Math.Sqrt(discrim) + l_y;
+                        }
+                        else
+                        {
+                            right_min = -9001;
+                            right_max = -9001;
+                        }
+                        double c_x,
+                            c_y,
+                            c_width,
+                            c_height;
+                        bool left = left_max > e.spriteY && left_min < e.spriteY + e.spriteHeight,
+                            right = right_max > e.spriteY && right_min < e.spriteY + e.spriteHeight,
+                            top = top_max > e.spriteX && top_min < e.spriteX + e.spriteWidth,
+                            bot = bot_max > e.spriteX && bot_min < e.spriteX + e.spriteWidth;
+                        if (!left && !right && !top && !bot) continue; // We aren't intersecting. Somehow.
+                        // Find c_x
+                        if (left) // Circle intersects our left
+                        {
+                            c_x = e.spriteX;
+                        }
+                        else
+                        {
+                            // Downwards is incorrect, use the above formula to check for bounded intersection
+                            if (top && bot) // Circle spans entire height
+                            {
+                                c_x = min(top_min, bot_min);
+                            }
+                            else if (top) // Only top intersects
+                            {
+                                c_x = top_min;
+                            }
+                            else if (bot) // Only bot intersects
+                            {
+                                c_x = bot_min;
+                            }
+                            else // Neither top nor bot intersects
+                            {
+                                c_x = l_x - l_r;
+                            }
+                        }
 
-                    if (right) // Right intersects
-                    {
-                        c_width = e.spriteX + e.spriteWidth - c_x;
-                    }
-                    else // We stop short of the right side
-                    {
-                        if (top && bot) // Spans block height
+                        if (right) // Right intersects
                         {
-                            c_width = max(top_max, bot_max) - c_x;
+                            c_width = e.spriteX + e.spriteWidth - c_x;
                         }
-                        else if (top)
+                        else // We stop short of the right side
                         {
-                            c_width = top_max - c_x;
+                            if (top && bot) // Spans block height
+                            {
+                                c_width = max(top_max, bot_max) - c_x;
+                            }
+                            else if (top)
+                            {
+                                c_width = top_max - c_x;
+                            }
+                            else if (bot)
+                            {
+                                c_width = bot_max - c_x;
+                            }
+                            else // Light smaller than block and off to the side
+                            {
+                                c_width = l_x + l_r;
+                            }
                         }
-                        else if (bot)
-                        {
-                            c_width = bot_max - c_x;
-                        }
-                        else // Light smaller than block and off to the side
-                        {
-                            c_width = l_x + l_r;
-                        }
-                    }
-
-
-                    // Find c_x
-                    if (top) // Circle intersects our left
-                    {
-                        c_y = e.spriteY;
-                    }
-                    else
-                    {
-                        // Downwards is incorrect, use the above formula to check for bounded intersection
-                        if (left && right) // Circle spans entire height
-                        {
-                            c_y = min(left_min, right_min);
-                        }
-                        else if (left) // Only top intersects
-                        {
-                            c_y = left_min;
-                        }
-                        else if (right) // Only bot intersects
-                        {
-                            c_y = right_min;
-                        }
-                        else // Neither top nor bot intersects
-                        {
-                            c_y = l_y - l_r;
-                        }
-                    }
 
 
-                    if (bot) // Right intersects
-                    {
-                        c_height = e.spriteY + e.spriteHeight - c_y;
-                    }
-                    else // We stop short of the right side
-                    {
-                        if (left && right) // Spans block height
+                        // Find c_x
+                        if (top) // Circle intersects our left
                         {
-                            c_height = max(left_max, right_max) - c_y;
+                            c_y = e.spriteY;
                         }
-                        else if (left)
+                        else
                         {
-                            c_height = left_max - c_y;
+                            // Downwards is incorrect, use the above formula to check for bounded intersection
+                            if (left && right) // Circle spans entire height
+                            {
+                                c_y = min(left_min, right_min);
+                            }
+                            else if (left) // Only top intersects
+                            {
+                                c_y = left_min;
+                            }
+                            else if (right) // Only bot intersects
+                            {
+                                c_y = right_min;
+                            }
+                            else // Neither top nor bot intersects
+                            {
+                                c_y = l_y - l_r;
+                            }
                         }
-                        else if (right)
-                        {
-                            c_height = right_max - c_y;
-                        }
-                        else // Light smaller than block and off to the side
-                        {
-                            c_height = l_y + l_r;
-                        }
-                    }
 
-                    // Finally have our collision zone
-                    collisionZoneList.Add(new collisionZone(c_x, c_y, c_width, c_height));
-                }
+
+                        if (bot) // Right intersects
+                        {
+                            c_height = e.spriteY + e.spriteHeight - c_y;
+                        }
+                        else // We stop short of the right side
+                        {
+                            if (left && right) // Spans block height
+                            {
+                                c_height = max(left_max, right_max) - c_y;
+                            }
+                            else if (left)
+                            {
+                                c_height = left_max - c_y;
+                            }
+                            else if (right)
+                            {
+                                c_height = right_max - c_y;
+                            }
+                            else // Light smaller than block and off to the side
+                            {
+                                c_height = l_y + l_r;
+                            }
+                        }
+
+                        // Finally have our collision zone
+                        collisionZoneList.Add(new collisionZone(c_x, c_y, c_width, c_height));
+                    }
             }
         }
 

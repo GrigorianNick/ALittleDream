@@ -54,7 +54,7 @@ namespace ALittleDream
             int familiarHeight = 20;
             int familiarWidth = 10;
             this.player = new Entity(ref playerX, ref playerY, ref playerHeight, ref playerWidth, "beta_player", Entity.collision.square, Entity.lightShape.none, Entity.movement.walking, Entity.drawIf.always, Entity.interaction.none, ref collisionObjects, ref lightingObjects);
-            this.familiar = new Entity(ref familiarX, ref familiarY, ref familiarHeight, ref familiarWidth, "familiar/familiar", Entity.collision.square, Entity.lightShape.circle, Entity.movement.flying, Entity.drawIf.always, Entity.interaction.none, ref collisionObjects, ref lightingObjects);
+            this.familiar = new Entity(ref familiarX, ref familiarY, ref familiarHeight, ref familiarWidth, "familiar/familiar", Entity.collision.none, Entity.lightShape.circle, Entity.movement.flying, Entity.drawIf.always, Entity.interaction.none, ref collisionObjects, ref lightingObjects);
             changeScreen = false;
             this.changed = false;
         }
@@ -152,7 +152,6 @@ namespace ALittleDream
                             Console.WriteLine(t.image);
                             if (t.image == "lights/QuantumUnlit.png")
                             {
-                                Console.WriteLine("Quant");
                                 Entity.quantumList.Add(ent);
                                 ent.isLit = false;
                                 ent.d = Entity.drawIf.lit;
@@ -242,6 +241,10 @@ namespace ALittleDream
             // END TILED XML PARSING
         }
 
+        public override string identify()
+        {
+            return "I am a Game Screen! level " + this.level;
+        }
 
         public override void LoadContent(ContentManager content)
         {
@@ -299,13 +302,14 @@ namespace ALittleDream
 
 
 
-        public override void Update(Controls controls, GameTime gameTime)
+        public override void Update(Controls controls, GameTime gameTime, AudioMixer audioMixer)
         {
             //handle player reaching door
             if ((player.spriteX + 15) > door.spriteX && (player.spriteX + player.spriteWidth) < (door.spriteX + door.spriteWidth + 15)
     && (player.spriteY + 15) > door.spriteY && (player.spriteY + player.spriteHeight) < (door.spriteY + door.spriteHeight + 15)
                 && !changed && controls.isPressed(Keys.E, Buttons.LeftShoulder))
             {
+                audioMixer.playEffect("Door");
                 changeScreen = true;
                 changed = true;
             }
@@ -327,8 +331,8 @@ namespace ALittleDream
                 //TODO: other sprites
                 player.needsNewSprite = false;
             }
-            player.Update(controls, gameTime);
-            familiar.Update(controls, gameTime);
+            player.Update(controls, gameTime, audioMixer);
+            familiar.Update(controls, gameTime, audioMixer);
             foreach (Entity e in Entity.entityList)
             {
                 if (e.needsNewSprite)
@@ -336,8 +340,11 @@ namespace ALittleDream
                     e.LoadContent(content);
                     e.needsNewSprite = false;
                 }
-                e.Update(controls, gameTime);
+                e.Update(controls, gameTime, audioMixer);
             }
+
+
+
         }
         public override void Draw(SpriteBatch spriteBatch)
         {
