@@ -86,6 +86,125 @@
     <Content Include="Content\bigDoor.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="Content\Content\beta_brick.png" />
+    <Content Include="Content\Content\beta_brick_old.png" />
+    <Content Include="Content\Content\beta_crate.png" />
+    <Content Include="Content\Content\beta_lantern_old.png" />
+    <Content Include="Content\Content\beta_lightbulb.png" />
+    <Content Include="Content\Content\beta_lightbulb_small.png" />
+    <Content Include="Content\Content\beta_player.png" />
+    <Content Include="Content\Content\beta_player_old.png" />
+    <Content Include="Content\Content\bigDoor.png" />
+    <Content Include="Content\Content\blacksquare.png" />
+    <Content Include="Content\Content\charHoldingLatern.png" />
+    <Content Include="Content\Content\charSprite.png" />
+    <Content Include="Content\Content\controls\a.png" />
+    <Content Include="Content\Content\controls\d.png" />
+    <Content Include="Content\Content\controls\down.png" />
+    <Content Include="Content\Content\controls\downDpad.png" />
+    <Content Include="Content\Content\controls\downLeftStick.png" />
+    <Content Include="Content\Content\controls\downRightStick.png" />
+    <Content Include="Content\Content\controls\e.png" />
+    <Content Include="Content\Content\controls\lb.png" />
+    <Content Include="Content\Content\controls\left.png" />
+    <Content Include="Content\Content\controls\leftDpad.png" />
+    <Content Include="Content\Content\controls\leftLeftStick.png" />
+    <Content Include="Content\Content\controls\leftRightStick.png" />
+    <Content Include="Content\Content\controls\lt.png" />
+    <Content Include="Content\Content\controls\q.png" />
+    <Content Include="Content\Content\controls\rb.png" />
+    <Content Include="Content\Content\controls\right.png" />
+    <Content Include="Content\Content\controls\rightDpad.png" />
+    <Content Include="Content\Content\controls\rightLeftStick.png" />
+    <Content Include="Content\Content\controls\rightRightStick.png" />
+    <Content Include="Content\Content\controls\rt.png" />
+    <Content Include="Content\Content\controls\s.png" />
+    <Content Include="Content\Content\controls\up.png" />
+    <Content Include="Content\Content\controls\upDpad.png" />
+    <Content Include="Content\Content\controls\upLeftStick.png" />
+    <Content Include="Content\Content\controls\upRightStick.png" />
+    <Content Include="Content\Content\controls\w.png" />
+    <Content Include="Content\Content\door.png" />
+    <Content Include="Content\Content\doorBottom.png" />
+    <Content Include="Content\Content\doorTop.png" />
+    <Content Include="Content\Content\end1.png" />
+    <Content Include="Content\Content\end2.png" />
+    <Content Include="Content\Content\end3.png" />
+    <Content Include="Content\Content\end4.png" />
+    <Content Include="Content\Content\familiar\familiar.png" />
+    <Content Include="Content\Content\familiar\familiar1.png" />
+    <Content Include="Content\Content\familiar\familiar2.png" />
+    <Content Include="Content\Content\jump\jump1.png" />
+    <Content Include="Content\Content\jump\jump10.png" />
+    <Content Include="Content\Content\jump\jump11.png" />
+    <Content Include="Content\Content\jump\jump2.png" />
+    <Content Include="Content\Content\jump\jump3.png" />
+    <Content Include="Content\Content\jump\jump4.png" />
+    <Content Include="Content\Content\jump\jump5.png" />
+    <Content Include="Content\Content\jump\jump6.png" />
+    <Content Include="Content\Content\jump\jump7.png" />
+    <Content Include="Content\Content\jump\jump8.png" />
+    <Content Include="Content\Content\jump\jump9.png" />
+    <Content Include="Content\Content\jump\jumpwOrb.png" />
+    <Content Include="Content\Content\levels\test.txt" />
+    <Content Include="Content\Content\lightmask.png" />
+    <Content Include="Content\Content\lights\hangingLight.png" />
+    <Content Include="Content\Content\lights\lamppostShort.png" />
+    <Content Include="Content\Content\lights\lamppostTall.png" />
+    <Content Include="Content\Content\lights\lamppostTallBottom.png" />
+    <Content Include="Content\Content\lights\lamppostTallTop.png" />
+    <Content Include="Content\Content\lights\lantern.png" />
+    <Content Include="Content\Content\lights\movingSpotlight.png" />
+    <Content Include="Content\Content\lights\movingSpotlight2.png" />
+    <Content Include="Content\Content\lights\switchOff.png" />
+    <Content Include="Content\Content\lights\switchOn.png" />
+    <Content Include="Content\Content\menu\enter.png" />
+    <Content Include="Content\Content\menu\menuBackground.png" />
+    <Content Include="Content\Content\menu\menuBackground1.png" />
+    <Content Include="Content\Content\menu\menuBackground2.png" />
+    <Content Include="Content\Content\menu\menuBackground3.png" />
+    <Content Include="Content\Content\menu\menuBackground4.png" />
+    <Content Include="Content\Content\menu\menuBackground5.png" />
+    <Content Include="Content\Content\menu\perish.png" />
+    <Content Include="Content\Content\menu\title.png" />
+    <Content Include="Content\Content\menu\titlewLights.png" />
+    <Content Include="Content\Content\player.png" />
+    <Content Include="Content\Content\tiles\rocksHorizontal.png" />
+    <Content Include="Content\Content\tiles\rocksVertical.png" />
+    <Content Include="Content\Content\tiles\rock\middle.png" />
+    <Content Include="Content\Content\tiles\rock\rocksBottomLeft.png" />
+    <Content Include="Content\Content\tiles\rock\rocksBottomTopRight.png" />
+    <Content Include="Content\Content\tiles\rock\rocksHorizontal1.png" />
+    <Content Include="Content\Content\tiles\rock\rocksHorizontal2.png" />
+    <Content Include="Content\Content\tiles\rock\rocksHorizontal3.png" />
+    <Content Include="Content\Content\tiles\rock\rocksHorizontal4.png" />
+    <Content Include="Content\Content\tiles\rock\rocksHorizontal5.png" />
+    <Content Include="Content\Content\tiles\rock\rocksHorizontal6.png" />
+    <Content Include="Content\Content\tiles\rock\rocksTopRight.png" />
+    <Content Include="Content\Content\tiles\rock\rocksVertical1.png" />
+    <Content Include="Content\Content\tiles\rock\rocksVertical2.png" />
+    <Content Include="Content\Content\tiles\rock\rocksVertical3.png" />
+    <Content Include="Content\Content\tiles\rock\rocksVertical4.png" />
+    <Content Include="Content\Content\tiles\rock\rocksVertical5.png" />
+    <Content Include="Content\Content\tiles\rock\rocksVertical6.png" />
+    <Content Include="Content\Content\tiles\rock\rockTiles_bottom.png" />
+    <Content Include="Content\Content\tiles\rock\rockTiles_right.png" />
+    <Content Include="Content\Content\tiles\rock\rockTiles_rightleft.png" />
+    <Content Include="Content\Content\tiles\rock\rockTiles_rightleft1.png" />
+    <Content Include="Content\Content\tiles\rock\rockTiles_rightleft2.png" />
+    <Content Include="Content\Content\tiles\rock\rockTiles_rightleft3.png" />
+    <Content Include="Content\Content\tiles\rock\rockTiles_rightleft4.png" />
+    <Content Include="Content\Content\tiles\rock\rockTiles_topbottom.png" />
+    <Content Include="Content\Content\tiles\rock\rockTiles_topbottom1.png" />
+    <Content Include="Content\Content\tiles\rock\rockTiles_topbottom2.png" />
+    <Content Include="Content\Content\tiles\rock\rockTiles_topbottom3.png" />
+    <Content Include="Content\Content\tiles\rock\rockTiles_topbottom4.png" />
+    <Content Include="Content\Content\tiles\rock\single.png" />
+    <Content Include="Content\Content\treebranchesBack.png" />
+    <Content Include="Content\Content\treebranchesFront.png" />
+    <Content Include="Content\Content\treesBack.png" />
+    <Content Include="Content\Content\treesFront.png" />
+    <Content Include="Content\Content\triangleLightMask.png" />
     <Content Include="Content\controls\a.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
@@ -437,6 +556,9 @@
     <Content Include="Content\triangleLightMask.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="Content\triangleLightMask2.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="Icon.ico" />
   </ItemGroup>
   <ItemGroup>
@@ -488,6 +610,16 @@
     <None Include="Content\audio\soundEffects\LittleDream_ToggleOn.xnb">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+	<None Include="Content\Content\levels\1.tmx" />
+    <None Include="Content\Content\levels\2.tmx" />
+    <None Include="Content\Content\levels\3.tmx" />
+    <None Include="Content\Content\levels\4.tmx" />
+    <None Include="Content\Content\levels\5.tmx" />
+    <None Include="Content\Content\levels\6.tmx" />
+    <None Include="Content\Content\levels\7.tmx" />
+    <None Include="Content\Content\levels\8.tmx" />
+    <None Include="Content\Content\levels\test.tmx" />
+    <None Include="Content\Content\Thumbs.db" />
     <None Include="Content\levels\1.tmx">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       <SubType>Designer</SubType>
