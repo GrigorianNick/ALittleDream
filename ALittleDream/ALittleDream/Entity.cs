@@ -35,7 +35,7 @@ namespace ALittleDream
         public static int toggleDistance = 50;
         public static int lightToggleRate = 12; //number of pixels per frame lighting changes by when toggled
         public int maxMomentum = 4;
-        public static float maxAngle = (float) Math.PI / 4; //for rotating lights
+        public float maxAngle = (float) Math.PI / 4; //for rotating lights
         public static float rotateRate = 0.008F; //for rotating lights
 
         public collision c;
@@ -151,8 +151,7 @@ namespace ALittleDream
                 animations.Add("lights/switchOnGLOW");
                 spriteAnimations = new List<Texture2D>();
             }
-          
-            }
+        }
 
         public static void AddEntityObject(Entity ent)
         {
@@ -195,7 +194,7 @@ namespace ALittleDream
                         this.lightRange = this.maxLightRange;
                     }
                 }
-                
+
                 if (!isLit && this.lightRange > 0)
                 {
                     this.lightRange -= Entity.lightToggleRate;
@@ -293,20 +292,20 @@ namespace ALittleDream
                                 else if (e.spriteName != "lights/QuantumUnlit.png")
                                 {
                                     this.isHoldingLantern = true; //now holding a lantern
-                                //remove lantern from all relavent lists
-                                Entity.entityList.Remove(e);
-                                collisionObjects.Remove(e);
-                                lightingObjects.Remove(e);
+                                    //remove lantern from all relavent lists
+                                    Entity.entityList.Remove(e);
+                                    collisionObjects.Remove(e);
+                                    lightingObjects.Remove(e);
 
-                                //change lighting
-                                this.l = lightShape.circle;
-                                lightingObjects.Add(this);
-                                this.setMaxLightRange(e.maxLightRange);
-                                this.lightRange = this.maxLightRange; //no incremental light change, just take light from lantern
-                                this.animations[0] = "charHoldingLatern.png";
-                                this.animations[1] = "jump/jumpwOrb.png";
-                                //TODO: other sprites
-                                this.needsNewSprite = true; //loads new content in GameLoop.Update()
+                                    //change lighting
+                                    this.l = lightShape.circle;
+                                    lightingObjects.Add(this);
+                                    this.setMaxLightRange(e.maxLightRange);
+                                    this.lightRange = this.maxLightRange; //no incremental light change, just take light from lantern
+                                    this.animations[0] = "charHoldingLatern.png";
+                                    this.animations[1] = "jump/jumpwOrb.png";
+                                    //TODO: other sprites
+                                    this.needsNewSprite = true; //loads new content in GameLoop.Update()
                                 }
 
                                 //play audio
@@ -339,17 +338,17 @@ namespace ALittleDream
                         }
                         if (drop)
                         {
-                        //make new lantern object
-                        int lanternX = this.spriteX - 31; //default to left of player
-                        int lanternY = this.spriteY + 10;
-                        int lanternHeight = 21, lanternWidth = 22;
-                        if (this.facingRight) lanternX += 31 + this.spriteWidth; //move to right of player if player is facing right
+                            //make new lantern object
+                            int lanternX = this.spriteX - 31; //default to left of player
+                            int lanternY = this.spriteY + 10;
+                            int lanternHeight = 21, lanternWidth = 22;
+                            if (this.facingRight) lanternX += 31 + this.spriteWidth; //move to right of player if player is facing right
                             Entity l = new Entity(ref lanternX, ref lanternY, ref lanternHeight, ref lanternWidth, "lights/lantern.png", Entity.collision.none, Entity.lightShape.circle, Entity.movement.physics, Entity.drawIf.lit, Entity.interaction.grab, ref this.collisionObjects, ref this.lightingObjects);
-                        Entity.entityList.Add(l);
+                            Entity.entityList.Add(l);
                             l.momentumX = this.momentumX; // Don't inherit momentumY because it feels weird
-                        l.setMaxLightRange(this.maxLightRange);
-                        l.lightRange = maxLightRange; //no incremental light change, just instantly max
-                        l.needsNewSprite = true; //loads new content in GameLoop.Update()
+                            l.setMaxLightRange(this.maxLightRange);
+                            l.lightRange = maxLightRange; //no incremental light change, just instantly max
+                            l.needsNewSprite = true; //loads new content in GameLoop.Update()
                         }
                         //change lighting
                         this.l = lightShape.none;
@@ -487,7 +486,7 @@ namespace ALittleDream
                 else
                 {
                     angle -= rotateRate;
-                    if (angle < 0 - maxAngle)
+                    if (angle < maxAngle - Math.PI / 2)
                     {
                         rotatingClockWise = true;
                     }
@@ -499,8 +498,8 @@ namespace ALittleDream
             {
                 spriteX += momentumX;
                 spriteY += momentumY;
-                }
-                    }
+            }
+        }
 
         private bool onGround()
         {
@@ -534,8 +533,12 @@ namespace ALittleDream
             //if (e.l == Entity.lightShape.cone) Console.WriteLine("Cone! {0}", e.maxLightRange);
             /*else if (e.l == Entity.lightShape.circle) Console.WriteLine("Circle!");
             else Console.WriteLine("None!");*/
+
+            if (e.l == Entity.lightShape.circle)
+            {
             double delta_x = (ent.spriteX + (ent.spriteWidth / 2)) - (e.spriteX + (e.spriteWidth / 2));
             double delta_y = (ent.spriteY + (ent.spriteHeight / 2)) - (e.spriteY + (e.spriteHeight / 2));
+                
             if (delta_x == 0) // We're on the same column
             {
                 if (e.lightRange + (e.spriteHeight / 2) > delta_y) return true;
@@ -560,23 +563,36 @@ namespace ALittleDream
             }
             double radius = Math.Sqrt((x_offset * x_offset) + (y_offset * y_offset));
             double distance = Math.Sqrt((delta_x * delta_x) + (delta_y * delta_y));
-            if (e.l == Entity.lightShape.circle) return distance < radius + e.lightRange;
-            //else if (e.l == Entity.lightShape.cone) return (distance < radius + e.lightRange) && 
+
             return distance < radius + e.lightRange;
+        }
+            else if (e.l == Entity.lightShape.cone)
+            {
+                double pointX = ent.spriteX + (ent.spriteWidth / 2);
+                double pointY = ent.spriteY + (ent.spriteHeight / 2);
+
+                return insideCone(e, pointX, pointY);
+            }
+            else { return false; }
         }
 
         private bool isIllum(Entity ent) // Only works if the light source's center isn't inside ent
         {
             foreach (Entity e in lightingObjects)
             {
+
+                if (e.l == Entity.lightShape.circle)
+                {
                 double delta_x = (ent.spriteX + (ent.spriteWidth / 2)) - (e.spriteX + (e.spriteWidth / 2));
                 double delta_y = (ent.spriteY + (ent.spriteHeight / 2)) - (e.spriteY + (e.spriteHeight / 2));
+                    
                 if (delta_x == 0) // We're on the same height
                 {
                     if (e.lightRange + (e.spriteWidth / 2) > delta_y) return true;
                     else continue;
                 }
-                else if (delta_y == 0) { // We're above/below each other
+                    else if (delta_y == 0)
+                    { // We're above/below each other
                     if (e.lightRange + (e.spriteHeight / 2) > delta_x) return true;
                     else continue;
                 }
@@ -596,7 +612,37 @@ namespace ALittleDream
                 double distance = Math.Sqrt((delta_x * delta_x) + (delta_y * delta_y));
                 if (distance < radius + e.lightRange) return true;
             }
+                else if (e.l == Entity.lightShape.cone)
+                {
+                    double pointX = ent.spriteX + (ent.spriteWidth / 2);
+                    double pointY = ent.spriteY + (ent.spriteHeight / 2);
+
+                    if (insideCone(e, pointX, pointY))
+                        return true;
+                }
+            }
             return false;
+        }
+
+        private bool insideCone(Entity l, double pointX, double pointY) // Checks to see whether a point is in lighting cone l
+        {
+            double delta_x = pointX - (l.spriteX + (l.spriteWidth / 2));
+            double delta_y = pointY - (l.spriteY + (l.spriteHeight / 2));
+
+            double dist = Math.Sqrt((delta_x * delta_x) + (delta_y * delta_y)); // distance from cone origin to point
+
+            double other_dx = pointX - (l.spriteX + (l.spriteWidth / 2));
+            double other_dy = pointY - (l.spriteY + (l.spriteHeight / 2) + l.lightRange);
+            double opposite = Math.Sqrt((other_dx * other_dx) + (other_dy * other_dy)); // distance from (cone_x, cone_y + cone_range) to point
+
+            // Use law of cos to calculate angle from y axis (down) at light origin to entity
+            float pointAngle = (float)Math.Acos((dist * dist + l.lightRange * l.lightRange - opposite * opposite) / (2 * dist * l.lightRange));
+
+            if (delta_x > 0)
+                pointAngle *= -1;
+
+            // true if in range of light and angle from center of cone to point < 30
+            return (dist <= l.lightRange && Math.Abs(pointAngle - (l.angle)) < .52);
         }
 
         private double min(double one, double two)
@@ -617,11 +663,20 @@ namespace ALittleDream
             foreach (Entity e in collisionObjects)
             {
                 //if (isIllum(e)) // We're illuminated
-                //{
                 if (e.c == collision.none || e.m == movement.walking || e.spriteName == "beta_player.png" || e.spriteName == "familiar.png") continue;
                     foreach (Entity l in lightingObjects)
                     {
-                        if (l.l == Entity.lightShape.cone) continue;
+                    if (l.l == Entity.lightShape.cone && isIllum(e)) {
+                        for (int i = 0; i < 5; i++)
+                        {
+                            for (int j = 0; j < 5; j++)
+                            {
+                                if (insideCone(l, e.spriteX + (e.spriteWidth * i) / 5 + e.spriteWidth / 10, e.spriteY + (e.spriteHeight * j) / 5 + e.spriteHeight / 10))
+                                    collisionZoneList.Add(new collisionZone(e.spriteX + (e.spriteWidth * i) / 5, e.spriteY + (e.spriteHeight * j) / 5, e.spriteWidth / 5, e.spriteHeight / 5));
+                            }
+                        }
+                        continue;
+                    }
                         if (!isIllum(e, l)) continue; // e isn't illuminated by l
                         if (l.spriteX == e.spriteX && l.spriteY == e.spriteY) continue; // Skipping checking against ourselves
                         double e_x = e.spriteX + (e.spriteWidth / 2);
@@ -653,22 +708,22 @@ namespace ALittleDream
                             bot_max = Math.Sqrt(discrim) + l_x;
                         }
                         else
-                {
+                        {
                             bot_min = -9001;
                             bot_max = -9001;
                         }
                         // Check left line intersection
                         discrim = (Math.Pow(l_r, 2) - Math.Pow(e.spriteX - l_x, 2));
                         if (discrim >= 0)
-                    {
+                        {
                             left_min = -Math.Sqrt(discrim) + l_y;
                             left_max = Math.Sqrt(discrim) + l_y;
                         }
                         else
-                {
+                        {
                             left_min = -9001;
                             left_max = -9001;
-                }
+                        }
                         // Check right line intersection
                         discrim = (Math.Pow(l_r, 2) - Math.Pow((e.spriteX + e.spriteWidth) - l_x, 2));
                         if (discrim >= 0)
@@ -692,11 +747,11 @@ namespace ALittleDream
                         if (!left && !right && !top && !bot) continue; // We aren't intersecting. Somehow.
                         // Find c_x
                         if (left) // Circle intersects our left
-                            {
+                        {
                             c_x = e.spriteX;
-                            }
-                            else
-                            {
+                        }
+                        else
+                        {
                             // Downwards is incorrect, use the above formula to check for bounded intersection
                             if (top && bot) // Circle spans entire height
                             {
@@ -737,26 +792,26 @@ namespace ALittleDream
                             else // Light smaller than block and off to the side
                             {
                                 c_width = l_x + l_r;
+                            }
                         }
-                    }
 
 
                         // Find c_x
                         if (top) // Circle intersects our left
                         {
                             c_y = e.spriteY;
-                }               
+                        }
                         else
                         {
                             // Downwards is incorrect, use the above formula to check for bounded intersection
                             if (left && right) // Circle spans entire height
                             {
                                 c_y = min(left_min, right_min);
-            }
+                            }
                             else if (left) // Only top intersects
                             {
                                 c_y = left_min;
-        }
+                            }
                             else if (right) // Only bot intersects
                             {
                                 c_y = right_min;
@@ -787,7 +842,7 @@ namespace ALittleDream
                                 c_height = right_max - c_y;
                             }
                             else // Light smaller than block and off to the side
-        {
+                            {
                                 c_height = l_y + l_r;
                             }
                         }
@@ -795,17 +850,17 @@ namespace ALittleDream
                         // Finally have our collision zone
                         collisionZoneList.Add(new collisionZone(c_x, c_y, c_width, c_height));
                     }
-                //}
             }
         }
 
         private void runCollisions(GameTime gameTime)
-            {
+        {
             foreach (collisionZone c in collisionZoneList)
             {
-            int leftSide = spriteX,
-                rightSide = spriteX + spriteWidth,
-                topSide = spriteY,
+                
+                int leftSide = spriteX,
+                    rightSide = spriteX + spriteWidth,
+                    topSide = spriteY,
                     bottomSide = spriteY + spriteHeight;
 
                 int cLeftSide = (int)c.x,
@@ -846,7 +901,7 @@ namespace ALittleDream
                     }
                 }
                  */
-                if (momentumX == 0 ) // Moving straight up/down
+                if (momentumX == 0) // Moving straight up/down
                 {
                     if (topDist < bottomDist) // Moving down
                     {
@@ -867,37 +922,37 @@ namespace ALittleDream
                         momentumX = 0;
                     }
                     else
-                {
+                    {
                         spriteX -= leftDist;
                         momentumX = 0;
                     }
                 }
                 else
                 {
-                int[] dists = new int[] { topDist, bottomDist, leftDist, rightDist }; //for comparing: largest is side of collision (other sides will be more negative)
-                if (isLargest(dists, topDist)) //collision is with entity above
-                {
-                    momentumY = 0;
-                    spriteY -= topDist;
-                    //spriteY -= momentumY;
-                    //momentumY = 0;
-                }
-                else if (isLargest(dists, bottomDist)) //collision is with entity below
-                {
-                    momentumY = 0;
+                    int[] dists = new int[] { topDist, bottomDist, leftDist, rightDist }; //for comparing: largest is side of collision (other sides will be more negative)
+                    if (isLargest(dists, topDist)) //collision is with entity above
+                    {
+                        momentumY = 0;
+                        spriteY -= topDist;
+                        //spriteY -= momentumY;
+                        //momentumY = 0;
+                    }
+                    else if (isLargest(dists, bottomDist)) //collision is with entity below
+                    {
+                        momentumY = 0;
                         //if (this.m == movement.walking && bottomDist <= 0 - spriteHeight / 2) spriteY = e.spriteY + spriteHeight;
-                    spriteY += bottomDist;
-                }
-                else if (isLargest(dists, leftDist)) //collision is with entity to left
-                {
-                    momentumX = 0;
-                    spriteX -= leftDist;
-                }
-                else //collision is with entity to the right
-                {
-                    momentumX = 0;
-                    spriteX += rightDist;
-                }
+                        spriteY += bottomDist;
+                    }
+                    else if (isLargest(dists, leftDist)) //collision is with entity to left
+                    {
+                        momentumX = 0;
+                        spriteX -= leftDist;
+                    }
+                    else //collision is with entity to the right
+                    {
+                        momentumX = 0;
+                        spriteX += rightDist;
+                    }
                     /*double deltX, deltY;
                     if (leftDist > rightDist)
                     {
@@ -939,9 +994,9 @@ namespace ALittleDream
                     if (deltY < deltX)
                     {
                         momentumX = 0;
-            }
+                    }
                     else
-            {
+                    {
                         momentumY = 0;
                     }*/
                 }

@@ -24,10 +24,10 @@
    <tileoffset x="9" y="-10"/>
   <image source="lights/hangingLight.png" width="22" height="29"/>
  </tileset>
- <tileset firstgid="8" name="doorBottom" tilewidth="40" tileheight="40" door="true">
+ <tileset firstgid="8" name="doorBottom" tilewidth="40" tileheight="40" door="true" collision="none">
   <image source="doorBottom.png" width="40" height="40"/>
  </tileset>
- <tileset firstgid="9" name="doorTop" tilewidth="40" tileheight="9">
+ <tileset firstgid="9" name="doorTop" tilewidth="40" tileheight="9" collision="none">
     <tileoffset x="0" y="32"/>
   <image source="doorTop.png" width="40" height="9"/>
  </tileset>
