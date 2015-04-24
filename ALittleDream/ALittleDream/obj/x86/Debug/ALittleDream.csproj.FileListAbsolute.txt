@@ -538,3 +538,6 @@ C:\Users\Craig\Source\Repos\ALittleDream\ALittleDream\ALittleDream\bin\Windows\D
 C:\Users\Craig\Source\Repos\ALittleDream\ALittleDream\ALittleDream\bin\Windows\Debug\Content\end\9.png
 C:\Users\Craig\Source\Repos\ALittleDream\ALittleDream\ALittleDream\bin\Windows\Debug\Content\end\1.png
 C:\Users\Craig\Source\Repos\ALittleDream\ALittleDream\ALittleDream\bin\Windows\Debug\Content\audio\soundEffects\LittleDream_Door.xnb
+C:\Users\Craig\Source\Repos\ALittleDream\ALittleDream\ALittleDream\bin\Windows\Debug\Content\lights\switchOffGLOW.png
+C:\Users\Craig\Source\Repos\ALittleDream\ALittleDream\ALittleDream\bin\Windows\Debug\Content\lights\switchOnGLOW.png
+C:\Users\Craig\Source\Repos\ALittleDream\ALittleDream\ALittleDream\obj\x86\Debug\ALittleDream.csprojResolveAssemblyReference.cache

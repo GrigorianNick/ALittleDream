@@ -191,6 +191,7 @@ namespace ALittleDream
                 {
                     FadeTrackOut("Title Screen");
                     PlayLoopedTracks();
+                    FadeTrackIn("Loop1");
                     levelMusicStarted = true;
                     Console.WriteLine("level music started");
                 }
