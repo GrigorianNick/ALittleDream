@@ -62,7 +62,7 @@ namespace ALittleDream
             endImages.Add(content.Load<Texture2D>("end/19"));
             endImages.Add(content.Load<Texture2D>("end/20"));
             endImages.Add(content.Load<Texture2D>("end/21"));
-            endImages.Add(content.Load<Texture2D>("end/22"));
+       
         }
 
         public override void UnloadContent(ContentManager content)
@@ -83,7 +83,7 @@ namespace ALittleDream
             }
             else
             {
-                if (timeElapsed > timeToChange && count < 22)
+                if (timeElapsed > timeToChange && count < 21)
                 {
                     theEnd = endImages[count];
                     count++;
