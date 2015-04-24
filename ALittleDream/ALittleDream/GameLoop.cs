@@ -102,7 +102,7 @@ namespace ALittleDream
                 graphics.PreferredBackBufferWidth = windowWidth;
                 graphics.PreferredBackBufferHeight = windowHeight;
                 graphics.ApplyChanges();
-                //graphics.ToggleFullScreen();
+                graphics.ToggleFullScreen();
 
                 SplashScreen splashScreen = new SplashScreen(graphics.PreferredBackBufferWidth, graphics.PreferredBackBufferHeight);
                 MenuScreen menuScreen = new MenuScreen(graphics.PreferredBackBufferWidth, graphics.PreferredBackBufferHeight, this);
@@ -111,7 +111,7 @@ namespace ALittleDream
                 GameScreen gameScreen3 = new GameScreen(3, 675, 0, -9001, -9001, GraphicsDevice);
                 GameScreen gameScreen4 = new GameScreen(4, 225, 0, 100, 20, GraphicsDevice);
                 GameScreen gameScreen5 = new GameScreen(5, 350, 150, 100, 20, GraphicsDevice);
-                GameScreen gameScreen6 = new GameScreen(6, 400, 100, 100, 20, GraphicsDevice);
+                GameScreen gameScreen6 = new GameScreen(6, 400, 100, -9001, -9001, GraphicsDevice);
                 GameScreen gameScreen7 = new GameScreen(7, 500, 50, 480, 20, GraphicsDevice);
                 GameScreen gameScreen8 = new GameScreen(8, 80, 200, -9001, -9001, GraphicsDevice);
                 GameScreen gameScreen9 = new GameScreen(9, 450, 0, -9001, -9001, GraphicsDevice);
@@ -245,10 +245,10 @@ namespace ALittleDream
             {
                 resetLevel();
             }
-            else if (controls.onPress(Keys.Space, Buttons.Back))///TO DELETE
+            /*else if (controls.onPress(Keys.Space, Buttons.Back))///TO DELETE
             {
                 screenManager.skipScreen();
-            }
+            }*/
 
             foreach (Entity e in Entity.entityList)
             {
