@@ -51,7 +51,8 @@ namespace ALittleDream
             {"Interact", "LittleDream_Interact"},
             {"Jump", "LittleDream_Jump"},
             {"Toggle On", "LittleDream_ToggleOn"},
-            {"Toggle Off", "LittleDream_ToggleOff"}
+            {"Toggle Off", "LittleDream_ToggleOff"},
+            {"Door", "LittleDream_Door"}
             //add more here
         };
 

@@ -301,6 +301,7 @@ namespace ALittleDream
     && (player.spriteY + 15) > door.spriteY && (player.spriteY + player.spriteHeight) < (door.spriteY + door.spriteHeight + 15)
                 && !changed && controls.isPressed(Keys.E, Buttons.LeftShoulder))
             {
+                audioMixer.playEffect("Door");
                 changeScreen = true;
                 changed = true;
             }
