@@ -35,7 +35,7 @@ namespace ALittleDream
         public static int toggleDistance = 50;
         public static int lightToggleRate = 12; //number of pixels per frame lighting changes by when toggled
         public int maxMomentum = 4;
-        public static float maxAngle = (float) Math.PI / 4; //for rotating lights
+        public float maxAngle = (float) Math.PI / 4; //for rotating lights
         public static float rotateRate = 0.008F; //for rotating lights
 
         public collision c;
