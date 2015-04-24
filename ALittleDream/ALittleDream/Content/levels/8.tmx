@@ -3,7 +3,7 @@
  <tileset firstgid="1" name="single" tilewidth="40" tileheight="40">
   <image source="tiles/rock/single.png" width="40" height="40"/>
  </tileset>
- <tileset firstgid="2" name="bigDoor" tilewidth="96" tileheight="110" door="true">
+ <tileset firstgid="2" name="bigDoor" tilewidth="96" tileheight="110" >
   <tileoffset x="12" y="-70"/>
   <image source="bigDoor.png" width="96" height="110"/>
  </tileset>
@@ -24,8 +24,40 @@
    <tileoffset x="9" y="-10"/>
   <image source="lights/hangingLight.png" width="22" height="29"/>
  </tileset>
+ <tileset firstgid="8" name="doorBottom" tilewidth="40" tileheight="40" door="true">
+  <image source="doorBottom.png" width="40" height="40"/>
+ </tileset>
+ <tileset firstgid="9" name="doorTop" tilewidth="40" tileheight="9">
+    <tileoffset x="0" y="32"/>
+  <image source="doorTop.png" width="40" height="9"/>
+ </tileset>
  <layer name="Tile Layer 1" width="25" height="15">
   <data>
+   <tile gid="0"/>
+   <tile gid="0"/>
+   <tile gid="0"/>
+   <tile gid="0"/>
+   <tile gid="0"/>
+   <tile gid="0"/>
+   <tile gid="0"/>
+   <tile gid="0"/>
+   <tile gid="0"/>
+   <tile gid="0"/>
+   <tile gid="0"/>
+   <tile gid="0"/>
+   <tile gid="0"/>
+   <tile gid="0"/>
+   <tile gid="0"/>
+   <tile gid="0"/>
+   <tile gid="0"/>
+   <tile gid="0"/>
+   <tile gid="0"/>
+   <tile gid="0"/>
+   <tile gid="0"/>
+   <tile gid="0"/>
+   <tile gid="0"/>
+   <tile gid="0"/>
+   <tile gid="0"/>
    <tile gid="0"/>
    <tile gid="0"/>
    <tile gid="0"/>
@@ -197,32 +229,7 @@
    <tile gid="0"/>
    <tile gid="0"/>
    <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
-   <tile gid="0"/>
+   <tile gid="9"/>
    <tile gid="0"/>
    <tile gid="0"/>
    <tile gid="0"/>
@@ -246,8 +253,8 @@
    <tile gid="6"/>
    <tile gid="0"/>
    <tile gid="0"/>
-   <tile gid="2"/>
    <tile gid="0"/>
+   <tile gid="8"/>
    <tile gid="0"/>
    <tile gid="0"/>
    <tile gid="0"/>
