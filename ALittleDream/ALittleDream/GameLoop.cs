@@ -102,7 +102,7 @@ namespace ALittleDream
                 graphics.PreferredBackBufferWidth = windowWidth;
                 graphics.PreferredBackBufferHeight = windowHeight;
                 graphics.ApplyChanges();
-                graphics.ToggleFullScreen();
+                //graphics.ToggleFullScreen();
 
                 SplashScreen splashScreen = new SplashScreen(graphics.PreferredBackBufferWidth, graphics.PreferredBackBufferHeight);
                 MenuScreen menuScreen = new MenuScreen(graphics.PreferredBackBufferWidth, graphics.PreferredBackBufferHeight, this);
@@ -113,9 +113,11 @@ namespace ALittleDream
                 GameScreen gameScreen5 = new GameScreen(5, 350, 150, 100, 20, GraphicsDevice);
                 GameScreen gameScreen6 = new GameScreen(6, 400, 100, 100, 20, GraphicsDevice);
                 GameScreen gameScreen7 = new GameScreen(7, 500, 50, 480, 20, GraphicsDevice);
-                GameScreen gameScreen8 = new GameScreen(8, 450, 0, 100, 20, GraphicsDevice);
-                GameScreen gameScreen9 = new GameScreen(9, 450, 0, 100, 20, GraphicsDevice);
-                GameScreen gameScreen10 = new GameScreen(10, 440, 280, -9001, -9001, GraphicsDevice);
+                GameScreen gameScreen8 = new GameScreen(8, 80, 200, -9001, -9001, GraphicsDevice);
+                GameScreen gameScreen9 = new GameScreen(9, 450, 0, -9001, -9001, GraphicsDevice);
+                GameScreen gameScreen10 = new GameScreen(10, 470, 280, -9001, -9001, GraphicsDevice);
+                GameScreen gameScreen11 = new GameScreen(11, 880, 80, 860, 20, GraphicsDevice);
+                GameScreen gameScreen12 = new GameScreen(12, 40, 280, -9001, -9001, GraphicsDevice);
                 //GameScreen gameScreen8 = new GameScreen(8, 450, 0, 100, 20, GraphicsDevice);
                 //EndScreen end = new EndScreen(graphics.PreferredBackBufferWidth, graphics.PreferredBackBufferHeight);
 
@@ -124,16 +126,18 @@ namespace ALittleDream
                 Stack<Screen> screens = new Stack<Screen>();
                 //screens.Push(gameScreen8);
                 //screens.Push(end);
-                screens.Push(gameScreen9);
-                screens.Push(gameScreen8);
-                screens.Push(gameScreen7);
-                screens.Push(gameScreen6);
-                screens.Push(gameScreen5);
-                screens.Push(gameScreen4);
-                screens.Push(gameScreen3);
-                screens.Push(gameScreen2);
-                screens.Push(gameScreen1);
-                screens.Push(gameScreen10);
+                /*screens.Push(gameScreen5);
+                screens.Push(gameScreen6);*/
+                screens.Push(gameScreen7); // Quantom & Switch puzzle
+                screens.Push(gameScreen11); // Quantom & Switch puzzle
+                screens.Push(gameScreen4); // Switch tutorial
+                screens.Push(gameScreen10); // Quantom tutorial
+                screens.Push(gameScreen2); // Lantern Puzzle
+                screens.Push(gameScreen9); // Lantern Puzzle
+                screens.Push(gameScreen12); // Lantern tutorial
+                screens.Push(gameScreen3); // Lighting tutorial
+                screens.Push(gameScreen8); // Movement puzzle
+                screens.Push(gameScreen1); // Movement tutorial
                 screens.Push(menuScreen);
                 screens.Push(splashScreen);
                 screenManager = new ScreenManager(screens, graphics.PreferredBackBufferWidth, graphics.PreferredBackBufferHeight);

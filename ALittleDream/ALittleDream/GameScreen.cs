@@ -147,7 +147,6 @@ namespace ALittleDream
                             Console.WriteLine(t.image);
                             if (t.image == "lights/QuantumUnlit.png")
                             {
-                                Console.WriteLine("Quant");
                                 Entity.quantumList.Add(ent);
                                 ent.isLit = false;
                                 ent.d = Entity.drawIf.lit;

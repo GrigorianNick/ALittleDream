@@ -326,7 +326,7 @@ namespace ALittleDream
                                     f.needsNewSprite = true;
                                     f.isLit = true;
                                 }
-                                e.lightRange = this.lightRange;
+                                e.lightRange = e.maxLightRange;
                                 break;
                             }
                         }
