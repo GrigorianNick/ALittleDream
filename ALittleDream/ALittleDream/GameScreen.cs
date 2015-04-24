@@ -150,6 +150,7 @@ namespace ALittleDream
                                 Console.WriteLine("Quant");
                                 Entity.quantumList.Add(ent);
                                 ent.isLit = false;
+                                ent.d = Entity.drawIf.lit;
                             }
                         }
                         else if (t.interact == "toggle")
