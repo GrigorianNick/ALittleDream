@@ -12,6 +12,7 @@ namespace ALittleDream
         public int height;
         public int offsetX;
         public int offsetY;
+        public float angle;
         public string light;
         public string draw;
         public string collision;
@@ -21,13 +22,14 @@ namespace ALittleDream
         public int maxLightRange;
         public string movement;
 
-        public Tile(string image, int width, int height, int offsetX, int offsetY, string light, int maxLightRange, string draw, string collision, bool door, string interact, string toggle, string movement)
+        public Tile(string image, int width, int height, int offsetX, int offsetY, float angle, string light, int maxLightRange, string draw, string collision, bool door, string interact, string toggle, string movement)
         {
             this.image = image;
             this.width = width;
             this.height = height;
             this.offsetX = offsetX;
             this.offsetY = offsetY;
+            this.angle = angle;
             this.light = light;
             this.draw = draw;
             this.collision = collision;

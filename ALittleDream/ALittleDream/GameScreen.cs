@@ -73,6 +73,7 @@ namespace ALittleDream
                 string draw = "";
                 int xOffset = 0;
                 int yOffset = 0;
+                double angle = 0;
                 bool door = false;
                 string interact = "";
                 string toggle = "";
@@ -83,6 +84,10 @@ namespace ALittleDream
                 {
                     light = tileset.Attribute("light").Value;
                     maxLightRange = Convert.ToInt32(tileset.Attribute("maxLightRange").Value);
+                }
+                if (tileset.Attribute("angle") != null)
+                {
+                    angle = Convert.ToDouble(tileset.Attribute("angle").Value);
                 }
                 if (tileset.Attribute("collision") != null)
                     collision = tileset.Attribute("collision").Value;
@@ -120,7 +125,7 @@ namespace ALittleDream
                 tiles.Add(new Tile(image,
                 Convert.ToInt32(tileset.Attribute("tileheight").Value),
                 Convert.ToInt32(tileset.Attribute("tilewidth").Value),
-                xOffset, yOffset, light, maxLightRange, draw, collision, door, interact, toggle, movement));
+                xOffset, yOffset, (float)angle, light, maxLightRange, draw, collision, door, interact, toggle, movement));
             }
 
 
@@ -189,8 +194,11 @@ namespace ALittleDream
                                 ent.maxLightRange = 280;
                             else
                                 ent.maxLightRange = t.maxLightRange;
-                            entityListLevel.Add(ent);
 
+                            ent.angle += t.angle;
+                            ent.maxAngle += t.angle;
+
+                            entityListLevel.Add(ent);
                         }
                     }
                     else
@@ -387,7 +395,8 @@ namespace ALittleDream
                 else if (e.l == Entity.lightShape.cone)
                 {
                     // adds 45 degrees to angle to account for rotation of lightmask image
-                    spriteBatch.Draw(triangleLightMask, new Vector2(e.spriteX, e.spriteY), null, Color.White, (float)(e.angle+.785), new Vector2(0, 0), 1, SpriteEffects.None, 0);
+                    spriteBatch.Draw(triangleLightMask, new Vector2(e.spriteX, e.spriteY), null, Color.White, (float)(e.angle+.79), new Vector2(0, 0), 1, SpriteEffects.None, 0);
+                    //Console.WriteLine("Angle:" + e.angle+.785);
                 }
             }
 

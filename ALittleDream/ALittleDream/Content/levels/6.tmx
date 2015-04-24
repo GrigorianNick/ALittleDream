@@ -50,7 +50,7 @@
   <tileoffset x="8" y="0"/>
   <image source="lights/switchOff.png" width="24" height="33"/>
  </tileset>
- <tileset firstgid="17" name="lamppostShort" tilewidth="18" tileheight="40" collision="none" light="circle" maxLightRange="115">
+ <tileset firstgid="17" name="lamppostShort" tilewidth="18" tileheight="40" collision="none" light="circle" maxLightRange="90">
   <tileoffset x="11" y="0"/>
   <image source="lights/lamppostShort.png" width="18" height="40"/>
  </tileset>
@@ -60,10 +60,14 @@
  <tileset firstgid="19" name="rocksTopRight" tilewidth="40" tileheight="40">
   <image source="tiles/rock/rocksTopRight.png" width="40" height="40"/>
  </tileset>
- <tileset firstgid="20" name="movingSpotlight" tilewidth="35" tileheight="24" collision="none" light="cone" maxLightRange="115">
+ <tileset firstgid="20" name="movingSpotlight" tilewidth="35" tileheight="24" collision="none" light="cone" maxLightRange="115" angle="1.5">
   <tileoffset x="0" y="-8"/>
   <image source="lights/movingSpotlight.png" width="35" height="24"/>
  </tileset>
+  <tileset firstgid="21" name="hangingLight" tilewidth="22" tileheight="29" collision="none" light="circle"  maxLightRange="100" movement="stationary">
+    <tileoffset x="30" y="-10"/>
+    <image source="lights/hangingLight.png" width="22" height="29" />
+  </tileset>
  <layer name="Tile Layer 1" width="25" height="15">
   <data>
    <tile gid="0"/>
@@ -154,7 +158,7 @@
    <tile gid="0"/>
    <tile gid="0"/>
    <tile gid="0"/>
-   <tile gid="0"/>
+   <tile gid="21"/>
    <tile gid="15"/>
    <tile gid="0"/>
    <tile gid="0"/>
@@ -179,7 +183,7 @@
    <tile gid="0"/>
    <tile gid="0"/>
    <tile gid="0"/>
-   <tile gid="17"/>
+   <tile gid="0"/>
    <tile gid="14"/>
    <tile gid="0"/>
    <tile gid="0"/>
@@ -280,7 +284,7 @@
    <tile gid="13"/>
    <tile gid="0"/>
    <tile gid="0"/>
-   <tile gid="20"/>
+   <tile gid="0"/>
    <tile gid="0"/>
    <tile gid="0"/>
    <tile gid="0"/>
@@ -330,7 +334,7 @@
    <tile gid="7"/>
    <tile gid="0"/>
    <tile gid="0"/>
-   <tile gid="0"/>
+   <tile gid="20"/>
    <tile gid="0"/>
    <tile gid="0"/>
    <tile gid="0"/>
